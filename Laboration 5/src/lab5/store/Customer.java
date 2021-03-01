@@ -8,11 +8,11 @@ public class Customer {
     this.ID = number;
   }
   
-  public getID(){
+  public int getID(){
     return ID;
   }
   
-  public toString(){
+  public String toString(){
     return String.valueOf(ID);
   }
   
