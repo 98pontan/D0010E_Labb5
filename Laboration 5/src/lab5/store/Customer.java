@@ -23,8 +23,4 @@ public class Customer {
   public void setState(CustomerState state){
     this.state = state;
   }
-  
-  public class enum CustomerState {
-    TURNED_AWAY, LATE_CUSTOMER, IN_STORE, NOT_IN_STORE
-  }
 }
