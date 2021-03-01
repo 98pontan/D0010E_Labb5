@@ -15,7 +15,7 @@ public class FIFO{
 		}
 	}
 
-	public Object first() throws NoSuchElementException {
+	public Customer first() throws NoSuchElementException {
 		if(FIFOQueue.size() == 0) {
 			throw new NoSuchElementException();
 		}
@@ -48,8 +48,8 @@ public class FIFO{
 	public String toString() {
 		String s = "Queue: ";
 		
-		for(Object elem: FIFOQueue) {
-			s = s + "(" + String.valueOf(elem) + ") ";
+		for(Customer customer: FIFOQueue) {
+			s = s + "(" + String.valueOf(customer) + ") ";
 		}
 		
 		return s;
