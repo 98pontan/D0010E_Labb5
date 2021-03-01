@@ -1,4 +1,5 @@
 package lab5.store;
+import java.util.NoSuchElementException;
 import java.util.ArrayList;
 
 public class FIFO{
