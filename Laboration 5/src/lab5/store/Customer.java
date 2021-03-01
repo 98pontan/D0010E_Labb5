@@ -10,4 +10,8 @@ public class Customer {
   public getID(){
     return ID;
   }
+  
+  public toString(){
+    return String.valueOf(ID);
+  }
 }
