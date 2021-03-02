@@ -6,10 +6,10 @@ import lab5.SimState.StoreState;
 
 
 public abstract class SimView implements Observer{
-  private State simState;
-  private State storeState;
+  private SimState simState;
+  private StoreState storeState;
   
-  public SimView(State simState, State storeState){
+  public SimView(SimState simState, StoreState storeState){
     simState.addObserver(this);
     storeState.addObserver(this);
   }
