@@ -57,7 +57,7 @@ public class SortedSequence
 		
 		return list;
 	}
-/*	
+	
 	void printArray(ArrayList<Event> unsorted) 
 	{
 		ArrayList<Event> list = sortList(unsorted);
@@ -67,6 +67,5 @@ public class SortedSequence
 			System.out.println("list: " + list.get(i).time);
 		}
 	}
-	*/
 
 }

@@ -38,7 +38,7 @@ public class SortedSequence
 		{
 			for(int j = 0; j < length - i - 1; j++) 
 			{
-				if(list.get(j).getTime() > list.get(j +  1).getTime()) {
+				if(list.get(j).time > list.get(j +  1).time) {
 					Event temp;
 					
 					temp = list.get(j);
@@ -57,7 +57,7 @@ public class SortedSequence
 		
 		return list;
 	}
-/*	
+	
 	void printArray(ArrayList<Event> unsorted) 
 	{
 		ArrayList<Event> list = sortList(unsorted);
@@ -67,6 +67,5 @@ public class SortedSequence
 			System.out.println("list: " + list.get(i).time);
 		}
 	}
-	*/
 
 }
