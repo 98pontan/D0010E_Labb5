@@ -1,0 +1,36 @@
+package lab5.events;
+import lab5.sim.*;
+import lab5.store.*;
+
+/**
+ * Description
+ * 
+ * @author Lucas Pettersson,
+ * @author Pontus Eriksson Jirbratt, 
+ * @author Jesper Johansson Oskarsson, 
+ * @author Markus Blomqvist
+ *
+ */
+public class ArrivalEvent extends Event{
+	
+	public ArrivalEvent(SimState state, EventQueue eventQueue, double time) 
+	{
+		super(state);
+		this.time = time;
+	}
+	
+	public void run() 
+	{
+		
+	}
+	
+	public double getTime()
+	{
+		
+	}
+	
+	public String getName()
+	
+	public Customer getCustomer()
+	
+}

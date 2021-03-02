@@ -1,0 +1,12 @@
+package lab5.sim;
+import lab5.store.*;
+
+
+/**
+ * 
+ * @author lucas
+ *
+ */
+abstract public class Event {
+	
+}

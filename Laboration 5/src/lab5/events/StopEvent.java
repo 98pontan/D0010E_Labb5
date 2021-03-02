@@ -1,5 +1,7 @@
 package lab5.events;
+import lab5.sim.*;
+import lab5.store.*;
 
-public class StopEvent {
+public class StopEvent extends Event {
 
 }
