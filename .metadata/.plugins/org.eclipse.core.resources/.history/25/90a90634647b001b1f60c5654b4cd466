@@ -1,0 +1,40 @@
+package lab5.events;
+import lab5.sim.*;
+import lab5.store.*;
+
+/**
+ * Description
+ * 
+ * @author Lucas Pettersson,
+ * @author Pontus Eriksson Jirbratt, 
+ * @author Jesper Johansson Oskarsson, 
+ * @author Markus Blomqvist
+ *
+ */
+public class GatherEvent extends Event {
+	
+	public GatherEvent(SimState state, EventQueue eventQueue, Customer customer, double time)
+	{
+		super(state, eventQueue);
+	}
+	
+	public void run() 
+	{
+
+	}
+	
+	public double getTime()
+	{
+		return this.time;
+	}
+	
+	public String getName()
+	{
+		return this.name;
+	}
+	
+	public Customer getCustomer()
+	{
+		return this.customer;
+	}
+}

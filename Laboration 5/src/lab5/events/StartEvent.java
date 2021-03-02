@@ -21,21 +21,26 @@ public class StartEvent extends Event {
 	{
 		super(state, eventQueue);
 		this.time = 0d;
-		name = "Start";
-		customer = null;
+		this.name = "Start";
+		this.customer = null;
+//		this.closeTime = state.getStore().getClosingTime();
 	}
 	
 	public void run() 
 	{
 //		state.update(this);
-//		this.state.getStore.addCustomer();
-//		
-		if(customer.getState() == CustomerState.IN_STORE)
+		
+//		state.getStore().setIsOpen(true);
+		closingEvent = new ClosingEvent(this.state, eventQueue, closeTime);
+//		eventQueue.addEvent(closingEvent);
+			      
+		double arrivalTime = 0d;
+		do 
 		{
-//	    	double gatherTime = this.time + state.getGatherTime().next();
-//	    	gatherEvent = new GatherEvent(this.state, this.eventQueue, customer, gatherTime);
-//	    	eventQueue.addEvent(gatherEvent);
-	    }
+//			arrivalTime = arrivalTime + state.getArrivalTime().next();
+			arrivalEvent = new ArrivalEvent(this.state, this.eventQueue, arrivalTime);
+//			eventQueue.addEvent(arrivalEvent);
+		}while(closeTime >  arrivalTime);
 	}
 	
 	public double getTime()
