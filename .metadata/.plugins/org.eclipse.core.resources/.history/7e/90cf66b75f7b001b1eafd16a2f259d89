@@ -1,0 +1,38 @@
+package lab5.store;
+
+public class StoreState {
+	int customers;
+	int checkOuts;
+	int maxCheckouts;
+	int maxCustomerToday;
+	final int MAXCUSTOMERS;
+	
+	StoreState(int openCheckout, int maxCustomers)
+	{
+		MAXCUSTOMERS = maxCustomers;
+		checkOuts = openCheckout;
+	}
+	
+	
+	int getCustomers() 
+	{
+		return customers;
+	}
+	
+	int checkOuts() 
+	{
+		return checkOuts;
+	}
+	
+	void openCheckout(int n) 
+	{
+		for(int i = 0; i <= n; i++) 
+		{
+			checkOuts++;
+		}
+	}
+	
+	
+	
+
+}

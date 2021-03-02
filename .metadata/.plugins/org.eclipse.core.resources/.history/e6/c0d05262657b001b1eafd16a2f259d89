@@ -1,0 +1,37 @@
+package lab5.sim;
+
+import java.util.Observable;
+
+import lab5.store.StoreState;
+/**
+ * is the general state of the simulation
+ * @author Pontus Eriksson Jirbratt
+ *
+ */
+public class SimState extends Observable
+{
+	double currentTime;
+	int numberOfEvents = 0;
+	boolean stopFlag;
+	
+	SimState(int openCheckouts, int customerLimit)
+	{
+		StoreState ss = new StoreState(openCheckouts , customerLimit);
+	}
+	void update(double time) 
+	{
+		currentTime += time;
+		numberOfEvents++;
+	}
+	
+	boolean getSimRunning() 
+	{
+		
+		return !stopFlag;
+	}
+	
+	getcurrentTime(){
+		return currentTime;
+	}
+	
+}
