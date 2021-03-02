@@ -34,6 +34,14 @@ public class StoreView extends SimView{
     System.out.println("");
     System.out.println("RESLUTAT");
     System.out.println("========");
+    System.out.println("");
+    System.out.println("1)");
+    System.out.println("");
+    System.out.println("2)");
+    System.out.println("");
+    System.out.println("");
+    System.out.println("3)");
+    System.out.println("");
   }
   
   public void update(Observable o, Object arg){
