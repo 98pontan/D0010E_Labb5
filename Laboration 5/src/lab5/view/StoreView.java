@@ -34,14 +34,14 @@ public class StoreView extends SimView{
     System.out.println("");
     System.out.println("RESLUTAT");
     System.out.println("========");
+    System.out.println(""); //"Av " + vad ska skrivas här??
+    System.out.println("1) Av " + StoreState.getCustomers() + " kunder handlade " +  + " medan " + + " missades."); 
     System.out.println("");
-    System.out.println("1)");
+    System.out.println("2) Total tid " + + " kassor varit lediga: " + + " te.");
+    System.out.println("   Genomsnittlig ledig kassatid: " + + " te (dvs " + + "% av tiden från öppning tills sista kunden betalat).");
     System.out.println("");
-    System.out.println("2)");
-    System.out.println("");
-    System.out.println("");
-    System.out.println("3)");
-    System.out.println("");
+    System.out.println("3) Total tid " + + " kunder tvingats köa: " + + " te.");
+    System.out.println("   Genomsnittlig kötid: " + + " te.");
   }
   
   public void update(Observable o, Object arg){
