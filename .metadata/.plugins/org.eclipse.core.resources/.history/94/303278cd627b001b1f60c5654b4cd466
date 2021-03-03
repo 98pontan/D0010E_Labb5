@@ -1,0 +1,39 @@
+package lab5.events;
+import lab5.sim.*;
+import lab5.store.*;
+
+public class StopEvent extends Event {
+
+	public StopEvent(SimState state, EventQueue eventQueue)
+	{
+		super(state, eventQueue);
+	}
+	
+	public void run() 
+	{
+//		state.update(this);
+//		this.state.getStore.addCustomer();
+//		
+		if(customer.getState() == CustomerState.IN_STORE)
+		{
+//	    	double gatherTime = this.time + state.getGatherTime().next();
+//	    	gatherEvent = new GatherEvent(this.state, this.eventQueue, customer, gatherTime);
+//	    	eventQueue.addEvent(gatherEvent);
+	    }
+	}
+	
+	public double getTime()
+	{
+		return time;
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public Customer getCustomer()
+	{
+		return customer;
+	}
+}

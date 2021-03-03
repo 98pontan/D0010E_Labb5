@@ -1,0 +1,20 @@
+package lab5.events;
+import lab5.sim.*;
+import lab5.store.*;
+
+/**
+ * Description
+ * 
+ * @author Lucas Pettersson,
+ * @author Pontus Eriksson Jirbratt, 
+ * @author Jesper Johansson Oskarsson, 
+ * @author Markus Blomqvist
+ *
+ */
+public class ArrivalEvent extends Event{
+	
+	public ArrivalEvent(StoreState storeState, EventQueue eventQueue, double time) 
+	{
+		super(storeState);
+	}
+}

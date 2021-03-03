@@ -1,0 +1,35 @@
+package lab5.events;
+import lab5.sim.*;
+import lab5.store.*;
+
+public class StopEvent extends Event {
+
+	public StopEvent(SimState state, EventQueue eventQueue)
+	{
+		super(state, eventQueue);
+		this.time = 0d;
+		this.name = "Stop";
+		this.customer = null;
+	}
+	
+	public void run() 
+	{
+		state.update(this);
+		state.setDisableSim();
+	}
+	
+	public double getTime()
+	{
+		return this.time;
+	}
+	
+	public String getName()
+	{
+		return this.name;
+	}
+	
+	public Customer getCustomer()
+	{
+		return this.customer;
+	}
+}

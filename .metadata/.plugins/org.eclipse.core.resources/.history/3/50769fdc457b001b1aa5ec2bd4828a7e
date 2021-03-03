@@ -1,0 +1,5 @@
+package lab5.sim;
+
+abstract public class Event {
+	
+}

@@ -1,5 +1,60 @@
 package lab5.events;
+import lab5.sim.*;
+import lab5.store.*;
 
-public class GatherEvent {
-
+/**
+ * Description
+ * 
+ * @author Lucas Pettersson,
+ * @author Pontus Eriksson Jirbratt, 
+ * @author Jesper Johansson Oskarsson, 
+ * @author Markus Blomqvist
+ *
+ */
+public class GatherEvent extends Event {
+	
+	private PurchaseEvent payEvent;
+	private double payTime;
+	
+	public GatherEvent(SimState state, EventQueue eventQueue, Customer customer, double time)
+	{
+		super(state, eventQueue);
+		this.time = time;
+		this.name = "Gather";
+		this.customer = customer;
+	}
+	
+	public void run() 
+	{
+//		state.update(this);
+//			      
+//		if(state.getCurrentSim().getFreeRegisters() > 0)
+//		{
+//			double payTime = this.time + state.getPayTime().next();
+//				         
+//			payEvent = new PurchaseEvent(this.state, this.eventQueue, payTime, customer);
+//			eventQueue.addEvent(payEvent);
+//			state.getCurrentSim().occupieRegister();
+//		}
+//		else 
+//		{
+//			state.getStore().getFIFOQueue().add(customer);
+//			state.getStore().addTotalCustomersInQueue();
+//		}
+	}
+	
+	public double getTime()
+	{
+		return time;
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public Customer getCustomer()
+	{
+		return customer;
+	}
 }
