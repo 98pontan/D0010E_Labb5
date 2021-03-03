@@ -15,16 +15,16 @@ public class RunSim {
         final int REGISTERS         = 3;
         final int MAX_CUSTOMERS     = 30;
         // Simulation run time in time units
-        final int SIM_TIME          = 10;
+        final double SIM_TIME       = 10.0;
         // How many customers that arrive per time unit
-        final double ARRIVAL_SPEED  = 4;
+        final double ARRIVAL_SPEED  = 4.0;
         // Lower and upper limits in time generation for
         // corresponding events
-        final double lowerGather    = 1, upperGather = 2;
-        final double lowerRegister  = 1, upperRegister = 2;
+        final double lowerGather    = 1.0, upperGather      = 2.0;
+        final double lowerRegister  = 1.0, upperRegister    = 1.5;
 
-        SimState model = new StoreState();
-        SimView view = new StoreView(/*model*/);
+        SimState model   = new StoreState();
+        SimView view     = new StoreView(/*model*/);
         EventQueue queue = new EventQueue();
         queue.add(new StartEvent(/*
                 SEED,
