@@ -4,7 +4,6 @@ public class Simulator {
     SimState model;
     SimView view;
     EventQueue queue;
-    private boolean simRunning = true;
 
     public Simulator(SimState model, SimView view, EventQueue queue) {
         this.model = model;
@@ -13,7 +12,7 @@ public class Simulator {
     }
 
     public void run() {
-        while (simRunning) {
+        while (model.isRunning()) {
             queue.getNext().execute();
         }
     }
