@@ -1,0 +1,41 @@
+package lab5.sim;
+
+import java.util.ArrayList;
+
+public class EventQueue {
+
+	 ArrayList<Event> eventQueue;
+	 
+	 private EventQueue(ArrayList<Event> eveQueue) 
+	 {
+		 eventQueue = eveQueue;
+	 }
+	
+	private ArrayList<Event> getEventQueue()
+	{
+		return eventQueue;
+	}
+	
+	private void addEvent(Event event)
+	{
+		eventQueue.add(event);
+		SortedSequence ss = new SortedSequence();
+		eventQueue = ss.sortList(eventQueue);
+		System.out.println(eventQueue);
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		ArrayList<Event> a = new ArrayList<>(Arrays.asList());
+		ArrayList<Event> list;
+		for(int i = 0;i < 4; i ++) {
+			a.add(i, new Event());
+		}
+		SortedSequence ss = new SortedSequence();
+		
+		ss.printArray(a);
+		
+	}
+
+}

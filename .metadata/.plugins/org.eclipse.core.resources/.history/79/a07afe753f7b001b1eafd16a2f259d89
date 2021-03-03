@@ -1,0 +1,40 @@
+package lab5.sim;
+
+import java.util.ArrayList;
+
+public class SortedSequence 
+{
+	SortedSequence(ArrayList<Event> unsortedList){
+		int length;
+		final int FIRSTINDEX = 0;
+		length = unsortedList.size();
+		
+		
+	}
+	private ArrayList<Event> sortEventQueue(ArrayList<Event> list, int low, int high) {
+		int pi;
+		
+		if(list.get(low).time < list.get(high).time) {
+			pi = partition(list, low, high);
+		}
+		
+	}
+	
+	private int partition(ArrayList<Event> list, int low, int high) {
+		double pivot;
+		int i;
+		
+		pivot = list.get(high).time;
+		i = low - 1;
+		
+		for(int j = low, j < high; j++) {
+			
+			if(list.get(j).time <= pivot) {
+				
+			}
+		}
+		
+		
+	}
+
+}

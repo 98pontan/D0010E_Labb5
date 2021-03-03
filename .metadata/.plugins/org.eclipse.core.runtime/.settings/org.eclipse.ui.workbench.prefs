@@ -1,3 +1,4 @@
+//org.eclipse.ui.commands/state/org.eclipse.ui.navigator.resources.nested.changeProjectPresentation/org.eclipse.ui.commands.radioState=false
 ACTIVE_HYPERLINK_COLOR=255,200,0
 CONFLICTING_COLOR=232,14,64
 CONTENT_ASSIST_BACKGROUND_COLOR=46,52,56
@@ -8,6 +9,7 @@ ERROR_COLOR=247,68,117
 HYPERLINK_COLOR=111,197,238
 INCOMING_COLOR=31,179,235
 OUTGOING_COLOR=235,237,239
+PLUGINS_NOT_ACTIVATED_ON_STARTUP=;org.eclipse.m2e.discovery;
 RESOLVED_COLOR=104,203,16
 cdataBorder=0,254,254
 cdataText=255,255,255

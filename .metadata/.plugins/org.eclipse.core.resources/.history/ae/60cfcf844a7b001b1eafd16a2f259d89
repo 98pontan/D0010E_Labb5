@@ -1,0 +1,125 @@
+package lab5.sim;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class SortedSequence 
+{
+	public static void main(String[] args)
+	{
+		ArrayList<Event> a = new ArrayList<>(Arrays.asList());
+		ArrayList<Event> list;
+		for(int i = 0;i < 4; i ++) {
+			a.add(i, new Event());
+		}
+		SortedSequence ss = new SortedSequence();
+		
+		list = ss.sortList(a);
+			
+		for(int i = 0; i < a.size(); i++) {
+			System.out.println("list: " + list.get(i).time);
+			System.out.println("a: " + a.get(i).time);
+		}
+		
+	}
+	
+	private ArrayList<Event> sortList(ArrayList<Event> list){
+		int length = list.size();
+		
+		for(int i = 0; i < length - 1; i++) {
+			for(int j = 0; j < length - i - j; j++) {
+				if(list.get(j).time > list.get(j +1).time) {
+					Event temp;
+					
+					temp = list.get(j);
+					list.set(j, list.get(j + 1));
+					list.set(j + 1, temp);
+				}//end if
+			}//end for j
+		}//end for i
+		
+		return list;
+	}
+	
+/*	public static void main(String[] args)
+	{
+		ArrayList<Event> a = new ArrayList<>(Arrays.asList());
+		
+		for(int i = 0;i < 4; i ++) {
+			a.add(i, new Event());
+		}
+		
+		final int LASTINDEX = a.size() - 1;
+		final int FIRSTINDEX = 0;
+	
+		
+		SortedSequence ss = new SortedSequence();
+		ss.sortEventQueue(a, FIRSTINDEX, LASTINDEX);
+		
+		for(int i = 0; i < a.size(); i++) {
+			System.out.println(a.get(i).time);
+		}
+	}
+
+	private ArrayList<Event> SortedSequence(){
+		ArrayList<Event> a = new ArrayList<>(Arrays.asList());
+		
+		for(int i = 0;i < 4; i ++) {
+			a.set(i, new Event());
+		}
+		
+		final int LASTINDEX;
+		final int FIRSTINDEX = 0;
+		LASTINDEX = a.size() - 1;
+		
+		SortedSequence ss = new SortedSequence();
+		ss.sortEventQueue(a, FIRSTINDEX, LASTINDEX);
+		
+		return a;
+	}
+
+	
+	private void sortEventQueue(ArrayList<Event> list, int low, int high) {
+		int pi;
+		
+		if(list.get(low).time < list.get(high).time) {
+			pi = partition(list, low, high);
+			
+			sortEventQueue(list, low, pi + 1);
+			sortEventQueue(list, pi + 1, high);
+		}
+		
+	}
+	
+	private int partition(ArrayList<Event> list, int low, int high) {
+		double pivot;
+		int i;
+		Event temp;
+		
+		pivot = list.get(high).time;
+		i = low - 1;
+		
+		for(int j = low; j < high; j++) {
+			
+			if(list.get(j).time <= pivot) {
+				i++;
+				
+				// swap list i and list j
+				temp = list.get(i);
+				list.set(i, list.get(j));
+				list.set(j, temp);
+			}
+		}
+		
+		// swap list i + 1 with pivot
+		temp = list.get(i + 1);
+		list.set(i + 1, list.get(high));
+		list.set(high, temp);
+		
+		return i+1;
+		
+	}
+	
+	*/
+
+}
