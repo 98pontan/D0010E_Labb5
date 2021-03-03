@@ -17,12 +17,12 @@ public class StoreView extends SimView{
   private void printStart(){
     System.out.println("PARAMETRAR");
     System.out.println("==========");
-    System.out.println("Antal kassor, N..........: ");
-    System.out.println("Max som ryms, M..........: ");
-    System.out.println("Ankomsthastighet, lambda.: ");
-    System.out.println("Plocktider, [P_min..Pmax]: ");
-    System.out.println("Betaltider, [K_min..Kmax]: ");
-    System.out.println("Frö, f...................: ");
+    System.out.println("Antal kassor, N..........: ") + storeState.getcheckOuts();
+    System.out.println("Max som ryms, M..........: " + storeState.getMaxCustomersToday());
+    System.out.println("Ankomsthastighet, lambda.: ") + ;
+    System.out.println("Plocktider, [P_min..Pmax]: ") + ;
+    System.out.println("Betaltider, [K_min..Kmax]: ") + ;
+    System.out.println("Frö, f...................: ") + ;
     System.out.println("");
   }
   
@@ -34,8 +34,8 @@ public class StoreView extends SimView{
     System.out.println("");
     System.out.println("RESLUTAT");
     System.out.println("========");
-    System.out.println(""); //"Av " + vad ska skrivas här??
-    System.out.println("1) Av " + StoreState.getCustomers() + " kunder handlade " +  + " medan " + + " missades."); 
+    System.out.println(""); // Totala antalet kunder, kunder som handlade, missade kunder. (kan vara fel i 1) nedan)
+    System.out.println("1) Av " + storeState.getCustomers() + " kunder handlade " + storeState.getMaxCustomersToday() + " medan " + storeState.getMissedCustomers() + " missades."); 
     System.out.println("");
     System.out.println("2) Total tid " + + " kassor varit lediga: " + + " te.");
     System.out.println("   Genomsnittlig ledig kassatid: " + + " te (dvs " + + "% av tiden från öppning tills sista kunden betalat).");
