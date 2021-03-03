@@ -1,0 +1,27 @@
+package lab5.sim;
+
+import java.util.ArrayList;
+
+public class EventQueue {
+
+	 ArrayList<Event> eventQueue;
+	 
+	 private EventQueue(ArrayList<Event> eveQueue) 
+	 {
+		 eventQueue = eveQueue;
+	 }
+	
+	private ArrayList<Event> getEventQueue()
+	{
+		return eventQueue;
+	}
+	
+	private void addEvent(Event event)
+	{
+		eventQueue.add(event);
+		SortedSequence ss = new SortedSequence();
+		eventQueue = ss.sortList(eventQueue);
+	}
+	
+
+}

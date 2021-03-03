@@ -1,0 +1,25 @@
+package lab5.sim;
+
+import java.util.ArrayList;
+
+public class SortedSequence 
+{
+	private ArrayList<Event> sortEventQueue(ArrayList<Event> unsortedList) {
+		int length;
+		final int FIRSTINDEX = 0;
+		
+		if(unsortedList == null) {
+			return unsortedList;
+		}
+		
+		length = unsortedList.size();
+		
+		if(unsortedList.get(FIRSTINDEX).time < unsortedList.get(length)) {
+			
+		}
+		return unsortedList;
+	}
+	
+	
+
+}

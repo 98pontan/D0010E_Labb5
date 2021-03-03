@@ -1,0 +1,22 @@
+package lab5.sim;
+
+public class SimState 
+{
+	double totTime;
+	int events = 0;
+	boolean stopFlag;
+	
+	void update(double time) 
+	{
+		totTime += time;
+		events++;
+	}
+	
+	boolean getSimRunning() 
+	{
+		
+		return !stopFlag;
+	}
+
+	
+}

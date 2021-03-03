@@ -1,5 +1,66 @@
 package lab5.sim;
 
-public class SimState {
+import java.util.Observable;
 
+import lab5.store.StoreState;
+/**
+ * is the general state of the simulation
+ * @author Pontus Eriksson Jirbratt
+ *
+ */
+public class SimState extends Observable
+{
+	double currentTime;
+	int numberOfEvents = 0;
+	boolean runFlag;
+	
+	/**
+	 * Constructor set the time to zero and set the flag for the program to true
+	 */
+	SimState()
+	{
+		currentTime = 0;
+		runFlag = true;
+		
+	}
+	
+	
+	/**
+	 * Increments number of events
+	 */
+	void newEvent() 
+	{
+		numberOfEvents++;
+	}
+	
+	void newTime(int t) 
+	{
+		currentTime += t;
+	}
+	/**
+	 * updates the observer
+	 */
+	void update() 
+	{
+		setChanged();
+		notifyObservers();
+	}
+	
+	/**
+	 * @return if the program is running 
+	 */
+	boolean getSimRunning() 
+	{
+		
+		return runFlag;
+	}
+	
+	/**
+	 * @return the current time in the program
+	 */
+	double getcurrentTime()
+	{
+		return currentTime;
+	}
+	
 }
