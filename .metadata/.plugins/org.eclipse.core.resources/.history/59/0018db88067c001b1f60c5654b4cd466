@@ -34,7 +34,7 @@ public class GatherEvent extends Event {
 //				         
 //			payEvent = new PurchaseEvent(this.state, this.eventQueue, payTime, customer);
 //			eventQueue.addEvent(payEvent);
-//			state.getCurrentSim().occupieRegister();
+//			state.getStore().occupieRegister();
 //		}
 //		else 
 //		{

@@ -24,7 +24,7 @@ public class ClosingEvent extends Event {
 	public void run() 
 	{
 //		state.update(this);
-//		state.getCurrentSim().setOpen(false);
+//		state.getStore().setOpen(false);
 	}
 	
 	public double getTime()

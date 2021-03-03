@@ -26,7 +26,7 @@ public class ArrivalEvent extends Event{
 	public void run() 
 	{
 //		state.update(this);
-//		state.getCurrentSim().addCustomer();
+//		this.state.getCurrentSim().addCustomer();
 //		
 		if(customer.getState() == CustomerState.IN_STORE)
 		{

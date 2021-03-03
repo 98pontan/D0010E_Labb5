@@ -28,22 +28,22 @@ public class PurchaseEvent extends Event {
 	{
 //		state.update(this);
 //		
-//		state.getCurrentSim().addMoney();
-//		state.getCurrentSim().removeCustomer(customer);
-//		state.getCurrentSim().unoccupieRegister();
+//		state.getStore().addMoney();
+//		state.getStore().removeCustomer(customer);
+//		state.getStore().unoccupieRegister();
 //			      
-//		if(!state.getCurrentSim().getFIFOQueue().isEmpty()) 
+//		if(!state.getStore().getFIFOQueue().isEmpty()) 
 //		{
-//			Customer customerFirstInLine = (Customer) state.getCurrentSim().getFIFOQueue().first();
+//			Customer customerFirstInLine = (Customer) state.getStore().getFIFOQueue().first();
 //			
-//			state.getCurrentSim().getFIFOQueue().removeFirst();
+//			state.getStore().getFIFOQueue().removeFirst();
 //			
 //			payTime = this.time + state.getPayTime().next();
 //			
 //			payEvent = new PurchaseEvent(this.state, this.eventQueue, payTime, customerFirstInLine);
 //			eventQueue.addEvent(payEvent);
 //			
-//			state.getCurrentSim().occupieRegister();
+//			state.getStore().occupieRegister();
 //		}
 	}
 	

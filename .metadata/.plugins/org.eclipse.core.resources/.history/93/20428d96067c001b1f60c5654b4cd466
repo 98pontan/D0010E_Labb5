@@ -43,7 +43,7 @@ public class PurchaseEvent extends Event {
 //			payEvent = new PurchaseEvent(this.state, this.eventQueue, payTime, customerFirstInLine);
 //			eventQueue.addEvent(payEvent);
 //			
-//			state.getCurrentSim().occupieRegister();
+//			state.getStore().occupieRegister();
 //		}
 	}
 	

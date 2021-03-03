@@ -23,7 +23,7 @@ public class StartEvent extends Event {
 		this.time = 0d;
 		this.name = "Start";
 		this.customer = null;
-//		this.closeTime = state.getCurrentSim().getClosingTime();
+//		this.closeTime = state.getStore().getClosingTime();
 	}
 	
 	public void run() 

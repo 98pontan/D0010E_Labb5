@@ -20,13 +20,13 @@ public class ArrivalEvent extends Event{
 		super(state, eventQueue);
 		this.time = time;
 		this.name = "Arrival";
-//		this.customer = this.state.getCurrentSim().createCustomer();
+//		this.customer = this.state.getStore().createCustomer();
 	}
 	
 	public void run() 
 	{
 //		state.update(this);
-//		state.getCurrentSim().addCustomer();
+//		this.state.getStore.addCustomer();
 //		
 		if(customer.getState() == CustomerState.IN_STORE)
 		{

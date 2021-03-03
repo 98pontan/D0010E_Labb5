@@ -36,14 +36,14 @@ public class PurchaseEvent extends Event {
 //		{
 //			Customer customerFirstInLine = (Customer) state.getCurrentSim().getFIFOQueue().first();
 //			
-//			state.getCurrentSim().getFIFOQueue().removeFirst();
+//			state.getStore().getFIFOQueue().removeFirst();
 //			
 //			payTime = this.time + state.getPayTime().next();
 //			
 //			payEvent = new PurchaseEvent(this.state, this.eventQueue, payTime, customerFirstInLine);
 //			eventQueue.addEvent(payEvent);
 //			
-//			state.getCurrentSim().occupieRegister();
+//			state.getStore().occupieRegister();
 //		}
 	}
 	
