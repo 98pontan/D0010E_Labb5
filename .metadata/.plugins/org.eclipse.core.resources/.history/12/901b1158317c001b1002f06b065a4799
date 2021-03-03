@@ -24,7 +24,6 @@ public class SimState extends Observable
 		
 	}
 	
-	
 	/**
 	 * Increments number of events
 	 */
@@ -33,10 +32,6 @@ public class SimState extends Observable
 		numberOfEvents++;
 	}
 	
-	void newTime(int t) 
-	{
-		currentTime += t;
-	}
 	/**
 	 * updates the observer
 	 */
