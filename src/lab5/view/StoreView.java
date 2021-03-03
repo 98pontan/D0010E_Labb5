@@ -8,7 +8,7 @@ public class StoreView extends SimView{
   private SimState simState;
   private StoreState storeState;
   
-  public class StoreView(SimState simState, StoreState storeState){
+  public StoreView(SimState simState, StoreState storeState){
     super(simState,storeState);
     this.simState = simState;
     this.storeState = storeState;
