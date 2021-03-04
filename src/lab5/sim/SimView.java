@@ -6,6 +6,7 @@ import lab5.SimState.StoreState;
 
 /**
  * This class is the general view used for the simulator.
+ * It is an observer and observes the state.
  * @author Markus Blomqvist
  */
 public abstract class SimView implements Observer{
