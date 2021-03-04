@@ -4,7 +4,10 @@ import java.util.Observer;
 import lab5.SimState;
 import lab5.SimState.StoreState;
 
-
+/**
+ * This class is the general view used for the simulator.
+ * @author Markus Blomqvist
+ */
 public abstract class SimView implements Observer{
   private SimState simState;
   private StoreState storeState;
