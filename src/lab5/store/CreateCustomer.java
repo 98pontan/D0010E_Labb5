@@ -1,6 +1,6 @@
 package lab5.store;
 
-/**
+ /**
   * This class creates customers and automatically increases the
   * number of customers created.
   * @author Markus Blomqvist
