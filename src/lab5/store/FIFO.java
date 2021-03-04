@@ -2,11 +2,18 @@ package lab5.store;
 import java.util.NoSuchElementException;
 import java.util.ArrayList;
 
+/**
+ * This is a first-in first-out class and is used for the queue of customers.
+ * @author Markus Blomqvist
+ */
 public class FIFO{
 
 	private ArrayList<Customer> FIFOQueue = new ArrayList<Customer>();
 	private int max = 0;
 	
+       /**
+ 	* This method adds a customer to the queue.
+ 	*/
 	public void add(Customer customer) {
 		FIFOQueue.add(customer);
 		
@@ -15,6 +22,9 @@ public class FIFO{
 		}
 	}
 
+       /**
+ 	* This method returns the first customer in the queue.
+ 	*/
 	public Customer first() throws NoSuchElementException {
 		if(FIFOQueue.size() == 0) {
 			throw new NoSuchElementException();
@@ -23,6 +33,9 @@ public class FIFO{
 		return FIFOQueue.get(0);
 	}
 	
+       /**
+ 	* This method removes the first customer in the queue.
+ 	*/
 	public void removeFirst() throws NoSuchElementException {
 		if(FIFOQueue.size() == 0) {
 			throw new NoSuchElementException();
@@ -31,6 +44,10 @@ public class FIFO{
 		FIFOQueue.remove(0);
 	}
 	
+       /**
+ 	* This method returns true or false depending on
+	* if the queue is empty.
+ 	*/
 	public boolean isEmpty() {
 		if(FIFOQueue.size() == 0) {
 			return true;
@@ -39,14 +56,24 @@ public class FIFO{
 		return false;
 	}
 
+       /**
+ 	* This method returns the maximal size of the queue.
+ 	*/
 	public int maxSize() {
 		return max;
 	}
 
+       /**
+ 	* This method returns the current size of the queue.
+ 	*/
 	public int size() {
 		return FIFOQueue.size();
 	}
 	
+       /**
+ 	* This method returns the queue as a String with
+	* the Customer objects in it.
+ 	*/
 	public String toString() {
 		String s = "Queue: ";
 		
