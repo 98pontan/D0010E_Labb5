@@ -1,6 +1,6 @@
 package lab5.store;
 
-/**
+ /**
   * This class represents a customer with ID and a state.
   * @author Markus Blomqvist
   */
