@@ -46,9 +46,9 @@ public class StoreView extends SimView{
    * This method prints out the events.
    */
   private void printEvents(){
-    String formatEvent = String.valueOf(simState.getCurrentEvent().getName());
-    if(formatEvent.length() < 4){
-      formatEvent = formatEvent + " ";
+    String eventFormat = String.valueOf(simState.getCurrentEvent().getName());
+    if(eventFormat.length() < 4){
+      eventFormat = eventFormat + " ";
     }
     
     String checkCustomerNull = String.valueOf(simState.getCurrentCustomer());
@@ -58,7 +58,7 @@ public class StoreView extends SimView{
   
     System.out.println(
               timeFormat(simState.getCurrentTime()) + "\t" +
-              formatEvent + "\t\t" +
+              eventFormat + "\t\t" +
               checkCustomerNull + "\t" +
               storeState.getIsOpen() + "\t" +
               storeState.getFreeRegisters() + "\t" +
