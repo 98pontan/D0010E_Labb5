@@ -62,7 +62,7 @@ public class StoreView extends SimView{
               checkCustomerNull + "\t" +
               storeState.getIsOpen() + "\t" +
               storeState.getFreeRegisters() + "\t" +
-              formatNumber(storeState.getRegisterFreeTime()) + "\t" +
+              timeFormat(storeState.getRegisterFreeTime()) + "\t" +
               storeState.getCustomersInStore() + "\t" +
               storeState.getCoinMade() + "\t" +
               storeState.getCustomersTurnedAway() + "\t" +
@@ -92,7 +92,7 @@ public class StoreView extends SimView{
   /**
    * This method makes sure that the time has the correct format
    * to print out in the simulation with 2 decimals.
-   * It returns a String of the time in the parameter.
+   * It returns a String of the time used in the print methods.
    */
   private String timeFormat(double time){
     String printTime = String.valueOf(Math.round(time * 100.0) / 100.0);
