@@ -23,7 +23,7 @@ public class ClosingEvent extends Event {
 	
 	public void run() 
 	{
-//		state.update(this);
+		state.update(this);
 //		state.getCurrentSim().setOpen(false);
 	}
 	
