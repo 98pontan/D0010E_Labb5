@@ -38,7 +38,7 @@ public class StoreState {
 	}
 	
 	/**
-	 * 
+	 * If a checkout is being occupide by a customer
 	 */
 	void occupideCheckout() 
 	{

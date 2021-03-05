@@ -24,6 +24,10 @@ public class SimState extends Observable
 		
 	}
 	
+	void setRunflag() 
+	{
+		runFlag = false;
+	}
 	
 	/**
 	 * Increments number of events
@@ -33,7 +37,10 @@ public class SimState extends Observable
 		numberOfEvents++;
 	}
 	
-	void newTime(int t) 
+	/**
+	 * increments the time when events happen
+	 */
+	void incrementTime(int t) 
 	{
 		currentTime += t;
 	}
