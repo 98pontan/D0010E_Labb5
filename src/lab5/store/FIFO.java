@@ -75,13 +75,21 @@ public class FIFO{
 	* the Customer objects in it.
  	*/
 	public String toString() {
-		String s = "Queue: ";
+		String s = "";
 		
 		for(Customer customer: FIFOQueue) {
-			s = s + "(" + String.valueOf(customer) + ") ";
+			if(FIFOQueue.size() == 0){
+				return "[" + s + "]";
+			}
+			
+			if(FIFOQueue.size() == 1){
+				return "[" + customer.toString() + "]";
+			}
+			
+			s = s + ", " + customer.toString();
 		}
 		
-		return s;
+		return "[" + s + "]";
 	}
 	
 }
