@@ -1,11 +1,7 @@
 package lab5.main;
 
 import lab5.events.StartEvent;
-import lab5.events.StopEvent;
-import lab5.sim.EventQueue;
-import lab5.sim.SimState;
-import lab5.sim.SimView;
-import lab5.sim.Simulator;
+import lab5.sim.*;
 import lab5.store.StoreState;
 import lab5.view.StoreView;
 
@@ -23,20 +19,25 @@ public class RunSim {
         final double lowerGather    = 1.0, upperGather      = 2.0;
         final double lowerRegister  = 1.0, upperRegister    = 1.5;
 
-        SimState model   = new StoreState();
-        SimView view     = new StoreView(/*model*/);
-        EventQueue queue = new EventQueue();
-        queue.add(new StartEvent(/*
+        StoreState model = new StoreState(
                 SEED,
                 REGISTERS,
                 MAX_CUSTOMERS,
                 ARRIVAL_SPEED,
                 lowerGather, upperGather,
                 lowerRegister, upperRegister
-        */));
-        queue.add(new StopEvent(/*SIM_TIME*/));
+        );
+        StoreView view = new StoreView(model);
+        // Should EventQueue really need a pre-made ArrayList?
+        //ArrayList<Event> a = new ArrayList<>();
+        // Why does StartEvent need model and queue?
+        //a.add(new StartEvent());
+        // Why does StopEvent need model and queue?
+        //a.add(new StopEvent());
+        EventQueue queue = new EventQueue();
+        queue.add(new StartEvent());
 
-        Simulator sim = new Simulator(model, view, queue);
+        Simulator sim = new Simulator(model, queue);
         sim.run();
     }
 }
