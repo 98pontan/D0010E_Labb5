@@ -30,10 +30,6 @@ public class RunSim {
                 lowerRegister, upperRegister
         );
         SimView view = new StoreView(model);
-        // Should EventQueue really need a pre-made ArrayList?
-        //ArrayList<Event> a = new ArrayList<>();
-        //a.add(new StartEvent());
-        //a.add(new StopEvent());
         EventQueue queue = new EventQueue();
         queue.addEvent(new StartEvent(model, queue));
         queue.addEvent(new ClosingEvent(model, queue, SIM_TIME));
