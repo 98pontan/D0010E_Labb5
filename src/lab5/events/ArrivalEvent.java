@@ -11,7 +11,7 @@ import lab5.store.*;
  * @author Markus Blomqvist
  *
  */
-public class ArrivalEvent extends Event{
+public class ArrivalEvent extends Event {
 	
 	private GatherEvent gatherEvent;
 	
@@ -20,19 +20,19 @@ public class ArrivalEvent extends Event{
 		super(state, eventQueue);
 		this.time = time;
 		this.name = "Arrival";
-//		this.customer = this.state.getCurrentSim().createCustomer();
+//		this.customer = this.state.model.createcustomer();
 	}
 	
 	public void run() 
 	{
-//		state.update(this);
+		state.update(this);
 //		state.getCurrentSim().addCustomer();
 //		
 		if(customer.getState() == CustomerState.IN_STORE)
 		{
 //	    	double gatherTime = this.time + state.getGatherTime().next();
 //	    	gatherEvent = new GatherEvent(this.state, this.eventQueue, customer, gatherTime);
-//	    	eventQueue.addEvent(gatherEvent);
+	    	eventQueue.addEvent(gatherEvent);
 	    }
 	}
 	

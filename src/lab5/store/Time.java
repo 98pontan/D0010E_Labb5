@@ -7,8 +7,10 @@ public class Time {
     private UniformRandomStream uniRegisterRnd;
     private UniformRandomStream uniGatherRnd;
     private ExponentialRandomStream expArrivalRnd;
+    private SimState state;
 
     public Time(
+            SimState state,
             long SEED,
             double lowerRegister,
             double upperRegister,
@@ -19,17 +21,18 @@ public class Time {
         uniRegisterRnd  = new UniformRandomStream(lowerRegister,upperRegister, SEED);
         uniGatherRnd    = new UniformRandomStream(lowerGather,upperGather, SEED);
         expArrivalRnd   = new ExponentialRandomStream(lambda, SEED);
+        this.state      = state;
     }
 
     public double generateRegisterTime() {
-        return SimState.getCurrentTime() + uniRegisterRnd.next();
+        return state.getCurrentTime() + uniRegisterRnd.next();
     }
 
     public double generateGatherTime() {
-        return SimState.getCurrentTime() + uniGatherRnd.next();
+        return state.getCurrentTime() + uniGatherRnd.next();
     }
 
     public double generateArrivalTime() {
-        return SimState.getCurrentTime() + expArrivalRnd.next();
+        return state.getCurrentTime() + expArrivalRnd.next();
     }
 }

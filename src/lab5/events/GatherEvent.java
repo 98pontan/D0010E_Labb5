@@ -26,14 +26,14 @@ public class GatherEvent extends Event {
 	
 	public void run() 
 	{
-//		state.update(this);
+		state.update(this);
 //			      
 //		if(state.getCurrentSim().getFreeRegisters() > 0)
 //		{
 //			double payTime = this.time + state.getPayTime().next();
 //				         
 //			payEvent = new PurchaseEvent(this.state, this.eventQueue, payTime, customer);
-//			eventQueue.addEvent(payEvent);
+			eventQueue.addEvent(payEvent);
 //			state.getCurrentSim().occupieRegister();
 //		}
 //		else 

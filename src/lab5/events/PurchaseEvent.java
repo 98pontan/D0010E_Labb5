@@ -26,9 +26,8 @@ public class PurchaseEvent extends Event {
 	
 	public void run() 
 	{
-//		state.update(this);
+		state.update(this);
 //		
-//		state.getCurrentSim().addMoney();
 //		state.getCurrentSim().removeCustomer(customer);
 //		state.getCurrentSim().unoccupieRegister();
 //			      
@@ -41,7 +40,7 @@ public class PurchaseEvent extends Event {
 //			payTime = this.time + state.getPayTime().next();
 //			
 //			payEvent = new PurchaseEvent(this.state, this.eventQueue, payTime, customerFirstInLine);
-//			eventQueue.addEvent(payEvent);
+			eventQueue.addEvent(payEvent);
 //			
 //			state.getCurrentSim().occupieRegister();
 //		}

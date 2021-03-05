@@ -23,7 +23,7 @@ public class StopEvent extends Event {
 	
 	public void run() 
 	{
-//		state.update(this);
+		state.update(this);
 //		state.setSimDisabled();
 	}
 	
