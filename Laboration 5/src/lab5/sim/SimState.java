@@ -12,18 +12,30 @@ public class SimState extends Observable
 {
 	double currentTime;
 	int numberOfEvents = 0;
-	boolean runFlag;
+	protected boolean runFlag;
+	Object currentSim;
 	
 	/**
 	 * Constructor set the time to zero and set the flag for the program to true
 	 */
-	SimState()
+	public SimState()
 	{
+		currentTime = 0;
+		runFlag = true;
+	}
+	
+	public SimState(Object sim)
+	{
+		this.currentSim = sim;
 		currentTime = 0;
 		runFlag = true;
 		
 	}
 	
+	void setRunflag() 
+	{
+		runFlag = false;
+	}
 	
 	/**
 	 * Increments number of events
@@ -33,14 +45,17 @@ public class SimState extends Observable
 		numberOfEvents++;
 	}
 	
-	void newTime(int t) 
+	/**
+	 * increments the time when events happen
+	 */
+	void incrementTime(int t) 
 	{
 		currentTime += t;
 	}
 	/**
 	 * updates the observer
 	 */
-	void update() 
+	public void update(Event currentEvent) 
 	{
 		setChanged();
 		notifyObservers();
@@ -58,9 +73,14 @@ public class SimState extends Observable
 	/**
 	 * @return the current time in the program
 	 */
-	double getcurrentTime()
+	public double getcurrentTime()
 	{
 		return currentTime;
+	}
+	
+	public StoreState getCurrentSim()
+	{
+		return (StoreState) currentSim;
 	}
 	
 }

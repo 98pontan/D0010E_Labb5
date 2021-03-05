@@ -20,10 +20,15 @@ public class EventQueue
     *
     * @param eveQueue
     */
-   private EventQueue(ArrayList<Event> eveQueue)
-   {
-      eventQueue = eveQueue;
-   }
+//   public EventQueue(ArrayList<Event> eveQueue)
+//   {
+//      eventQueue = eveQueue;
+//   }
+   
+    public EventQueue()
+    {
+    
+    }
 
    /**
     * Returns the eventQueue. 
@@ -40,7 +45,7 @@ public class EventQueue
     * Sets the current eventQueue to the sorted eventQueue
     * @param event
     */
-   private void addEvent(Event event)
+   public void addEvent(Event event)
    {
       eventQueue.add(event);
       SortedSequence ss = new SortedSequence();

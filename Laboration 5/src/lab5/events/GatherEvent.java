@@ -26,21 +26,21 @@ public class GatherEvent extends Event {
 	
 	public void run() 
 	{
-//		state.update(this);
-//			      
-//		if(state.getCurrentSim().getFreeRegisters() > 0)
-//		{
-//			double payTime = this.time + state.getPayTime().next();
-//				         
-//			payEvent = new PurchaseEvent(this.state, this.eventQueue, payTime, customer);
-//			eventQueue.addEvent(payEvent);
-//			state.getCurrentSim().occupieRegister();
-//		}
-//		else 
-//		{
-//			state.getStore().getFIFOQueue().add(customer);
-//			state.getStore().addTotalCustomersInQueue();
-//		}
+		state.update(this);
+			      
+		if(state.getCurrentSim().getAvailableCheckouts() > 0)
+		{
+			double payTime = this.time + state.getCurrentSim().getTimeFactory().generateRegisterTime();
+				         
+			payEvent = new PurchaseEvent(this.state, this.eventQueue, customer, payTime);
+			eventQueue.addEvent(payEvent);
+			state.getCurrentSim().occupiedCheckout();
+		}
+		else 
+		{
+//			state.getCurrentSim().getFIFOQueue().add(customer);
+//			state.getCurrentSim().addTotalCustomersInQueue();
+		}
 	}
 	
 	public double getTime()

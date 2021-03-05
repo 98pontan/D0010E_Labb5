@@ -23,24 +23,22 @@ public class StartEvent extends Event {
 		this.time = 0d;
 		this.name = "Start";
 		this.customer = null;
-//		this.closeTime = state.getCurrentSim().getClosingTime();
 	}
 	
 	public void run() 
 	{
-//		state.update(this);
+		state.update(this);
 		
-//		state.getStore().setIsOpen(true);
 		closingEvent = new ClosingEvent(this.state, eventQueue, closeTime);
-//		eventQueue.addEvent(closingEvent);
+		eventQueue.addEvent(closingEvent);
 			      
 		double arrivalTime = 0d;
 		do 
 		{
-//			arrivalTime = arrivalTime + state.getArrivalTime().next();
+			arrivalTime = arrivalTime + this.state.getCurrentSim().getTimeFactory().generateArrivalTime();
 			arrivalEvent = new ArrivalEvent(this.state, this.eventQueue, arrivalTime);
-//			eventQueue.addEvent(arrivalEvent);
-		}while(closeTime >  arrivalTime);
+			eventQueue.addEvent(arrivalEvent);
+		}while(closeTime > arrivalTime);
 	}
 	
 	public double getTime()
