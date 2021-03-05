@@ -76,7 +76,6 @@ public class FIFO{
  	*/
 	public String toString() {
 		String s = "";
-		String s2 = ", ";
 		
 		for(Customer customer: FIFOQueue) {
 			if(FIFOQueue.size() == 0){
@@ -87,7 +86,7 @@ public class FIFO{
 				return "[" + String.valueOf(customer.getID()) + "]";
 			}
 			
-			s = s + s2 + String.valueOf(customer.getID());
+			s = s + ", " + String.valueOf(customer.getID());
 		}
 		
 		return "[" + s + "]";
