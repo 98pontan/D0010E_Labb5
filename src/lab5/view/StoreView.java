@@ -53,7 +53,7 @@ public class StoreView extends SimView{
     
     String checkCustomerNull = String.valueOf(simState.getCurrentCustomer());
     if(checkCustomerNull.equals("null")){
-      checkCustomerNull = " ";
+      checkCustomerNull = "---";
     }
   
     System.out.println(
