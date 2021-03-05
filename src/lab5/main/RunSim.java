@@ -19,7 +19,7 @@ public class RunSim {
         final double lowerGather    = 1.0, upperGather      = 2.0;
         final double lowerRegister  = 1.0, upperRegister    = 1.5;
 
-        StoreState model = new StoreState(
+        SimState model = new StoreState(
                 SEED,
                 REGISTERS,
                 MAX_CUSTOMERS,
@@ -27,15 +27,13 @@ public class RunSim {
                 lowerGather, upperGather,
                 lowerRegister, upperRegister
         );
-        StoreView view = new StoreView(model);
+        SimView view = new StoreView(model);
         // Should EventQueue really need a pre-made ArrayList?
         //ArrayList<Event> a = new ArrayList<>();
-        // Why does StartEvent need model and queue?
         //a.add(new StartEvent());
-        // Why does StopEvent need model and queue?
         //a.add(new StopEvent());
         EventQueue queue = new EventQueue();
-        queue.add(new StartEvent());
+        queue.addEvent(new StartEvent(model, queue));
 
         Simulator sim = new Simulator(model, queue);
         sim.run();
