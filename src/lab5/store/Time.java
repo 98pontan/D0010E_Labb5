@@ -1,16 +1,15 @@
 package lab5.store;
 
 import lab5.random.*;
-import lab5.sim.SimState;
 
 public class Time {
     private UniformRandomStream uniRegisterRnd;
     private UniformRandomStream uniGatherRnd;
     private ExponentialRandomStream expArrivalRnd;
-    private SimState state;
+    private StoreState state;
 
     public Time(
-            SimState state,
+            StoreState state,
             long SEED,
             double lowerRegister,
             double upperRegister,

@@ -22,10 +22,12 @@ public class FIFO{
 		}
 	}
 
+	// TODO: Maybe create pop() function?
+
        /**
  	* This method returns the first customer in the queue.
  	*/
-	public Customer first() throws NoSuchElementException {
+	public Customer getFirst() throws NoSuchElementException {
 		if(FIFOQueue.size() == 0) {
 			throw new NoSuchElementException();
 		}
@@ -49,11 +51,7 @@ public class FIFO{
 	* if the queue is empty.
  	*/
 	public boolean isEmpty() {
-		if(FIFOQueue.size() == 0) {
-			return true;
-		}
-		
-		return false;
+		return FIFOQueue.size() == 0;
 	}
 
        /**

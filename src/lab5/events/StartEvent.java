@@ -12,11 +12,8 @@ import lab5.store.*;
  *
  */
 public class StartEvent extends Event {
-
-	private ClosingEvent closingEvent; 
 	private ArrivalEvent arrivalEvent;
-	private double closeTime;
-	
+
 	public StartEvent(SimState state, EventQueue eventQueue) 
 	{
 		super(state, eventQueue);
@@ -27,32 +24,13 @@ public class StartEvent extends Event {
 	
 	public void run() 
 	{
+		StoreState model = (StoreState) state.getCurrentSim();
+		model.toggleIsOpen();
+
+		double arrivalTime = model.getTimeFactory().generateArrivalTime();
+		arrivalEvent = new ArrivalEvent(this.state, this.eventQueue, arrivalTime);
+		eventQueue.addEvent(arrivalEvent);
+
 		state.update(this);
-		
-		closingEvent = new ClosingEvent(this.state, eventQueue, closeTime);
-		eventQueue.addEvent(closingEvent);
-			      
-		double arrivalTime = 0d;
-		do 
-		{
-//			arrivalTime = arrivalTime + state.getArrivalTime().next();
-			arrivalEvent = new ArrivalEvent(this.state, this.eventQueue, arrivalTime);
-			eventQueue.addEvent(arrivalEvent);
-		}while(closeTime > arrivalTime);
-	}
-	
-	public double getTime()
-	{
-		return time;
-	}
-	
-	public String getName()
-	{
-		return name;
-	}
-	
-	public Customer getCustomer()
-	{
-		return customer;
 	}
 }

@@ -24,37 +24,26 @@ public class PurchaseEvent extends Event {
 	
 	public void run() {
 		// Decrease customer count in store by one
-		StoreState model = (StoreState) this.state;
-		model.decreaseCustomerCount(customer);
+		StoreState model = (StoreState) state.getCurrentSim();
+		// Make sure it's the right element being removed
+		model.getCustomerList().remove(customer);
 
-		if (model.getQueue().length == 0) {
+		if (model.getCheckoutQueue().isEmpty()) {
 			model.emptyCheckout();
 		}
 
 		else {
-			// Get first customer in queue
-			eventQueue.addEvent(new PurchaseEvent(state, eventQueue, getFirstCustomerFromRegisterQueue(), 0.0));
+			eventQueue.addEvent(new PurchaseEvent(
+					model,
+					eventQueue,
+					model.getCheckoutQueue().getFirst(),
+					model.getTimeFactory().generateRegisterTime()
+			));
 		}
 
 		// Save info about another customer has finished
 		model.updatePurchaseCount();
-		_updateTime(model);
-		model.update();
-	}
-
-	private void _updateTime(StoreState model) {
-		model.setTime(this.time);
-	}
-	
-	public double getTime() {
-		return time;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public Customer getCustomer() {
-		return customer;
+		updateTime(model);
+		state.update(this);
 	}
 }

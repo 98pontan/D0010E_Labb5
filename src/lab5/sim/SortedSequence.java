@@ -34,11 +34,11 @@ public class SortedSequence
 	{
 		int length = list.size();
 		
-		for(int i = 0; i < length - 1; i++) 
+		for(int i = 0; i < length - 2; i++)
 		{
-			for(int j = 0; j < length - i - 1; j++) 
+			for(int j = 0; j < length - i - 2; j++)
 			{
-				if(list.get(j).getTime() > list.get(j +  1).getTime()) {
+				if(list.get(j).getTime() > list.get(j + 1).getTime()) {
 					Event temp;
 					
 					temp = list.get(j);

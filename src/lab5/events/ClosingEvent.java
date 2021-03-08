@@ -23,22 +23,8 @@ public class ClosingEvent extends Event {
 	
 	public void run() 
 	{
-		state.update(this);
-//		state.getCurrentSim().setOpen(false);
-	}
-	
-	public double getTime()
-	{
-		return time;
-	}
-	
-	public String getName()
-	{
-		return name;
-	}
-	
-	public Customer getCustomer()
-	{
-		return customer;
+		StoreState store = (StoreState) state.getCurrentSim();
+		store.toggleIsOpen();
+		store.update(this);
 	}
 }

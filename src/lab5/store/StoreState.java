@@ -1,25 +1,44 @@
 package lab5.store;
 
+import lab5.sim.Event;
+import lab5.sim.SimState;
 
+import java.util.ArrayList;
 
-public class StoreState {
-	int customers;
+public class StoreState extends SimState {
 	int checkOuts;
 	int maxCheckouts;
 	int maxCustomersToday;
 	int missedCustomers;
+	int purchases;
+	int turnedAwayCustomers;
 	int availableCheckouts;
 	int totQueueTime;
 	int emptyCheckoutTime;
 	int occupideCheckouts;
 	final int MAXCUSTOMERS;
-	
-	
-	public StoreState(int openCheckout, int maxCustomers)
-	{
-		MAXCUSTOMERS = maxCustomers;
-		checkOuts = openCheckout;
-		availableCheckouts = openCheckout;
+	boolean isOpen = false;
+
+	private Time timeFactory;
+	private CreateCustomer customerFactory = new CreateCustomer();
+	private ArrayList<Customer> customerList;
+	private FIFO checkoutQueue;
+
+	public StoreState(
+		long SEED,
+		int CHECKOUTS,
+		int MAX_CUSTOMERS,
+		double ARRIVAL_SPEED,
+		double lowerGather, double upperGather,
+		double lowerCheckout, double upperCheckout
+	) {
+		super();
+		MAXCUSTOMERS = MAX_CUSTOMERS;
+		checkOuts = CHECKOUTS;
+		availableCheckouts = CHECKOUTS;
+		timeFactory = new Time(this, SEED, lowerCheckout, upperCheckout, lowerGather, upperGather, ARRIVAL_SPEED);
+		customerList = new ArrayList<>();
+		checkoutQueue = new FIFO();
 	}
 	
 	
@@ -27,7 +46,7 @@ public class StoreState {
 	 * checks if a checkout is available 
 	 * @return true if available false if occupied
 	 */
-	boolean checkAvailbleCheckout() 
+	public boolean checkAvailableCheckout()
 	{
 		if(availableCheckouts > 0) 
 		{
@@ -54,7 +73,7 @@ public class StoreState {
 	/**
 	 * Makes a checkout available after a customer has used it. 
 	 */
-	void emptyCheckout()
+	public void emptyCheckout()
 	{
 		if(availableCheckouts + 1 <= checkOuts)
 		{
@@ -84,7 +103,7 @@ public class StoreState {
 	 * Closes checkouts so long its positive
 	 * @param n, number of checkout to close
 	 */
-	void closeCheckouts(int n) 
+	public void closeCheckouts(int n)
 	{
 		if(n - checkOuts >= 0) 
 			checkOuts -= n;
@@ -94,9 +113,9 @@ public class StoreState {
 	 * Increases the number of missed customers if the number of customers is over the max number of customers. 
 	 * @param
 	 */
-	void missedCustomers () 
+	public void missedCustomers ()
 	{
-		if(customers + 1 > MAXCUSTOMERS)
+		if(isFull())
 			missedCustomers++;
 	}
 	
@@ -106,7 +125,7 @@ public class StoreState {
 	 */
 	int getCustomers() 
 	{
-		return customers;
+		return customerList.size();
 	}
 	
 	/**
@@ -158,4 +177,51 @@ public class StoreState {
 		return totQueueTime;
 	}
 
+	public boolean isFull() {
+		return MAXCUSTOMERS == customerList.size();
+	}
+
+	public boolean isOpen() {
+		return isOpen;
+	}
+
+	public void toggleIsOpen() {
+		isOpen = !isOpen;
+	}
+
+	// Kanske borde flyttas in i customerFactory?
+	public void addCustomer(Customer c) {
+		customerList.add(c);
+	};
+
+	public ArrayList<Customer> getCustomerList() {
+		return customerList;
+	}
+
+	public Customer createCustomer(CustomerState cState) {
+		Customer c = customerFactory.createCustomer();
+		c.setState(cState);
+		addCustomer(c);
+		return c;
+	}
+
+	public Time getTimeFactory() {
+		return timeFactory;
+	}
+
+	public void turnedAwayCustomer() {
+		turnedAwayCustomers++;
+	}
+
+	public int getTurnedAwayCustomer() {
+		return turnedAwayCustomers;
+	}
+
+	public FIFO getCheckoutQueue() {
+		return checkoutQueue;
+	}
+
+	public void updatePurchaseCount() {
+		purchases++;
+	}
 }

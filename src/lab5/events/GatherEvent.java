@@ -23,36 +23,23 @@ public class GatherEvent extends Event {
 	}
 	
 	public void run() {
-		StoreState model = (StoreState) this.state;
+		StoreState model = (StoreState) state.getCurrentSim();
+
 		if (model.checkAvailableCheckout()) {
 			model.closeCheckouts(1);
-			eventQueue.addEvent(new PurchaseEvent(model, eventQueue, customer, 0.0));
+			eventQueue.addEvent(new PurchaseEvent(
+					model,
+					eventQueue,
+					customer,
+					model.getTimeFactory().generateRegisterTime())
+			);
 		}
 
 		else {
-			model.addToQueue(customer);
+			model.getCheckoutQueue().add(customer);
 		}
 
-		_updateTime(model);
-		model.update();
-	}
-
-	private void _updateTime(StoreState model) {
-		model.setTime(this.time);
-	}
-	
-	public double getTime()
-	{
-		return time;
-	}
-	
-	public String getName()
-	{
-		return name;
-	}
-	
-	public Customer getCustomer()
-	{
-		return customer;
+		updateTime(model);
+		state.update(this);
 	}
 }
