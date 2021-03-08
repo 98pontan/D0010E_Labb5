@@ -20,10 +20,23 @@ import lab5.store.*;
 	protected double time;
 	
 	abstract public void run();
-	abstract public double getTime();
-	abstract public String getName();
-	abstract public Customer getCustomer();
-	
+
+	public double getTime() {
+		return this.time;
+	};
+
+	public String getName() {
+		return this.name;
+	};
+
+	public Customer getCustomer() {
+		return this.customer;
+	};
+
+	protected void updateTime(SimState model) {
+		model.setTime(this.time);
+	}
+
 	public Event(SimState state, EventQueue eventQueue)
 	{
 		this.state = state;

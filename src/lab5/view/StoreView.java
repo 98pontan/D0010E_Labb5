@@ -1,6 +1,7 @@
 package lab5.view;
 import lab5.sim.EventQueue;
 import lab5.sim.SimState;
+import lab5.sim.SimView;
 import lab5.store.*;
 import lab5.events.*;
 
@@ -10,7 +11,7 @@ import lab5.events.*;
  * @author Markus Blomqvist
  */
 // METODERNA MÅSTE KONTROLLERAS
-public class StoreView extends SimView{
+public class StoreView extends SimView {
   private SimState simState;
   private StoreState storeState;
   
@@ -18,9 +19,8 @@ public class StoreView extends SimView{
    * This is the constructor for this class.
    * It will use the states to get data.
    */
-  public StoreView(SimState simState, StoreState storeState){
-    super(simState,storeState);
-    this.simState = simState;
+  public StoreView(StoreState storeState){
+    super(storeState);
     this.storeState = storeState;
   }
   

@@ -5,5 +5,5 @@ package lab5.store;
   * @author Markus Blomqvist
   */
 public enum CustomerState {
-  TURNED_AWAY, LATE_CUSTOMER, IN_STORE, NOT_IN_STORE
+    LATE_CUSTOMER, IN_STORE, FINISHED
 }

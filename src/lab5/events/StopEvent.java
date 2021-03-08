@@ -23,22 +23,7 @@ public class StopEvent extends Event {
 	
 	public void run() 
 	{
+		state.setRunflagFalse();
 		state.update(this);
-//		state.setSimDisabled();
-	}
-	
-	public double getTime()
-	{
-		return time;
-	}
-	
-	public String getName()
-	{
-		return name;
-	}
-	
-	public Customer getCustomer()
-	{
-		return customer;
 	}
 }
