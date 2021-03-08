@@ -1,6 +1,9 @@
 package lab5.events;
-import lab5.sim.*;
-import lab5.store.*;
+
+import lab5.store.StoreState;
+import lab5.store.Customer;
+import lab5.sim.Event;
+import lab5.sim.EventQueue;
 
 /**
  * Description
@@ -12,52 +15,46 @@ import lab5.store.*;
  *
  */
 public class PurchaseEvent extends Event {
-
-	PurchaseEvent payEvent;
-	private double payTime;
-	
-	public PurchaseEvent(SimState state, EventQueue eventQueue, Customer customer, double time)
-	{
+	public PurchaseEvent(StoreState state, EventQueue eventQueue, Customer customer, double executionTime) {
 		super(state, eventQueue);
-		this.time = time;
+		this.time = executionTime;
 		this.name = "Purchase";
 		this.customer = customer;
 	}
 	
-	public void run() 
-	{
-		state.update(this);
-//		
-//		state.getCurrentSim().removeCustomer(customer);
-//		state.getCurrentSim().unoccupieRegister();
-//			      
-//		if(!state.getCurrentSim().getFIFOQueue().isEmpty()) 
-//		{
-//			Customer customerFirstInLine = (Customer) state.getCurrentSim().getFIFOQueue().first();
-//			
-//			state.getCurrentSim().getFIFOQueue().removeFirst();
-//			
-//			payTime = this.time + state.getPayTime().next();
-//			
-//			payEvent = new PurchaseEvent(this.state, this.eventQueue, payTime, customerFirstInLine);
-			eventQueue.addEvent(payEvent);
-//			
-//			state.getCurrentSim().occupieRegister();
-//		}
+	public void run() {
+		// Decrease customer count in store by one
+		StoreState model = (StoreState) this.state;
+		model.decreaseCustomerCount(customer);
+
+		if (model.getQueue().length == 0) {
+			model.emptyCheckout();
+		}
+
+		else {
+			// Get first customer in queue
+			eventQueue.addEvent(new PurchaseEvent(state, eventQueue, getFirstCustomerFromRegisterQueue(), 0.0));
+		}
+
+		// Save info about another customer has finished
+		model.updatePurchaseCount();
+		_updateTime(model);
+		model.update();
+	}
+
+	private void _updateTime(StoreState model) {
+		model.setTime(this.time);
 	}
 	
-	public double getTime()
-	{
+	public double getTime() {
 		return time;
 	}
 	
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 	
-	public Customer getCustomer()
-	{
+	public Customer getCustomer() {
 		return customer;
 	}
 }
