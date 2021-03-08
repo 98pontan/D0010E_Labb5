@@ -11,8 +11,8 @@ public class FIFO{
 	private ArrayList<Customer> FIFOQueue = new ArrayList<Customer>();
 	private int max = 0;
 	
-       /**
- 	* This method adds a customer to the queue.
+	/**
+ 	* adds a customer to the queue and keeps track of the biggest size the list has been.
  	*/
 	public void add(Customer customer) {
 		FIFOQueue.add(customer);
@@ -24,8 +24,8 @@ public class FIFO{
 
 	// TODO: Maybe create pop() function?
 
-       /**
- 	* This method returns the first customer in the queue.
+	/**
+ 	* @return the first customer in the queue.
  	*/
 	public Customer getFirst() throws NoSuchElementException {
 		if(FIFOQueue.size() == 0) {
@@ -35,9 +35,9 @@ public class FIFO{
 		return FIFOQueue.get(0);
 	}
 	
-       /**
- 	* This method removes the first customer in the queue.
- 	*/
+	/**
+	 * removes the first customer in the queue.
+	 */
 	public void removeFirst() throws NoSuchElementException {
 		if(FIFOQueue.size() == 0) {
 			throw new NoSuchElementException();
@@ -46,30 +46,29 @@ public class FIFO{
 		FIFOQueue.remove(0);
 	}
 	
-       /**
- 	* This method returns true or false depending on
-	* if the queue is empty.
- 	*/
+	/**
+	 * @return true if the queue is empty else false
+	 */
 	public boolean isEmpty() {
 		return FIFOQueue.size() == 0;
 	}
 
-       /**
- 	* This method returns the maximal size of the queue.
- 	*/
+	/**
+ 	 * @return the maximal size of the queue
+ 	 */
 	public int maxSize() {
 		return max;
 	}
 
-       /**
- 	* This method returns the current size of the queue.
+	/**
+ 	* @return the current size of the queue
  	*/
 	public int size() {
 		return FIFOQueue.size();
 	}
 	
-       /**
- 	* This method returns the queue as a String with
+	/**
+ 	* @return the queue as a string with
 	* the Customer objects in it.
  	*/
 	public String toString() {

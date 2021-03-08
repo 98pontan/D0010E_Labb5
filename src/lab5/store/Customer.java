@@ -5,26 +5,29 @@ package lab5.store;
   * @author Markus Blomqvist
   */
 public class Customer {
-     private int ID;
+     private final int ID;
 
      /**
       * This constructor creates a customer with an ID.
       */
-     public Customer(int number) {
+     public Customer(int number)
+     {
          this.ID = number;
      }
 
-     /**
-      * This method returns the ID of the customer.
-      */
-     public int getID() {
+    /**
+     * @return the ID of the customer
+     */
+     public int getID()
+     {
          return ID;
      }
 
      /**
-      * This method returns a String of the ID of the customer.
+      * @return a string of the ID of the customer.
       */
-     public String toString() {
+     public String toString()
+     {
          return String.valueOf(ID);
      }
  }

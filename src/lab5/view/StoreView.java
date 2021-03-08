@@ -30,12 +30,12 @@ public class StoreView extends SimView {
   private void printStart(){
     System.out.println("PARAMETRAR");
     System.out.println("==========");
-    System.out.println("Antal kassor, N..........: ") + storeState.getcheckOuts();
+    System.out.println("Antal kassor, N..........: " + storeState.getcheckOuts());
     System.out.println("Max som ryms, M..........: " + storeState.getMaxCustomersToday());
-    System.out.println("Ankomsthastighet, lambda.: ") + ;
-    System.out.println("Plocktider, [P_min..Pmax]: ") + "[" + + ".." + + "]";
-    System.out.println("Betaltider, [K_min..Kmax]: ") + "[" + + ".." + + "]";
-    System.out.println("Frö, f...................: ") + ;
+    System.out.println("Ankomsthastighet, lambda.: " + storeState.getArrivalSpeed());
+    System.out.println("Plocktider, [P_min..Pmax]: " + "[" + storeState.getGatherLower() + ".." + storeState.getGatherUpper() + "]");
+    System.out.println("Betaltider, [K_min..Kmax]: " + "[" + storeState.getCheckoutLower() + ".." + storeState.getCheckoutUpper() + "]");
+    System.out.println("Frö, f...................: " + storeState.getSEED());
     System.out.println("");
     System.out.println("FÖRLOPP");
     System.out.println("=======");
@@ -47,7 +47,7 @@ public class StoreView extends SimView {
    */
   private void printEvents(){
     String eventFormat = String.valueOf(simState.getCurrentEvent().getName());
-    if(eventFormat.length() < 4){
+    if(eventFormat.length() < 4){ //magisk fyra
       eventFormat = eventFormat + " ";
     }
     
@@ -60,16 +60,16 @@ public class StoreView extends SimView {
               timeFormat(simState.getCurrentTime()) + "\t" +
               eventFormat + "\t\t" +
               checkCustomerNull + "\t" +
-              storeState.getIsOpen() + "\t" +
-              storeState.getFreeRegisters() + "\t" +
+              storeState.isOpen() + "\t" +
+              storeState.getAvailableCheckouts() + "\t" +
               timeFormat(storeState.getRegisterFreeTime()) + "\t" +
-              storeState.getCustomersInStore() + "\t" +
+              storeState.gettotQueueTime() + "\t" +
               storeState.getCoinMade() + "\t" +
-              storeState.getCustomersTurnedAway() + "\t" +
+              storeState.getMissedCustomers() + "\t" +
               storeState.getTotalCustomersInQueue() + "\t" +
               timeFormat(storeState.getCustomerQueueTime()) + "\t" +
-              storeState.getFIFOQueue().size() + "\t" +
-              storeState.getFIFOQueue());
+              storeState.getCheckoutQueue().size() + "\t" +
+              storeState.getCheckoutQueue());
   }
   
   /**

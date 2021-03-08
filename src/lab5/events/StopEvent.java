@@ -20,7 +20,10 @@ public class StopEvent extends Event {
 		this.name = "Stop";
 		this.customer = null;
 	}
-	
+
+	/**
+	 * Stops the simulation
+	 */
 	public void run() 
 	{
 		state.setRunflagFalse();

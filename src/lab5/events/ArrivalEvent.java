@@ -22,7 +22,14 @@ public class ArrivalEvent extends Event {
 		this.time = time;
 		this.name = "Arrival";
 	}
-	
+
+	/**
+	 * execution of arrival event
+	 * if the store is closed, the customer will be turned away and missed customers will increase by one.
+	 * else an arrival event is created
+	 * if the store is open and not full, a new customer will be created
+	 * else increase missed customers by one
+	 */
 	public void run() 
 	{
 		StoreState store = (StoreState) state.getCurrentSim();

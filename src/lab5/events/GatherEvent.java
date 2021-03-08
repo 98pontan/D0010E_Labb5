@@ -21,12 +21,17 @@ public class GatherEvent extends Event {
 		this.name = "Gather";
 		this.customer = customer;
 	}
-	
+
+	/**
+	 * execution of gatherEvent
+	 * if checkouts are available it will be occupide and a purchase event will be created.
+	 * else the customer will be put into a queue.
+	 */
 	public void run() {
 		StoreState model = (StoreState) state.getCurrentSim();
 
 		if (model.checkAvailableCheckout()) {
-			model.closeCheckouts(1);
+			model.occupideCheckout();
 			eventQueue.addEvent(new PurchaseEvent(
 					model,
 					eventQueue,

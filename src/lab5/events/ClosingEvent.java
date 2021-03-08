@@ -20,7 +20,10 @@ public class ClosingEvent extends Event {
 		this.name = "Close";
 		this.customer = null;
 	}
-	
+
+	/**
+	 * Closes the store, no customers can enter the store.
+	 */
 	public void run() 
 	{
 		StoreState store = (StoreState) state.getCurrentSim();
