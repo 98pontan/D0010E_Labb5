@@ -7,8 +7,8 @@ import lab5.sim.*;
 import lab5.store.StoreState;
 
 /**
- * This class is used to optimize the operations.
- * It simulates to find the optimal amount of checkouts while the other parameters is set.
+ * This class is used to optimize the operations of a simulated environment.
+ * It runs simulations to find the optimal amount of checkouts while the other parameters is set.
  * @author Markus Blomqvist.
  */
 public class Optimize {
