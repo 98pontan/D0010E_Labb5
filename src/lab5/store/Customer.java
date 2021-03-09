@@ -6,8 +6,14 @@ package lab5.store;
   */
 public class Customer {
      private final int ID;
+     private double queueTime = 0;
 
-     /**
+    public void setQueueTime(double queueTime)
+    {
+       this.queueTime = queueTime;
+    }
+
+    /**
       * This constructor creates a customer with an ID.
       */
      public Customer(int number)
@@ -30,4 +36,11 @@ public class Customer {
      {
          return String.valueOf(ID);
      }
+
+
+    public double getQueueTime(double time)
+    {
+       queueTime = time - queueTime;
+       return queueTime;
+    }
  }

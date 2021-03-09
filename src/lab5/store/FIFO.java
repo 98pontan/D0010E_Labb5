@@ -10,13 +10,14 @@ public class FIFO{
 
 	private ArrayList<Customer> FIFOQueue = new ArrayList<Customer>();
 	private int max = 0;
+	private int totalQueuers;
 	
 	/**
  	* adds a customer to the queue and keeps track of the biggest size the list has been.
  	*/
 	public void add(Customer customer) {
 		FIFOQueue.add(customer);
-		
+		totalQueuers++;
 		if(FIFOQueue.size() > max) {
 			max = FIFOQueue.size();
 		}
@@ -88,5 +89,9 @@ public class FIFO{
 		
 		return "[" + s + "]";
 	}
-	
+
+	public int getTotalQueuers()
+	{
+		return totalQueuers;
+	}
 }

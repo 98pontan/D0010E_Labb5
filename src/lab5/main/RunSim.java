@@ -36,7 +36,7 @@ public class RunSim {
         queue.addEvent(new ClosingEvent(model, queue, SIM_TIME));
         queue.addEvent(new StopEvent(model, queue));
 
-        Simulator sim = new Simulator(model, queue);
+        Simulator sim = new Simulator(simState, queue);
         sim.run();
     }
 }

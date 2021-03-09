@@ -23,19 +23,21 @@ public class StoreState extends SimState {
 	private int purchases;
 	private int turnedAwayCustomers;
 	private int availableCheckouts;
-	private int totQueueTime;
-	private int emptyCheckoutTime;
 	private int occupideCheckouts;
 	private final int MAXCUSTOMERS;
+	private int totCustomers;
 
 	boolean isOpen = false;
 
+	private double totQueueTime;
 	private final double ARRIVAL_SPEED;
 	private final double LOWER_GATHER;
 	private final double UPPER_GATHER;
 	private final double LOWER_CHECKOUT;
 	private final double UPPER_CHECKOUT;
 	private final long SEED;
+
+	private double emptyCheckoutTime;
 
 
 	private Time timeFactory;
@@ -94,7 +96,14 @@ public class StoreState extends SimState {
 		
 		return false;
 	}
-	
+	// TODO: kanske behöver multiplicera med antalet kassor
+	public void createCheckoutFreeTime(double time)
+	{
+		double t;
+
+		t = time - getCurrentTime();
+		emptyCheckoutTime += t;
+	}
 	/**
 	 * If a checkout is being occupide by a customer
 	 */
@@ -108,7 +117,12 @@ public class StoreState extends SimState {
 		}
 	
 	}
-	
+
+	public void setTotQueueTime(double totQueueTime)
+	{
+		this.totQueueTime += totQueueTime;
+	}
+
 	/**
 	 * Makes a checkout available after a customer has used it. 
 	 */
@@ -197,6 +211,8 @@ public class StoreState extends SimState {
 	// Kanske borde flyttas in i customerFactory?
 	public void addCustomer(Customer c)
 	{
+		totCustomers++;
+
 		if(customerList.size() + 1 > maxCustomersToday)
 			maxCustomersToday = customerList.size() + 1;
 
@@ -218,7 +234,7 @@ public class StoreState extends SimState {
 	/**
 	 * @return number of customers in the store
 	 */
-	int getCustomers() 
+	public int getCustomers()
 	{
 		return customerList.size();
 	}
@@ -349,5 +365,25 @@ public class StoreState extends SimState {
 	public long getSEED()
 	{
 		return SEED;
+	}
+
+	public double getCheckoutFreeTime()
+	{
+		return emptyCheckoutTime;
+	}
+
+	public int getPurchases()
+	{
+		return purchases;
+	}
+
+	public double getTotQueueTime()
+	{
+		return totQueueTime;
+	}
+
+	public int getTotCustomers()
+	{
+		return totCustomers;
 	}
 }

@@ -30,15 +30,20 @@ public class PurchaseEvent extends Event {
 
 		if (model.getCheckoutQueue().isEmpty()) {
 			model.emptyCheckout();
+
 		}
 
 		else {
+			double queueTime;
 			eventQueue.addEvent(new PurchaseEvent(
 					model,
 					eventQueue,
 					model.getCheckoutQueue().getFirst(),
 					model.getTimeFactory().generateRegisterTime()
 			));
+			queueTime = model.getCheckoutQueue().getFirst().getQueueTime(time);
+			model.setTotQueueTime(queueTime);
+			model.getCheckoutQueue().removeFirst();
 		}
 
 		// Save info about another customer has finished

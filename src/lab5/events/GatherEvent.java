@@ -31,6 +31,7 @@ public class GatherEvent extends Event {
 		StoreState model = (StoreState) state.getCurrentSim();
 
 		if (model.checkAvailableCheckout()) {
+			model.createCheckoutFreeTime(time);
 			model.occupideCheckout();
 			eventQueue.addEvent(new PurchaseEvent(
 					model,
@@ -41,6 +42,7 @@ public class GatherEvent extends Event {
 		}
 
 		else {
+			customer.setQueueTime(time);
 			model.getCheckoutQueue().add(customer);
 		}
 
