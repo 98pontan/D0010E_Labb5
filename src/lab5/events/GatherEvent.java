@@ -24,11 +24,11 @@ public class GatherEvent extends Event {
 
 	/**
 	 * execution of gatherEvent
-	 * if checkouts are available it will be occupide and a purchase event will be created.
+	 * if checkouts are available it will be occupied and a purchase event will be created.
 	 * else the customer will be put into a queue.
 	 */
 	public void run() {
-		StoreState model = (StoreState) state.getCurrentSim();
+		StoreState model = (StoreState) this.state;
 
 		if (model.checkAvailableCheckout()) {
 			model.createCheckoutFreeTime(time);

@@ -29,14 +29,14 @@ public class RunSim {
             lowerGather, upperGather,
             lowerRegister, upperRegister
         );
-        SimState simState = new SimState(model);
+        //SimState simState = new SimState(model);
         StoreView view = new StoreView(model);
         EventQueue queue = new EventQueue();
-        queue.addEvent(new StartEvent(model, queue));
-        queue.addEvent(new ClosingEvent(model, queue, SIM_TIME));
         queue.addEvent(new StopEvent(model, queue));
+        queue.addEvent(new ClosingEvent(model, queue, SIM_TIME));
+        queue.addEvent(new StartEvent(model, queue));
 
-        Simulator sim = new Simulator(simState, queue);
+        Simulator sim = new Simulator(model, queue);
         sim.run();
     }
 }

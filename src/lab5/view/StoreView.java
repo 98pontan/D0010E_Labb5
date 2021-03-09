@@ -47,18 +47,18 @@ public class StoreView extends SimView {
    * This method prints out the events.
    */
   private void printEvents(){
-    String eventFormat = String.valueOf(simState.getLastEvent().getName());
+    String eventFormat = String.valueOf(storeState.getLastEvent().getName());
     if(eventFormat.length() < 4){ //magisk fyra
       eventFormat = eventFormat + " ";
     }
     
-    String checkCustomerNull = String.valueOf(simState.getLastEvent().getCustomer());
+    String checkCustomerNull = String.valueOf(storeState.getLastEvent().getCustomer());
     if(checkCustomerNull.equals("null")){
       checkCustomerNull = "---";
     }
   
     System.out.println(
-              timeFormat(simState.getCurrentTime()) + "\t" +
+              timeFormat(storeState.getCurrentTime()) + "\t" +
               eventFormat + "\t\t" +
               checkCustomerNull + "\t" +
               storeState.isOpen() + "\t" +
@@ -109,12 +109,12 @@ public class StoreView extends SimView {
    * the current event is.
    */
   public void update(Observable o, Object arg){
-    if (simState.getLastEvent().getClass() == StartEvent.class){
+    if (storeState.getLastEvent().getClass() == StartEvent.class){
       printStart();
-      System.out.println(simState.getCurrentTime() + "\tStart");
+      System.out.println(storeState.getCurrentTime() + "\tStart");
     }
-    else if (simState.getLastEvent().getClass() == StopEvent.class){
-      System.out.println(timeFormat(simState.getCurrentTime()) + "\tStop");
+    else if (storeState.getLastEvent().getClass() == StopEvent.class){
+      System.out.println(timeFormat(storeState.getCurrentTime()) + "\tStop");
       printEnd();
     }
     else{

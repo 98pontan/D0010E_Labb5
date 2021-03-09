@@ -24,7 +24,7 @@ public class PurchaseEvent extends Event {
 	
 	public void run() {
 		// Decrease customer count in store by one
-		StoreState model = (StoreState) state.getCurrentSim();
+		StoreState model = (StoreState) this.state;
 		// Make sure it's the right element being removed
 		model.getCustomerList().remove(customer);
 

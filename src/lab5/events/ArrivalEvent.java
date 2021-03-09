@@ -32,7 +32,7 @@ public class ArrivalEvent extends Event {
 	 */
 	public void run() 
 	{
-		StoreState store = (StoreState) state.getCurrentSim();
+		StoreState store = (StoreState) this.state;
 
 		// TODO: Make it pretty? Switch maybe?
 		if (!store.isOpen()) {

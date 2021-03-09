@@ -26,7 +26,7 @@ public class ClosingEvent extends Event {
 	 */
 	public void run() 
 	{
-		StoreState store = (StoreState) state.getCurrentSim();
+		StoreState store = (StoreState) this.state;
 		store.toggleIsOpen();
 		store.update(this);
 	}

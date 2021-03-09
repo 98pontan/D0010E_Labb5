@@ -24,7 +24,7 @@ public class StartEvent extends Event {
 	
 	public void run() 
 	{
-		StoreState model = (StoreState) state.getCurrentSim();
+		StoreState model = (StoreState) this.state;
 		model.toggleIsOpen();
 
 		double arrivalTime = model.getTimeFactory().generateArrivalTime();

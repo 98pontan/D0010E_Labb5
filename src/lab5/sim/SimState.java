@@ -21,12 +21,7 @@ public class SimState extends Observable
 	/**
 	 * Constructor set the time to zero and set the flag for the program to true
 	 */
-	public SimState(Object sim)
-	{
-		this.currentSim = sim;
-		currentTime = 0;
-		runFlag = true;
-		
+	public SimState(Object sim) {
 	}
 
 	/**
@@ -34,7 +29,9 @@ public class SimState extends Observable
 	 */
     public SimState()
 	 {
-
+		 //this.currentSim = sim;
+		 currentTime = 0;
+		 runFlag = true;
     }
 
 	/**
