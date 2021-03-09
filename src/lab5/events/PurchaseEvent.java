@@ -18,7 +18,7 @@ public class PurchaseEvent extends Event {
 	public PurchaseEvent(StoreState state, EventQueue eventQueue, Customer customer, double executionTime) {
 		super(state, eventQueue);
 		this.time = executionTime;
-		this.name = "Purchase";
+		this.name = "Pay";
 		this.customer = customer;
 	}
 	

@@ -56,21 +56,22 @@ public class StoreView extends SimView {
     if(checkCustomerNull.equals("null")){
       checkCustomerNull = "---";
     }
-  
+    String checkOpen;
+    checkOpen = storeState.isOpen() ? "ö" + "\t" : "s" + "\t";
     System.out.println(
               timeFormat(storeState.getCurrentTime()) + "\t" +
               eventFormat + "\t\t" +
               checkCustomerNull + "\t" +
-              storeState.isOpen() + "\t" +
+              checkOpen +
               storeState.getAvailableCheckouts() + "\t" +
               timeFormat(storeState.getCheckoutFreeTime()) + "\t" +
-              storeState.gettotQueueTime() + "\t" +
+              storeState.getCustomers() + "\t" +
               storeState.getPurchases() + "\t" +
               storeState.getMissedCustomers() + "\t" +
               storeState.getCheckoutQueue().getTotalQueuers()+ "\t" +
               timeFormat(storeState.getTotQueueTime()) + "\t" +
               storeState.getCheckoutQueue().size() + "\t" +
-              storeState.getCheckoutQueue());
+              storeState.getCheckoutQueue().toString());
   }
   
   /**
@@ -87,7 +88,7 @@ public class StoreView extends SimView {
     System.out.println("   Genomsnittlig ledig kassatid: " + timeFormat(storeState.getCheckoutFreeTime()/storeState.getAvailableCheckouts())
             + " te (dvs " + timeFormat((storeState.getAvailableCheckouts()/storeState.getCheckoutFreeTime())*100)  + "% av tiden från öppning tills sista kunden betalat).");
     System.out.println("");
-    System.out.println("3) Total tid " + timeFormat(storeState.getCheckoutQueue().getTotalQueuers()) + " kunder tvingats köa: " + timeFormat(storeState.getTotQueueTime()) + " te.");
+    System.out.println("3) Total tid " + storeState.getCheckoutQueue().getTotalQueuers() + " kunder tvingats köa: " + timeFormat(storeState.getTotQueueTime()) + " te.");
     System.out.println("   Genomsnittlig kötid: " + timeFormat(storeState.getCheckoutQueue().getTotalQueuers()/storeState.getTotQueueTime())+ " te.");
   }
 

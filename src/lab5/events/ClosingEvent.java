@@ -28,6 +28,11 @@ public class ClosingEvent extends Event {
 	{
 		StoreState store = (StoreState) this.state;
 		store.toggleIsOpen();
+		if(store.getAvailableCheckouts() > 0)
+		{
+			store.createCheckoutFreeTime(time);
+		}
+		updateTime(store);
 		store.update(this);
 	}
 }

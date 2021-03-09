@@ -55,7 +55,7 @@ public class SimState extends Observable
 	 * @param time the time the events needed to finnish
 	 */
 	public void setTime(double time) {
-		currentTime += time;
+		currentTime = time;
 	}
 
 

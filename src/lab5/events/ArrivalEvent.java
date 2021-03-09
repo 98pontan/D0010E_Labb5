@@ -38,16 +38,22 @@ public class ArrivalEvent extends Event {
 		if (!store.isOpen()) {
 			store.turnedAwayCustomer();
 		}
-
+	/*
 		else {
 			double arrivalTime = store.getTimeFactory().generateArrivalTime();
 			arrivalEvent = new ArrivalEvent(store, this.eventQueue, arrivalTime);
 			eventQueue.addEvent(arrivalEvent);
 		}
 
+	 */
+
 		if (store.isOpen() && !store.isFull()) {
 			customer = store.createCustomer(CustomerState.IN_STORE);
 			store.addCustomer(customer);
+
+			double arrivalTime = store.getTimeFactory().generateArrivalTime();
+			arrivalEvent = new ArrivalEvent(store, this.eventQueue, arrivalTime);
+			eventQueue.addEvent(arrivalEvent);
 
 			double gatherTime = store.getTimeFactory().generateGatherTime();
 	    	gatherEvent = new GatherEvent(store, this.eventQueue, customer, gatherTime);
@@ -57,7 +63,8 @@ public class ArrivalEvent extends Event {
 		else {
 			store.missedCustomers();
 		}
-
+		store.createCheckoutFreeTime(time);
+		updateTime(store);
 		state.update(this);
 	}
 }
