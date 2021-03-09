@@ -46,7 +46,6 @@ public class GatherEvent extends Event {
 			customer.setQueueTime(time);
 			model.getCheckoutQueue().add(customer);
 		}
-
 		state.update(this);
 	}
 }

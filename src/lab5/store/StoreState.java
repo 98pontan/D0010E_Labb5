@@ -100,8 +100,7 @@ public class StoreState extends SimState {
 	public void createCheckoutFreeTime(double time)
 	{
 		double t;
-
-		t = time - getCurrentTime();
+		t = time * availableCheckouts;
 		emptyCheckoutTime += t;
 	}
 	/**

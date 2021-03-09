@@ -30,5 +30,6 @@ public class ClosingEvent extends Event {
 		StoreState store = (StoreState) this.state;
 		store.toggleIsOpen();
 		state.update(this);
+
 	}
 }
