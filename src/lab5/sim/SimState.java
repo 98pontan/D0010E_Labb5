@@ -10,42 +10,31 @@ import java.util.Observable;
  * @author Markus Blomqvist
  *
  */
-public class SimState extends Observable
-{
+public class SimState extends Observable {
 	double currentTime;
 	int numberOfEvents = 0;
 	boolean runFlag;
 	Event lastEvent;
-	Object currentSim;
-	
+
 	/**
 	 * Constructor set the time to zero and set the flag for the program to true
 	 */
-	public SimState(Object sim) {
+	public SimState() {
+		currentTime = 0;
+		runFlag = true;
 	}
-
-	/**
-	 * empty constructor to be called while the program is running.
-	 */
-    public SimState()
-	 {
-		 //this.currentSim = sim;
-		 currentTime = 0;
-		 runFlag = true;
-    }
 
 	/**
 	 * shuts down the simulation
 	 */
-	public void setRunflagFalse()
-	{
+	public void setRunflagFalse() {
 		runFlag = false;
 	}
 	
 	/**
 	 * Increments number of events
 	 */
-	void newEvent() 
+	private void newEvent()
 	{
 		numberOfEvents++;
 	}
@@ -58,8 +47,6 @@ public class SimState extends Observable
 		currentTime = time;
 	}
 
-
-
 	/**
 	 * updates the observer
 	 */
@@ -69,14 +56,6 @@ public class SimState extends Observable
 		newEvent();
 		setChanged();
 		notifyObservers();
-	}
-
-	/**
-	 * @return the current sim object
-	 */
-	public Object getCurrentSim()
-	{
-		return currentSim;
 	}
 
 	/**

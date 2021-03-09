@@ -23,6 +23,7 @@ public class PurchaseEvent extends Event {
 	}
 	
 	public void run() {
+		state.setTime(time);
 		// Decrease customer count in store by one
 		StoreState model = (StoreState) this.state;
 		// Make sure it's the right element being removed
@@ -48,7 +49,6 @@ public class PurchaseEvent extends Event {
 
 		// Save info about another customer has finished
 		model.updatePurchaseCount();
-		updateTime(model);
 		state.update(this);
 	}
 }

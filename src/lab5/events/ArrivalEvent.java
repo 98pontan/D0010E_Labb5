@@ -32,6 +32,7 @@ public class ArrivalEvent extends Event {
 	 */
 	public void run() 
 	{
+		state.setTime(time);
 		StoreState store = (StoreState) this.state;
 
 		// TODO: Make it pretty? Switch maybe?

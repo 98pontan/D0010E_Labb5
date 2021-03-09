@@ -29,7 +29,6 @@ public class RunSim {
             lowerGather, upperGather,
             lowerRegister, upperRegister
         );
-        //SimState simState = new SimState(model);
         StoreView view = new StoreView(model);
         EventQueue queue = new EventQueue();
         queue.addEvent(new StopEvent(model, queue));
