@@ -79,7 +79,7 @@ public class StoreView extends SimView {
    */
   private void printEnd(){
     System.out.println("");
-    System.out.println("RESLUTAT");
+    System.out.println("RESUlTAT");
     System.out.println("========");
     System.out.println(""); // Totala antalet kunder, kunder som handlade, missade kunder. (kan vara fel i 1) nedan)
     System.out.println("1) Av " + storeState.getTotCustomers() + " kunder handlade " + storeState.getPurchases() + " medan " + storeState.getMissedCustomers() + " missades.");
@@ -89,7 +89,7 @@ public class StoreView extends SimView {
             + " te (dvs " + timeFormat((storeState.getAvailableCheckouts()/storeState.getCheckoutFreeTime())*100)  + "% av tiden från öppning tills sista kunden betalat).");
     System.out.println("");
     System.out.println("3) Total tid " + storeState.getCheckoutQueue().getTotalQueuers() + " kunder tvingats köa: " + timeFormat(storeState.getTotQueueTime()) + " te.");
-    System.out.println("   Genomsnittlig kötid: " + timeFormat(storeState.getCheckoutQueue().getTotalQueuers()/storeState.getTotQueueTime())+ " te.");
+    System.out.println("   Genomsnittlig kötid: " + timeFormat(storeState.getTotQueueTime() / storeState.getCheckoutQueue().getTotalQueuers()) + " te.");
   }
 
   /**

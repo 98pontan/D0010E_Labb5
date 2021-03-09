@@ -83,7 +83,12 @@ public class FIFO{
 			if(FIFOQueue.size() == 1){
 				return "[" + customer.toString() + "]";
 			}
-			
+
+			if (customer == FIFOQueue.get(0))
+			{
+				s += customer.toString();
+			}
+
 			s = s + ", " + customer.toString();
 		}
 		
