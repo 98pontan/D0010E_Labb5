@@ -223,7 +223,7 @@ public class StoreState extends SimState {
 	 * @param cState
 	 * @return the latest created customer
 	 */
-	public Customer createCustomer(CustomerState cState)
+	public Customer createCustomer()
 	{
 		Customer c = customerFactory.createCustomer();
 		//c.setState(cState);
