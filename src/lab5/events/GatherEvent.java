@@ -28,6 +28,7 @@ public class GatherEvent extends Event {
 	 * else the customer will be put into a queue.
 	 */
 	public void run() {
+		state.setTime(time);
 		StoreState model = (StoreState) this.state;
 
 		if (model.checkAvailableCheckout()) {
@@ -46,7 +47,6 @@ public class GatherEvent extends Event {
 			model.getCheckoutQueue().add(customer);
 		}
 
-		updateTime(model);
 		state.update(this);
 	}
 }

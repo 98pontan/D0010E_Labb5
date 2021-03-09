@@ -26,8 +26,9 @@ public class ClosingEvent extends Event {
 	 */
 	public void run() 
 	{
+		state.setTime(time);
 		StoreState store = (StoreState) this.state;
 		store.toggleIsOpen();
-		store.update(this);
+		state.update(this);
 	}
 }
