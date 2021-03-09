@@ -19,7 +19,7 @@ public class RunSim {
         // Lower and upper limits in time generation for
         // corresponding events
         final double lowerGather    = 0.5, upperGather      = 1.0;
-        final double lowerRegister  = 2.0, upperRegister    = 3.0;
+        final double lowerCheckout  = 2.0, upperCheckout    = 3.0;
 
         StoreState model = new StoreState(
             SEED,
@@ -27,7 +27,7 @@ public class RunSim {
             MAX_CUSTOMERS,
             ARRIVAL_SPEED,
             lowerGather, upperGather,
-            lowerRegister, upperRegister
+            lowerCheckout, upperCheckout
         );
         StoreView view = new StoreView(model);
         EventQueue queue = new EventQueue();
