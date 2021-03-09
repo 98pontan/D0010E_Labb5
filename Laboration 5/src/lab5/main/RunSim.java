@@ -9,8 +9,8 @@ import lab5.view.StoreView;
 
 public class RunSim {
     public static void main(String[] args) {
-        final int SEED              = 1234;
-        final int REGISTERS         = 2;
+        final long SEED             = 1234;
+        final int CHECKOUTS         = 2;
         final int MAX_CUSTOMERS     = 5;
         // Simulation run time in time units
         final double SIM_TIME       = 10.0;
@@ -22,19 +22,18 @@ public class RunSim {
         final double lowerRegister  = 2.0, upperRegister    = 3.0;
 
         StoreState model = new StoreState(
-                SEED,
-                REGISTERS,
-                MAX_CUSTOMERS,
-                ARRIVAL_SPEED,
-                lowerGather, upperGather,
-                lowerRegister, upperRegister
+            SEED,
+            CHECKOUTS,
+            MAX_CUSTOMERS,
+            ARRIVAL_SPEED,
+            lowerGather, upperGather,
+            lowerRegister, upperRegister
         );
-        SimState state = new SimState(model);
-        SimView view = new StoreView(model);
+        StoreView view = new StoreView(model);
         EventQueue queue = new EventQueue();
-        queue.addEvent(new StartEvent(model, queue));
-        queue.addEvent(new ClosingEvent(model, queue, SIM_TIME));
         queue.addEvent(new StopEvent(model, queue));
+        queue.addEvent(new ClosingEvent(model, queue, SIM_TIME));
+        queue.addEvent(new StartEvent(model, queue));
 
         Simulator sim = new Simulator(model, queue);
         sim.run();

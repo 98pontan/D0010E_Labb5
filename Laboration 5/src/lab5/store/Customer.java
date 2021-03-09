@@ -1,45 +1,46 @@
 package lab5.store;
 
  /**
-  * This class represents a customer with ID and a state.
+  * This class represents a customer with ID.
   * @author Markus Blomqvist
   */
 public class Customer {
-  private int ID;
-  private CustomerState state;
-  
- /**
-  * This constructor creates a customer with an ID.
-  */
-  public Customer(int number) {
-    this.ID = number;
-  }
-  
- /**
-  * This method returns the ID of the customer.
-  */
-  public int getID(){
-    return ID;
-  }
-  
- /**
-  * This method returns a String of the ID of the customer.
-  */
-  public String toString(){
-    return String.valueOf(ID);
-  }
-  
- /**
-  * This method returns the current state of the customer.
-  */
-  public CustomerState getState(){
-    return state;
-  }
-  
- /**
-  * This method sets the state of the customer.
-  */
-  public void setState(CustomerState state){
-    this.state = state;
-  }
-}
+     private final int ID;
+     private double queueTime = 0;
+
+    public void setQueueTime(double queueTime)
+    {
+       this.queueTime = queueTime;
+    }
+
+    /**
+      * This constructor creates a customer with an ID.
+      */
+     public Customer(int number)
+     {
+         this.ID = number;
+     }
+
+    /**
+     * @return the ID of the customer
+     */
+     public int getID()
+     {
+         return ID;
+     }
+
+     /**
+      * @return a string of the ID of the customer.
+      */
+     public String toString()
+     {
+         return String.valueOf(ID);
+     }
+
+
+    public double getQueueTime(double time)
+    {
+       queueTime = time - queueTime;
+       return queueTime;
+    }
+ }

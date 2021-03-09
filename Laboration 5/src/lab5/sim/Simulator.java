@@ -13,7 +13,5 @@ public class Simulator {
         while (model.getSimRunning()) {
             queue.popNextEvent().run();
         }
-        // TODO: When done, remember to print out final information
-        // Maybe through SimView class? By creating endPrint function?
     }
 }

@@ -1,0 +1,113 @@
+package lab5.sim;
+
+import java.util.Observable;
+
+import lab5.events.StopEvent;
+import lab5.store.StoreState;
+
+/**
+ * The general state of the simulation, keep tracks of time, events and if the simulation is still running
+ * @author Pontus Eriksson Jirbratt,
+ * @author Lucas Pettersson,
+ * @author Jesper Johansson Oskarsson,
+ * @author Markus Blomqvist
+ *
+ */
+public class SimState extends Observable
+{
+	double currentTime;
+	int numberOfEvents = 0;
+	boolean runFlag;
+	Event lastEvent;
+	Object currentSim;
+	
+	/**
+	 * Constructor set the time to zero and set the flag for the program to true
+	 */
+	public SimState(Object sim) {
+	}
+
+	/**
+	 * empty constructor to be called while the program is running.
+	 */
+    public SimState()
+	 {
+		 //this.currentSim = sim;
+		 currentTime = 0;
+		 runFlag = true;
+    }
+
+	/**
+	 * shuts down the simulation
+	 */
+	public void setRunflagFalse()
+	{
+		runFlag = false;
+	}
+	
+	/**
+	 * Increments number of events
+	 */
+	void newEvent() 
+	{
+		numberOfEvents++;
+	}
+
+	/**
+	 * a total time of the simulation
+	 * @param time the time the events needed to finnish
+	 */
+	public void setTime(double time) {
+		currentTime += time;
+	}
+
+
+
+	/**
+	 * updates the observer
+	 */
+	public void update(Event e)
+	{
+		lastEvent = e;
+		StoreState store = (StoreState) e.state;
+		
+		if (getCurrentTime() == store.closeTime)
+		{
+			StopEvent stop = new StopEvent(store, store.eventQueue);
+		}
+		newEvent();
+		setChanged();
+		notifyObservers();
+	}
+
+	/**
+	 * @return the current sim object
+	 */
+	public Object getCurrentSim()
+	{
+		return currentSim;
+	}
+
+	/**
+	 * @return if the program is running 
+	 */
+	boolean getSimRunning() 
+	{
+		return runFlag;
+	}
+	
+	/**
+	 * @return the current time in the program
+	 */
+	public double getCurrentTime()
+	{
+		return currentTime;
+	}
+
+	/**
+	 * @return the last event to occur
+	 */
+	public Event getLastEvent() {
+		return lastEvent;
+	}
+}

@@ -14,41 +14,51 @@ import lab5.store.*;
 public class ArrivalEvent extends Event {
 	
 	private GatherEvent gatherEvent;
-	
+	private ArrivalEvent arrivalEvent;
+
 	public ArrivalEvent(SimState state, EventQueue eventQueue, double time) 
 	{
 		super(state, eventQueue);
 		this.time = time;
 		this.name = "Arrival";
-		this.customer = this.state.getCurrentSim().createCustomer();
 	}
-	
+
+	/**
+	 * execution of arrival event
+	 * if the store is closed, the customer will be turned away and missed customers will increase by one.
+	 * else an arrival event is created
+	 * if the store is open and not full, a new customer will be created
+	 * else increase missed customers by one
+	 */
 	public void run() 
 	{
+		state.setTime(time);
+		StoreState store = (StoreState) this.state;
+
+		// TODO: Make it pretty? Switch maybe?
+		if (!store.isOpen()) {
+			store.turnedAwayCustomer();
+		}
+
+		else {
+			double arrivalTime = store.getTimeFactory().generateArrivalTime();
+			arrivalEvent = new ArrivalEvent(store, this.eventQueue, arrivalTime);
+			eventQueue.addEvent(arrivalEvent);
+		}
+
+		if (store.isOpen() && !store.isFull()) {
+			customer = store.createCustomer(CustomerState.IN_STORE);
+			store.addCustomer(customer);
+
+			double gatherTime = store.getTimeFactory().generateGatherTime();
+	    	gatherEvent = new GatherEvent(store, this.eventQueue, customer, gatherTime);
+			eventQueue.addEvent(gatherEvent);
+		}
+
+		else {
+			store.missedCustomers();
+		}
+
 		state.update(this);
-		state.getCurrentSim().addCustomer(customer);
-		
-		if(customer.getState() == CustomerState.IN_STORE)
-		{
-	    	double gatherTime = this.time + this.state.getCurrentSim().getTimeFactory().generateGatherTime();
-	    	gatherEvent = new GatherEvent(this.state, this.eventQueue, customer, gatherTime);
-	    	eventQueue.addEvent(gatherEvent);
-	    }
 	}
-	
-	public double getTime()
-	{
-		return time;
-	}
-	
-	public String getName()
-	{
-		return name;
-	}
-	
-	public Customer getCustomer()
-	{
-		return customer;
-	}
-	
 }

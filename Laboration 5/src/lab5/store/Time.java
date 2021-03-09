@@ -1,16 +1,15 @@
 package lab5.store;
 
 import lab5.random.*;
-import lab5.sim.SimState;
 
 public class Time {
     private UniformRandomStream uniRegisterRnd;
     private UniformRandomStream uniGatherRnd;
     private ExponentialRandomStream expArrivalRnd;
-    private StoreState store;
+    private StoreState state;
 
     public Time(
-            StoreState store,
+            StoreState state,
             long SEED,
             double lowerRegister,
             double upperRegister,
@@ -21,18 +20,18 @@ public class Time {
         uniRegisterRnd  = new UniformRandomStream(lowerRegister,upperRegister, SEED);
         uniGatherRnd    = new UniformRandomStream(lowerGather,upperGather, SEED);
         expArrivalRnd   = new ExponentialRandomStream(lambda, SEED);
-        this.store      = store;
+        this.state      = state;
     }
 
     public double generateRegisterTime() {
-        return store.getcurrentTime() + uniRegisterRnd.next();
+        return state.getCurrentTime() + uniRegisterRnd.next();
     }
 
     public double generateGatherTime() {
-        return store.getcurrentTime() + uniGatherRnd.next();
+        return state.getCurrentTime() + uniGatherRnd.next();
     }
 
     public double generateArrivalTime() {
-        return store.getcurrentTime() + expArrivalRnd.next();
+        return state.getCurrentTime() + expArrivalRnd.next();
     }
 }

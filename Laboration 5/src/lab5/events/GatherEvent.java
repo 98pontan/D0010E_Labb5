@@ -1,6 +1,9 @@
 package lab5.events;
-import lab5.sim.*;
-import lab5.store.*;
+
+import lab5.store.StoreState;
+import lab5.store.Customer;
+import lab5.sim.Event;
+import lab5.sim.EventQueue;
 
 /**
  * Description
@@ -12,49 +15,38 @@ import lab5.store.*;
  *
  */
 public class GatherEvent extends Event {
-	
-	private PurchaseEvent payEvent;
-	private double payTime;
-	
-	public GatherEvent(SimState state, EventQueue eventQueue, Customer customer, double time)
-	{
+	public GatherEvent(StoreState state, EventQueue eventQueue, Customer customer, double executionTime) {
 		super(state, eventQueue);
-		this.time = time;
+		this.time = executionTime;
 		this.name = "Gather";
 		this.customer = customer;
 	}
-	
-	public void run() 
-	{
+
+	/**
+	 * execution of gatherEvent
+	 * if checkouts are available it will be occupied and a purchase event will be created.
+	 * else the customer will be put into a queue.
+	 */
+	public void run() {
+		state.setTime(time);
+		StoreState model = (StoreState) this.state;
+
+		if (model.checkAvailableCheckout()) {
+			model.createCheckoutFreeTime(time);
+			model.occupideCheckout();
+			eventQueue.addEvent(new PurchaseEvent(
+					model,
+					eventQueue,
+					customer,
+					model.getTimeFactory().generateRegisterTime())
+			);
+		}
+
+		else {
+			customer.setQueueTime(time);
+			model.getCheckoutQueue().add(customer);
+		}
+
 		state.update(this);
-			      
-		if(state.getCurrentSim().getAvailableCheckouts() > 0)
-		{
-			double payTime = this.time + state.getCurrentSim().getTimeFactory().generateRegisterTime();
-				         
-			payEvent = new PurchaseEvent(this.state, this.eventQueue, customer, payTime);
-			eventQueue.addEvent(payEvent);
-			state.getCurrentSim().occupiedCheckout();
-		}
-		else 
-		{
-//			state.getCurrentSim().getFIFOQueue().add(customer);
-//			state.getCurrentSim().addTotalCustomersInQueue();
-		}
-	}
-	
-	public double getTime()
-	{
-		return time;
-	}
-	
-	public String getName()
-	{
-		return name;
-	}
-	
-	public Customer getCustomer()
-	{
-		return customer;
 	}
 }

@@ -15,26 +15,24 @@ public class EventQueue
 
    ArrayList<Event> eventQueue;
 
+   public EventQueue() {
+      eventQueue = new ArrayList<>();
+   }
    /**
     * Constructor that takes an ArrayList of events and set the current eventQueue to it.
     *
     * @param eveQueue
     */
-//   public EventQueue(ArrayList<Event> eveQueue)
-//   {
-//      eventQueue = eveQueue;
-//   }
-   
-    public EventQueue()
-    {
-    
-    }
+   public EventQueue(ArrayList<Event> eveQueue)
+   {
+      eventQueue = eveQueue;
+   }
 
    /**
     * Returns the eventQueue. 
     * @return eventQueue
     */
-   private ArrayList<Event> getEventQueue()
+   public ArrayList<Event> getEventQueue()
    {
       return eventQueue;
    }
@@ -47,10 +45,9 @@ public class EventQueue
     */
    public void addEvent(Event event)
    {
-      eventQueue.add(event);
+      eventQueue.add(0, event);
       SortedSequence ss = new SortedSequence();
       eventQueue = ss.sortList(eventQueue);
-      System.out.println(eventQueue);
    }
    
    /**
@@ -68,34 +65,5 @@ public class EventQueue
       eventQueue.remove(NEXTEVENT);
 
       return event;
-
    }
-	
-	/*
-	public static void main(String[] args)
-	{
-		ArrayList<Event> list = new ArrayList<Event>();
-		EventQueue eq = new EventQueue(list);
-		
-		eq.printTest();
-		
-	}
-	
-	void printTest() {
-
-		for(int i = 0; i < 5; i++) {
-			eventQueue.add(i, new Event());
-		}
-		
-		for(int i = 0; i < 5; i++) {
-			System.out.println("First list: " + eventQueue.get(i).time);
-		}
-		
-		addEvent(new Event());
-		
-		for(int i = 0; i < 6; i++) {
-			System.out.println("Sorted list:" + eventQueue.get(i).time);
-		}
-	}
-	*/
 }

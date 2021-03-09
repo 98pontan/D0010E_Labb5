@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="lab5.store.StoreState"/>
+    <fullyQualifiedTypeName name="lab5.sim.SimView"/>
+    <fullyQualifiedTypeName name="java.util.Observable"/>
+</qualifiedTypeNameHistroy>

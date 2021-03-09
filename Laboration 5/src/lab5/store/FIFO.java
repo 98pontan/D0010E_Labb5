@@ -10,22 +10,25 @@ public class FIFO{
 
 	private ArrayList<Customer> FIFOQueue = new ArrayList<Customer>();
 	private int max = 0;
+	private int totalQueuers;
 	
-       /**
- 	* This method adds a customer to the queue.
+	/**
+ 	* adds a customer to the queue and keeps track of the biggest size the list has been.
  	*/
 	public void add(Customer customer) {
 		FIFOQueue.add(customer);
-		
+		totalQueuers++;
 		if(FIFOQueue.size() > max) {
 			max = FIFOQueue.size();
 		}
 	}
 
-       /**
- 	* This method returns the first customer in the queue.
+	// TODO: Maybe create pop() function?
+
+	/**
+ 	* @return the first customer in the queue.
  	*/
-	public Customer first() throws NoSuchElementException {
+	public Customer getFirst() throws NoSuchElementException {
 		if(FIFOQueue.size() == 0) {
 			throw new NoSuchElementException();
 		}
@@ -33,9 +36,9 @@ public class FIFO{
 		return FIFOQueue.get(0);
 	}
 	
-       /**
- 	* This method removes the first customer in the queue.
- 	*/
+	/**
+	 * removes the first customer in the queue.
+	 */
 	public void removeFirst() throws NoSuchElementException {
 		if(FIFOQueue.size() == 0) {
 			throw new NoSuchElementException();
@@ -44,44 +47,55 @@ public class FIFO{
 		FIFOQueue.remove(0);
 	}
 	
-       /**
- 	* This method returns true or false depending on
-	* if the queue is empty.
- 	*/
+	/**
+	 * @return true if the queue is empty else false
+	 */
 	public boolean isEmpty() {
-		if(FIFOQueue.size() == 0) {
-			return true;
-		}
-		
-		return false;
+		return FIFOQueue.size() == 0;
 	}
 
-       /**
- 	* This method returns the maximal size of the queue.
- 	*/
+	/**
+ 	 * @return the maximal size of the queue
+ 	 */
 	public int maxSize() {
 		return max;
 	}
 
-       /**
- 	* This method returns the current size of the queue.
+	/**
+ 	* @return the current size of the queue
  	*/
 	public int size() {
 		return FIFOQueue.size();
 	}
 	
-       /**
- 	* This method returns the queue as a String with
+	/**
+ 	* @return the queue as a string with
 	* the Customer objects in it.
  	*/
 	public String toString() {
-		String s = "Queue: ";
+		String s = "";
 		
 		for(Customer customer: FIFOQueue) {
-			s = s + "(" + String.valueOf(customer) + ") ";
-		}
+			if(FIFOQueue.size() == 0){
+				return "[" + s + "]";
+			}
+			
+			if(FIFOQueue.size() == 1){
+				return "[" + customer.toString() + "]";
+			}
 		
-		return s;
+			if (customer == FIFOQueue.get(0))
+			{
+				s += customer.toString();
+			}
+			
+			s = s + ", " + customer.toString() ;
+		}
+		return "[" + s + "]";
 	}
-	
+
+	public int getTotalQueuers()
+	{
+		return totalQueuers;
+	}
 }
