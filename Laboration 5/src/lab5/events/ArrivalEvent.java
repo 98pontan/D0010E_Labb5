@@ -39,7 +39,7 @@ public class ArrivalEvent extends Event {
 		state.setTime(time);
 		state.update(this);
 		StoreState store = (StoreState) this.state;
-
+		store.createCheckoutFreeTime(this);
 		// TODO: Make it pretty? Switch maybe?
 		if (!store.isOpen()) {
 			store.turnedAwayCustomer();
@@ -61,7 +61,5 @@ public class ArrivalEvent extends Event {
 		else {
 			store.missedCustomers();
 		}
-
-		store.createCheckoutFreeTime(this);
 	}
 }

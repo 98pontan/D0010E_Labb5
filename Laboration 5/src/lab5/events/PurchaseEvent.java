@@ -26,13 +26,14 @@ public class PurchaseEvent extends Event {
 		state.setTime(time);
 		state.update(this);
 		StoreState model = (StoreState) this.state;
+		model.createCheckoutFreeTime(this);
+		
 		// Decrease customer count in store by one
 		// Make sure it's the right element being removed
 		model.getCustomerList().remove(customer);
 
 		if (model.getCheckoutQueue().isEmpty()) {
 			model.emptyCheckout();
-
 		}
 
 		else {

@@ -40,7 +40,7 @@ public class StoreView extends SimView {
     System.out.println("");
     System.out.println("FÖRLOPP");
     System.out.println("=======");
-    System.out.println("Tid\tHÃ¤ndelse\tKund\t?\tled\tledT\tI\t$\t:-(\tkÃ¶at\tkÃ¶T\tkÃ¶ar\t[KassakÃ¶..]");
+    System.out.println("Tid\tHÃ¤ndelse\tKund\t?\tled\tledT\tI\t$\t:-(\tköat\tköT\tköar\t[Kassakö..]");
   }
   
   /**
@@ -57,7 +57,7 @@ public class StoreView extends SimView {
     	checkCustomerNull = "---";
     }
     String checkOpen;
-    checkOpen = storeState.isOpen() ? "Ã¶" + "\t" : "s" + "\t";
+    checkOpen = storeState.isOpen() ? "Ö" + "\t" : "S" + "\t";
     System.out.println(
               timeFormat(storeState.getCurrentTime()) + "\t" +
               eventFormat + "\t\t" +

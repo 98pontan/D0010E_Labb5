@@ -31,9 +31,9 @@ public class GatherEvent extends Event {
 		state.setTime(time);
 		state.update(this);
 		StoreState model = (StoreState) this.state;
+		model.createCheckoutFreeTime(this);
 
 		if (model.checkAvailableCheckout()) {
-			model.createCheckoutFreeTime(this);
 			model.occupideCheckout();
 			eventQueue.addEvent(new PurchaseEvent(
 					model,

@@ -87,6 +87,7 @@ public class FIFO{
 			if (customer == FIFOQueue.get(0))
 			{
 				s += customer.toString();
+				continue;
 			}
 			
 			s = s + ", " + customer.toString();
