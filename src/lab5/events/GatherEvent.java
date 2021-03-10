@@ -33,7 +33,7 @@ public class GatherEvent extends Event {
 
 		if (store.checkAvailableCheckout()) {
 			store.createCheckoutFreeTime(time);
-			store.occupideCheckout();
+			store.occupiedCheckout();
 			eventQueue.addEvent(new PurchaseEvent(
 					store,
 					eventQueue,

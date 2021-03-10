@@ -1,6 +1,5 @@
 package lab5.events;
 import lab5.sim.*;
-import lab5.store.*;
 
 /**
  * Description
@@ -27,6 +26,6 @@ public class StopEvent extends Event {
 	public void run() 
 	{
 		state.update(this);
-		state.setRunflagFalse();
+		state.setRunFlagFalse();
 	}
 }

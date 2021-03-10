@@ -1,5 +1,5 @@
 package lab5.view;
-import lab5.sim.SimState;
+import lab5.sim.Event;
 import lab5.sim.SimView;
 import lab5.store.*;
 import lab5.events.*;
@@ -13,7 +13,6 @@ import java.util.Observable;
  */
 // METODERNA MÅSTE KONTROLLERAS
 public class StoreView extends SimView {
-  private SimState simState;
   private StoreState storeState;
   
   /**
@@ -41,30 +40,33 @@ public class StoreView extends SimView {
     System.out.println("FÖRLOPP");
     System.out.println("=======");
     System.out.println("Tid\tHändelse\tKund\t?\tled\tledT\tI\t$\t:-(\tköat\tköT\tköar\t[Kassakö..]");
+    System.out.println(storeState.getCurrentTime() + "\tStart");
   }
   
   /**
    * This method prints out the events.
    */
-  private void printEvents(){
-    String eventFormat = String.valueOf(storeState.getCurrentEvent().getName());
-    if(eventFormat.length() < 4){ //magisk fyra
-      eventFormat = eventFormat + " ";
+  private void printEvents(Event e) {
+    String eventName = e.getName();
+    if (eventName.length() < 4) { //magisk fyra (Avser nog tab)
+      eventName = eventName + " ";
     }
     
-    String checkCustomerNull = String.valueOf(storeState.getCurrentEvent().getCustomer());
-    if(checkCustomerNull.equals("null")){
-      checkCustomerNull = "---";
+    String customerID = String.valueOf(e.getCustomer());
+    if (customerID.equals("null")) {
+      customerID = "---";
     }
+    
     String checkOpen;
     checkOpen = storeState.isOpen() ? "ö" + "\t" : "s" + "\t";
+    
     System.out.println(
-              timeFormat(storeState.getCurrentTime()) + "\t" +
-              eventFormat + "\t\t" +
-              checkCustomerNull + "\t" +
+              timeFormat(e.getTime()) + "\t" +
+              eventName + "\t\t" +
+              customerID + "\t" +
               checkOpen +
               storeState.getAvailableCheckouts() + "\t" +
-              timeFormat(storeState.getCheckoutFreeTime()) + "\t" +
+              timeFormat(storeState.getCheckoutFreeTime(e)) + "\t" +
               storeState.getCustomers() + "\t" +
               storeState.getPurchases() + "\t" +
               storeState.getMissedCustomers() + "\t" +
@@ -77,16 +79,17 @@ public class StoreView extends SimView {
   /**
    * This method prints out the end.
    */
-  private void printEnd(){
+  private void printEnd(Event e) {
+    System.out.println(timeFormat(storeState.getCurrentTime()) + "\tStop");
     System.out.println("");
     System.out.println("RESUlTAT");
     System.out.println("========");
     System.out.println(""); // Totala antalet kunder, kunder som handlade, missade kunder. (kan vara fel i 1) nedan)
-    System.out.println("1) Av " + storeState.getTotCustomers() + " kunder handlade " + storeState.getPurchases() + " medan " + storeState.getMissedCustomers() + " missades.");
+    System.out.println("1) Av " + storeState.getCustomerFactory().getCreatedCustomers() + " kunder handlade " + storeState.getPurchases() + " medan " + storeState.getMissedCustomers() + " missades.");
     System.out.println("");
-    System.out.println("2) Total tid " + storeState.getcheckOuts() + " kassor varit lediga: " + timeFormat(storeState.getCheckoutFreeTime())  + " te.");
-    System.out.println("   Genomsnittlig ledig kassatid: " + timeFormat(storeState.getCheckoutFreeTime()/storeState.getAvailableCheckouts())
-            + " te (dvs " + timeFormat((storeState.getAvailableCheckouts()/storeState.getCheckoutFreeTime())*100)  + "% av tiden från öppning tills sista kunden betalat).");
+    System.out.println("2) Total tid " + storeState.getcheckOuts() + " kassor varit lediga: " + timeFormat(storeState.getCheckoutFreeTime(e))  + " te.");
+    System.out.println("   Genomsnittlig ledig kassatid: " + timeFormat(storeState.getCheckoutFreeTime(e)/storeState.getAvailableCheckouts())
+            + " te (dvs " + timeFormat((storeState.getAvailableCheckouts()/storeState.getCheckoutFreeTime(e))*100)  + "% av tiden från öppning tills sista kunden betalat).");
     System.out.println("");
     System.out.println("3) Total tid " + storeState.getCheckoutQueue().getTotalQueuers() + " kunder tvingats köa: " + timeFormat(storeState.getTotQueueTime()) + " te.");
     System.out.println("   Genomsnittlig kötid: " + timeFormat(storeState.getTotQueueTime() / storeState.getCheckoutQueue().getTotalQueuers()) + " te.");
@@ -110,17 +113,16 @@ public class StoreView extends SimView {
    * the current event is.
    */
   public void update(Observable o, Object arg){
-    if (storeState.getCurrentEvent().getClass() == StartEvent.class){
+    if (arg.getClass() == StartEvent.class) {
       printStart();
-      System.out.println(storeState.getCurrentTime() + "\tStart");
     }
-    else if (storeState.getCurrentEvent().getClass() == StopEvent.class){
-      System.out.println(timeFormat(storeState.getCurrentTime()) + "\tStop");
-      printEnd();
+    
+    else if (arg.getClass() == StopEvent.class) {
+      printEnd((Event) arg);
     }
-    else{
-      printEvents();
+    
+    else{ 
+      printEvents((Event) arg);
     }
   }
-  
 }

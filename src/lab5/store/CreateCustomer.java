@@ -17,4 +17,8 @@ public class CreateCustomer {
     createdCustomers++;
     return customer;
   }
+
+  public int getCreatedCustomers() {
+      return createdCustomers;
+  }
 }

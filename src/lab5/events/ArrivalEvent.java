@@ -23,7 +23,6 @@ public class ArrivalEvent extends Event {
 		this.name = "Ankomst";
 
 		StoreState store = (StoreState) state;
-		// Skapa alltid en kund, men läggs bara till inne i butiken nedan
 		this.customer = store.getCustomerFactory().createCustomer();
 	}
 
