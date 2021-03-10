@@ -81,15 +81,35 @@ public class StoreState extends SimState {
 		UPPER_GATHER = upperGather;
 
 	}
-	
-	
+
+	public void update(Event e) {
+		super.update(e);
+
+		_updateCheckoutFreeTime(e.getTime());
+
+		setChanged();
+		notifyObservers();
+	}
+
+	public void _updateCheckoutFreeTime(double currentTime) {
+		if (checkAvailableCheckout()) {
+			try {
+				emptyCheckoutTime += (currentTime - getLastEvent().getTime()) * availableCheckouts;
+			}
+
+			catch (NullPointerException e) {
+				emptyCheckoutTime += currentTime * availableCheckouts;
+			}
+		}
+	}
+
 	/**
 	 * checks if a checkout is available 
 	 * @return true if available false if occupied
 	 */
 	public boolean checkAvailableCheckout()
 	{
-		if(availableCheckouts > 0) 
+		if(availableCheckouts > 0)
 		{
 			return true;
 		}
@@ -99,7 +119,6 @@ public class StoreState extends SimState {
 
 	public void createCheckoutFreeTime(double time)
 	{
-		emptyCheckoutTime = time * availableCheckouts;
 	}
 	/**
 	 * If a checkout is being occupide by a customer
@@ -115,9 +134,9 @@ public class StoreState extends SimState {
 	
 	}
 
-	public void setTotQueueTime(double totQueueTime)
+	public void setTotQueueTime(double newTime)
 	{
-		this.totQueueTime += totQueueTime;
+		this.totQueueTime += newTime;
 	}
 
 	/**

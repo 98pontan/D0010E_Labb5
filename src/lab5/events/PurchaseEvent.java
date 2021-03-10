@@ -23,32 +23,30 @@ public class PurchaseEvent extends Event {
 	}
 	
 	public void run() {
-		state.setTime(time);
-		state.update(this);
-		StoreState model = (StoreState) this.state;
+		StoreState store = (StoreState) this.state;
+		store.update(this);
 		// Decrease customer count in store by one
 		// Make sure it's the right element being removed
-		model.getCustomerList().remove(customer);
+		store.getCustomerList().remove(customer);
 
-		if (model.getCheckoutQueue().isEmpty()) {
-			model.emptyCheckout();
+		if (store.getCheckoutQueue().isEmpty()) {
+			store.emptyCheckout();
 
 		}
 
 		else {
-			double queueTime;
 			eventQueue.addEvent(new PurchaseEvent(
-					model,
+					store,
 					eventQueue,
-					model.getCheckoutQueue().getFirst(),
-					model.getTimeFactory().generateRegisterTime()
+					store.getCheckoutQueue().getFirst(),
+					store.getTimeFactory().generateRegisterTime()
 			));
-			queueTime = model.getCheckoutQueue().getFirst().getQueueTime(time);
-			model.setTotQueueTime(queueTime);
-			model.getCheckoutQueue().removeFirst();
+			//double queueTime = store.getCheckoutQueue().getFirst().getQueueTime(time);
+			//store.setTotQueueTime(queueTime);
+			store.getCheckoutQueue().removeFirst();
 		}
 
 		// Save info about another customer has finished
-		model.updatePurchaseCount();
+		store.updatePurchaseCount();
 	}
 }

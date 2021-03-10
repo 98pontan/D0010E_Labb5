@@ -47,12 +47,12 @@ public class StoreView extends SimView {
    * This method prints out the events.
    */
   private void printEvents(){
-    String eventFormat = String.valueOf(storeState.getLastEvent().getName());
+    String eventFormat = String.valueOf(storeState.getCurrentEvent().getName());
     if(eventFormat.length() < 4){ //magisk fyra
       eventFormat = eventFormat + " ";
     }
     
-    String checkCustomerNull = String.valueOf(storeState.getLastEvent().getCustomer());
+    String checkCustomerNull = String.valueOf(storeState.getCurrentEvent().getCustomer());
     if(checkCustomerNull.equals("null")){
       checkCustomerNull = "---";
     }
@@ -110,11 +110,11 @@ public class StoreView extends SimView {
    * the current event is.
    */
   public void update(Observable o, Object arg){
-    if (storeState.getLastEvent().getClass() == StartEvent.class){
+    if (storeState.getCurrentEvent().getClass() == StartEvent.class){
       printStart();
       System.out.println(storeState.getCurrentTime() + "\tStart");
     }
-    else if (storeState.getLastEvent().getClass() == StopEvent.class){
+    else if (storeState.getCurrentEvent().getClass() == StopEvent.class){
       System.out.println(timeFormat(storeState.getCurrentTime()) + "\tStop");
       printEnd();
     }

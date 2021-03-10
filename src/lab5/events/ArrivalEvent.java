@@ -36,9 +36,8 @@ public class ArrivalEvent extends Event {
 	 */
 	public void run() 
 	{
-		state.setTime(time);
-		state.update(this);
 		StoreState store = (StoreState) this.state;
+		store.update(this);
 
 		// TODO: Make it pretty? Switch maybe?
 		if (!store.isOpen()) {

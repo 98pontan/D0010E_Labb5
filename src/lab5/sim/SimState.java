@@ -1,5 +1,7 @@
 package lab5.sim;
 
+import lab5.events.StopEvent;
+
 import java.util.Observable;
 
 /**
@@ -14,6 +16,7 @@ public class SimState extends Observable {
 	double currentTime;
 	int numberOfEvents = 0;
 	boolean runFlag;
+	Event currentEvent;
 	Event lastEvent;
 
 	/**
@@ -52,8 +55,12 @@ public class SimState extends Observable {
 	 */
 	public void update(Event e)
 	{
-		lastEvent = e;
+		lastEvent = currentEvent;
+		currentEvent = e;
 		newEvent();
+
+		currentTime = e.getTime();
+
 		setChanged();
 		notifyObservers();
 	}
@@ -74,10 +81,14 @@ public class SimState extends Observable {
 		return currentTime;
 	}
 
+	public Event getLastEvent() {
+		return lastEvent;
+	}
+
 	/**
 	 * @return the last event to occur
 	 */
-	public Event getLastEvent() {
-		return lastEvent;
+	public Event getCurrentEvent() {
+		return currentEvent;
 	}
 }

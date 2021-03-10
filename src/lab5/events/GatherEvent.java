@@ -28,24 +28,28 @@ public class GatherEvent extends Event {
 	 * else the customer will be put into a queue.
 	 */
 	public void run() {
-		state.setTime(time);
-		state.update(this);
-		StoreState model = (StoreState) this.state;
+		StoreState store = (StoreState) this.state;
+		store.update(this);
 
-		if (model.checkAvailableCheckout()) {
-			model.createCheckoutFreeTime(time);
-			model.occupideCheckout();
+		if (store.checkAvailableCheckout()) {
+			store.createCheckoutFreeTime(time);
+			store.occupideCheckout();
 			eventQueue.addEvent(new PurchaseEvent(
-					model,
+					store,
 					eventQueue,
 					customer,
-					model.getTimeFactory().generateRegisterTime())
+					store.getTimeFactory().generateRegisterTime())
 			);
 		}
 
 		else {
 			customer.setQueueTime(time);
-			model.getCheckoutQueue().add(customer);
+			store.getCheckoutQueue().add(customer);
+
+			if (!store.getCheckoutQueue().isEmpty()) {
+				//double queueTime = store.getCheckoutQueue().getTotalQueueTime(time);
+				//store.setTotQueueTime(queueTime);
+			}
 		}
 	}
 }
