@@ -17,7 +17,7 @@ public class ClosingEvent extends Event {
 	{
 		super(state, eventQueue);
 		this.time = time;
-		this.name = "Close";
+		this.name = "Stäng";
 		this.customer = null;
 	}
 
@@ -26,8 +26,8 @@ public class ClosingEvent extends Event {
 	 */
 	public void run() 
 	{
-		StoreState store = (StoreState) state.getCurrentSim();
-		store.toggleIsOpen();
+		StoreState store = (StoreState) this.state;
 		store.update(this);
+		store.toggleIsOpen();
 	}
 }

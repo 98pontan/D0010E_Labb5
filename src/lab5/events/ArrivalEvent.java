@@ -20,7 +20,10 @@ public class ArrivalEvent extends Event {
 	{
 		super(state, eventQueue);
 		this.time = time;
-		this.name = "Arrival";
+		this.name = "Ankomst";
+
+		StoreState store = (StoreState) state;
+		this.customer = store.getCustomerFactory().createCustomer();
 	}
 
 	/**
@@ -32,7 +35,8 @@ public class ArrivalEvent extends Event {
 	 */
 	public void run() 
 	{
-		StoreState store = (StoreState) state.getCurrentSim();
+		StoreState store = (StoreState) this.state;
+		store.update(this);
 
 		// TODO: Make it pretty? Switch maybe?
 		if (!store.isOpen()) {
@@ -46,18 +50,18 @@ public class ArrivalEvent extends Event {
 		}
 
 		if (store.isOpen() && !store.isFull()) {
-			customer = store.createCustomer(CustomerState.IN_STORE);
-			store.addCustomer(customer);
-
+			store.incrementCustomers();
+			store.getCustomerList().add(customer);
 			double gatherTime = store.getTimeFactory().generateGatherTime();
 	    	gatherEvent = new GatherEvent(store, this.eventQueue, customer, gatherTime);
 			eventQueue.addEvent(gatherEvent);
 		}
 
-		else {
+		else if (store.isOpen()) {
 			store.missedCustomers();
+			store.incrementCustomers();
 		}
 
-		state.update(this);
+		store.createCheckoutFreeTime(time);
 	}
 }

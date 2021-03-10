@@ -10,45 +10,32 @@ import java.util.Observable;
  * @author Markus Blomqvist
  *
  */
-public class SimState extends Observable
-{
+public class SimState extends Observable {
 	double currentTime;
-	int numberOfEvents = 0;
+	int numberOfEvents;
 	boolean runFlag;
 	Event lastEvent;
-	Object currentSim;
-	
+
 	/**
 	 * Constructor set the time to zero and set the flag for the program to true
 	 */
-	public SimState(Object sim)
-	{
-		this.currentSim = sim;
-		currentTime = 0;
-		runFlag = true;
-		
+	public SimState() {
+		currentTime 	= 0;
+		numberOfEvents 	= 0;
+		runFlag 		= true;
 	}
-
-	/**
-	 * empty constructor to be called while the program is running.
-	 */
-    public SimState()
-	 {
-
-    }
 
 	/**
 	 * shuts down the simulation
 	 */
-	public void setRunflagFalse()
-	{
+	public void setRunFlagFalse() {
 		runFlag = false;
 	}
 	
 	/**
 	 * Increments number of events
 	 */
-	void newEvent() 
+	private void _newEvent()
 	{
 		numberOfEvents++;
 	}
@@ -58,28 +45,19 @@ public class SimState extends Observable
 	 * @param time the time the events needed to finnish
 	 */
 	public void setTime(double time) {
-		currentTime += time;
+		currentTime = time;
 	}
-
-
 
 	/**
 	 * updates the observer
 	 */
 	public void update(Event e)
 	{
-		lastEvent = e;
-		newEvent();
-		setChanged();
-		notifyObservers();
-	}
+		_newEvent();
+		currentTime = e.getTime();
 
-	/**
-	 * @return the current sim object
-	 */
-	public Object getCurrentSim()
-	{
-		return currentSim;
+		setChanged();
+		notifyObservers(e);
 	}
 
 	/**
@@ -98,10 +76,11 @@ public class SimState extends Observable
 		return currentTime;
 	}
 
-	/**
-	 * @return the last event to occur
-	 */
 	public Event getLastEvent() {
 		return lastEvent;
+	}
+
+	public void setLastEvent(Event e) {
+		lastEvent = e;
 	}
 }

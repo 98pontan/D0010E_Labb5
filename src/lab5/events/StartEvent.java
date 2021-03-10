@@ -24,13 +24,12 @@ public class StartEvent extends Event {
 	
 	public void run() 
 	{
-		StoreState model = (StoreState) state.getCurrentSim();
-		model.toggleIsOpen();
+		StoreState store = (StoreState) this.state;
+		store.update(this);
+		store.toggleIsOpen();
 
-		double arrivalTime = model.getTimeFactory().generateArrivalTime();
+		double arrivalTime = store.getTimeFactory().generateArrivalTime();
 		arrivalEvent = new ArrivalEvent(this.state, this.eventQueue, arrivalTime);
 		eventQueue.addEvent(arrivalEvent);
-
-		state.update(this);
 	}
 }

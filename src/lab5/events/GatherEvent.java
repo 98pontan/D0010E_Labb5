@@ -18,35 +18,38 @@ public class GatherEvent extends Event {
 	public GatherEvent(StoreState state, EventQueue eventQueue, Customer customer, double executionTime) {
 		super(state, eventQueue);
 		this.time = executionTime;
-		this.name = "Gather";
+		this.name = "Plock";
 		this.customer = customer;
 	}
 
 	/**
 	 * execution of gatherEvent
-	 * if checkouts are available it will be occupide and a purchase event will be created.
+	 * if checkouts are available it will be occupied and a purchase event will be created.
 	 * else the customer will be put into a queue.
 	 */
 	public void run() {
-		StoreState model = (StoreState) state.getCurrentSim();
+		StoreState store = (StoreState) this.state;
+		store.update(this);
 
-		if (model.checkAvailableCheckout()) {
-			model.createCheckoutFreeTime(time);
-			model.occupideCheckout();
+		if (store.checkAvailableCheckout()) {
+			store.createCheckoutFreeTime(time);
+			store.occupiedCheckout();
 			eventQueue.addEvent(new PurchaseEvent(
-					model,
+					store,
 					eventQueue,
 					customer,
-					model.getTimeFactory().generateRegisterTime())
+					store.getTimeFactory().generateRegisterTime())
 			);
 		}
 
 		else {
 			customer.setQueueTime(time);
-			model.getCheckoutQueue().add(customer);
-		}
+			store.getCheckoutQueue().add(customer);
 
-		updateTime(model);
-		state.update(this);
+			if (!store.getCheckoutQueue().isEmpty()) {
+				//double queueTime = store.getCheckoutQueue().getTotalQueueTime(time);
+				//store.setTotQueueTime(queueTime);
+			}
+		}
 	}
 }
