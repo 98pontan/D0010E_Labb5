@@ -83,13 +83,13 @@ public class FIFO{
 			if(FIFOQueue.size() == 1){
 				return "[" + customer.toString() + "]";
 			}
-			
+
 			if (customer == FIFOQueue.get(0))
 			{
 				s += customer.toString();
 				continue;
 			}
-			
+
 			s = s + ", " + customer.toString();
 		}
 		
@@ -99,5 +99,14 @@ public class FIFO{
 	public int getTotalQueuers()
 	{
 		return totalQueuers;
+	}
+
+	public double getTotalQueueTime(double currentTime) {
+		double sumTime = 0;
+		for (Customer c : FIFOQueue) {
+			sumTime += c.getQueueTime(currentTime);
+		}
+
+		return sumTime;
 	}
 }

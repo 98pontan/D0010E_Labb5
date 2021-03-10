@@ -11,13 +11,13 @@ public class Time {
     public Time(
             StoreState state,
             long SEED,
-            double lowerRegister,
-            double upperRegister,
+            double lowerCheckout,
+            double upperCheckout,
             double lowerGather,
             double upperGather,
             double lambda
     ) {
-        uniRegisterRnd  = new UniformRandomStream(lowerRegister,upperRegister, SEED);
+        uniRegisterRnd  = new UniformRandomStream(lowerCheckout,upperCheckout, SEED);
         uniGatherRnd    = new UniformRandomStream(lowerGather,upperGather, SEED);
         expArrivalRnd   = new ExponentialRandomStream(lambda, SEED);
         this.state      = state;

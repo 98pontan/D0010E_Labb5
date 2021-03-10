@@ -12,7 +12,7 @@ public class CreateCustomer {
   * This constructor creates a customer with an ID of the number of customers created.
   * The constructor also returns a customer.
   */
-  public Customer createCustomer(){
+  public Customer createCustomer() {
     Customer customer = new Customer(createdCustomers);
     createdCustomers++;
     return customer;

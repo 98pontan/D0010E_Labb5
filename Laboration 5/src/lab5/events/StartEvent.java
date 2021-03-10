@@ -24,8 +24,8 @@ public class StartEvent extends Event {
 	
 	public void run() 
 	{
-		state.update(this);
 		StoreState store = (StoreState) this.state;
+		store.update(this);
 		store.toggleIsOpen();
 
 		double arrivalTime = store.getTimeFactory().generateArrivalTime();
