@@ -1,5 +1,7 @@
 package lab5.store;
 
+import lab5.events.ArrivalEvent;
+import lab5.events.StopEvent;
 import lab5.sim.Event;
 import lab5.sim.SimState;
 
@@ -36,7 +38,9 @@ public class StoreState extends SimState {
 	private double totQueueTime;
 	private double emptyCheckoutTime;
 	private boolean isOpen = false;
+	private double timeAtCheckoutFreeTime;
 
+	private double t = 0;
 
 	private Time timeFactory;
 	private CreateCustomer customerFactory;
@@ -78,10 +82,22 @@ public class StoreState extends SimState {
 		UPPER_CHECKOUT = upperCheckout;
 		LOWER_GATHER = lowerGather;
 		UPPER_GATHER = upperGather;
-
 	}
 
 	public void update(Event e) {
+		if (e.getClass() != StopEvent.class) {
+			if (!(!isOpen() && e.getClass() == ArrivalEvent.class))
+			{
+				_updateCheckoutFreeTime(e.getTime());
+			}
+		}
+		try {
+			totQueueTime += (e.getTime() - getLastEvent().getTime()) * checkoutQueue.size();
+		}
+
+		catch (NullPointerException exception) {
+			totQueueTime = 0;
+		}
 		super.update(e);
 		setLastEvent(e);
 	}
@@ -90,18 +106,17 @@ public class StoreState extends SimState {
 		if (checkAvailableCheckout()) {
 			try {
 				emptyCheckoutTime += (currentTime - getLastEvent().getTime()) * availableCheckouts;
+				setTimeAtCheckoutFreeTime(currentTime);
 			}
 
 			catch (NullPointerException e) {
-				emptyCheckoutTime += currentTime * availableCheckouts;
+				emptyCheckoutTime = 0;
 			}
 		}
 	}
 
-	public double getCheckoutFreeTime(Event e)
+	public double getCheckoutFreeTime()
 	{
-		// Make sure time returned is correct first
-		_updateCheckoutFreeTime(e.getTime());
 		return emptyCheckoutTime;
 	}
 
@@ -384,5 +399,13 @@ public class StoreState extends SimState {
 
 	public void incrementCustomers() {
 		totCustomers++;
+	}
+
+	public double getTimeAtCheckoutFreeTime() {
+		return timeAtCheckoutFreeTime;
+	}
+
+	public void setTimeAtCheckoutFreeTime(double timeAtCheckoutFreeTime) {
+		this.timeAtCheckoutFreeTime = timeAtCheckoutFreeTime;
 	}
 }
