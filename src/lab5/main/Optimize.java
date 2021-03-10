@@ -91,6 +91,7 @@ public class Optimize {
     
     // Runs 100 times if the maximum of the minimum number of checkouts has not changed.
     while(counter < 100){
+      // Creates a new amount of checkouts by sending in a new random SEED into the second method.
       int newAmountOfCheckouts = metod2(rand.nextLong());
       
       // If true, the counter resets.
