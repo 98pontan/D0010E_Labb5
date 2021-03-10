@@ -94,15 +94,16 @@ public class Optimize {
       // Creates a new amount of checkouts by sending in a new random SEED into the second method.
       int newAmountOfCheckouts = metod2(rand.nextLong());
       
-      // If true, the counter resets.
-      if(maxMinCheckouts != (checkBigger = maxMinCheckouts > newAmountOfCheckouts ? newAmountOfCheckouts : maxMinCheckouts)){
+      // If true, the counter resets. If false then the counter counts up by 1.
+      if(maxMinCheckouts != Math.max(newAmountOfCheckouts, maxMinCheckouts);){
         counter = 0;
       }
       else{
         counter++;
       }
       
-      maxMinCheckouts = (checkBigger = maxMinCheckouts > newAmountOfCheckouts ? newAmountOfCheckouts : maxMinCheckouts);
+      // maxMinCheckouts equals the biggest value of either newAmountOfCheckouts or maxMinCheckouts.
+      maxMinCheckouts = Math.max(newAmountOfCheckouts, maxMinCheckouts);;
     }
     
     return maxMinCheckouts;
