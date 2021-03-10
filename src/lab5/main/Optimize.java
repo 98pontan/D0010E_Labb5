@@ -17,8 +17,8 @@ public class Optimize {
     long SEED = 1234;
     
     // testar
-    System.out.println(opt.metod2(SEED));
-    System.out.println(opt.metod3(SEED));
+    System.out.println("Minsta antal kassor som ger minimalt antal missade (" +
+    opt.metod2(SEED) + "): " + opt.metod3(SEED));
   }
   
   public int metod1(long SEED, int CHECKOUTS, int MAX_CUSTOMERS,
@@ -72,8 +72,8 @@ public class Optimize {
     		                          lowerGather, upperGather, ARRIVAL_SPEED,
                                       lowerRegister, upperRegister, SIM_TIME);
       
-      // Checks if NewMissedCustomers is different than the inital value.
-      // If it is different the last amount of checkouts was the most opmtimal amount.
+      // Checks if NewMissedCustomers is different than the initial value.
+      // If it is different the last amount of checkouts was the most optimal amount.
       if(missedCustomers != newMissedCustomers){
         return minCheckouts + 1;
       }
