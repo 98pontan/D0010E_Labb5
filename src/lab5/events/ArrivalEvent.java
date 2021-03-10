@@ -52,14 +52,16 @@ public class ArrivalEvent extends Event {
 		}
 
 		if (store.isOpen() && !store.isFull()) {
+			store.incrementCustomers();
 			store.getCustomerList().add(customer);
 			double gatherTime = store.getTimeFactory().generateGatherTime();
 	    	gatherEvent = new GatherEvent(store, this.eventQueue, customer, gatherTime);
 			eventQueue.addEvent(gatherEvent);
 		}
 
-		else {
+		else if (store.isOpen()){
 			store.missedCustomers();
+			store.incrementCustomers();
 		}
 
 		store.createCheckoutFreeTime(time);

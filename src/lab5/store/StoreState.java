@@ -206,14 +206,14 @@ public class StoreState extends SimState {
 	}
 
 	// Kanske borde flyttas in i customerFactory?
-	public void addCustomer(Customer c)
+	public void incrementCustomers()
 	{
 		totCustomers++;
 
 		if(customerList.size() + 1 > maxCustomersToday)
 			maxCustomersToday = customerList.size() + 1;
 
-		customerList.add(c);
+		//customerList.add(c);
 	};
 
 	/**
@@ -224,7 +224,7 @@ public class StoreState extends SimState {
 	{
 		Customer c = customerFactory.createCustomer();
 		//c.setState(cState);
-		addCustomer(c);
+		//addCustomer(c);
 		return c;
 	}
 	/**

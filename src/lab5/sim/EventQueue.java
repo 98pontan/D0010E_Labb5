@@ -28,6 +28,8 @@ public class EventQueue
       eventQueue = eveQueue;
    }
 
+   
+
    /**
     * Returns the eventQueue. 
     * @return eventQueue
