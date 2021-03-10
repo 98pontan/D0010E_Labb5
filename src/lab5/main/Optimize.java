@@ -21,8 +21,8 @@ public class Optimize {
     System.out.println(opt.metod3(SEED));
   }
   
-  public int metod1(long SEED, int CHECKOUTS, , int MAX_CUSTOMERS,
-                   double lowerGather, double upperGather, double ARRIVAL_TIME,
+  public int metod1(long SEED, int CHECKOUTS, int MAX_CUSTOMERS,
+                   double lowerGather, double upperGather, double ARRIVAL_SPEED,
                    double lowerRegister, double upperRegister,  double SIM_TIME){
     
     // Kanske ska skapa en SimState model istället? Kanske fråga om detta?
@@ -51,7 +51,7 @@ public class Optimize {
     // The first method's parameters.
     int MAX_CUSTOMERS = 5;
     double SIM_TIME = 10;
-    double ARRIVAL_TIME = 1.0;
+    double ARRIVAL_SPEED = 1.0;
     double lowerGather = 0.5;
     double upperGather = 1.0;
     double lowerRegister = 2.0;
@@ -61,16 +61,16 @@ public class Optimize {
     int minCheckouts = MAX_CUSTOMERS;
     
     // Initial value of missedCustomers.
-    int missedCustomers = metod1(long SEED, int CHECKOUTS, , int MAX_CUSTOMERS,
-                                 double lowerGather, double upperGather, double ARRIVAL_TIME,
-                                 double lowerRegister, double upperRegister,  double SIM_TIME);
+    int missedCustomers = metod1(SEED, minCheckouts, MAX_CUSTOMERS,
+                                 lowerGather, upperGather, ARRIVAL_SPEED,
+                                 lowerRegister, upperRegister, SIM_TIME);
     
     // Gets a new value as long as minCheckouts >= 1.
     while(minCheckouts >= 1){
       // Creates a new amount of missed customers.
-      int newMissedCustomers = metod1(long SEED, int minCheckouts, , int MAX_CUSTOMERS,
-                                      double lowerGather, double upperGather, double ARRIVAL_TIME,
-                                      double lowerRegister, double upperRegister,  double SIM_TIME);
+      int newMissedCustomers = metod1(SEED, minCheckouts, MAX_CUSTOMERS,
+    		                          lowerGather, upperGather, ARRIVAL_SPEED,
+                                      lowerRegister, upperRegister, SIM_TIME);
       
       // Checks if NewMissedCustomers is different than the inital value.
       // If it is different the last amount of checkouts was the most opmtimal amount.
@@ -91,7 +91,6 @@ public class Optimize {
     
     int maxMinCheckouts = 0;
     int counter = 0;
-    int checkBigger;
     
     // Runs 100 times if the maximum of the minimum number of checkouts has not changed.
     while(counter < 100){
@@ -99,7 +98,7 @@ public class Optimize {
       int newAmountOfCheckouts = metod2(rand.nextLong());
       
       // If true, the counter resets. If false then the counter counts up by 1.
-      if(maxMinCheckouts != Math.max(newAmountOfCheckouts, maxMinCheckouts);){
+      if(maxMinCheckouts != Math.max(newAmountOfCheckouts, maxMinCheckouts)){
         counter = 0;
       }
       else{
