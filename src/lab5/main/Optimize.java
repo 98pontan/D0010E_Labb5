@@ -14,7 +14,11 @@ import lab5.store.StoreState;
 public class Optimize {
   public static void main(String[] args) {
     Optimize opt = new Optimize();
-    long SEED = 315354808530047762;
+    long SEED = 1234;
+    
+    // testar
+    System.out.println(opt.metod2(SEED));
+    System.out.println(opt.metod3(SEED));
   }
   
   public int metod1(long SEED, int CHECKOUTS, , int MAX_CUSTOMERS,
@@ -45,13 +49,13 @@ public class Optimize {
   
   public int metod2(long SEED){
     // The first method's parameters.
-    int MAX_CUSTOMERS = 6;
+    int MAX_CUSTOMERS = 5;
     double SIM_TIME = 10;
-    double ARRIVAL_TIME = 1;
+    double ARRIVAL_TIME = 1.0;
     double lowerGather = 0.5;
-    double upperGather = 0.9;
-    double lowerRegister = 2;
-    double upperRegister = 4;
+    double upperGather = 1.0;
+    double lowerRegister = 2.0;
+    double upperRegister = 3.0;
     
     // The minimal amount of checkouts can not be bigger than MAX_CUSTOMERS.
     int minCheckouts = MAX_CUSTOMERS;
@@ -103,7 +107,7 @@ public class Optimize {
       }
       
       // maxMinCheckouts equals the biggest value of either newAmountOfCheckouts or maxMinCheckouts.
-      maxMinCheckouts = Math.max(newAmountOfCheckouts, maxMinCheckouts);;
+      maxMinCheckouts = Math.max(newAmountOfCheckouts, maxMinCheckouts);
     }
     
     return maxMinCheckouts;
