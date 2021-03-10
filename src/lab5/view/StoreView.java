@@ -66,7 +66,7 @@ public class StoreView extends SimView {
               customerID + "\t" +
               checkOpen +
               storeState.getAvailableCheckouts() + "\t" +
-              timeFormat(storeState.getCheckoutFreeTime(e)) + "\t" +
+              timeFormat(storeState.getCheckoutFreeTime()) + "\t" +
               storeState.getCustomers() + "\t" +
               storeState.getPurchases() + "\t" +
               storeState.getMissedCustomers() + "\t" +
@@ -87,9 +87,9 @@ public class StoreView extends SimView {
     System.out.println(""); // Totala antalet kunder, kunder som handlade, missade kunder. (kan vara fel i 1) nedan)
     System.out.println("1) Av " + storeState.getTotCustomers() + " kunder handlade " + storeState.getPurchases() + " medan " + storeState.getMissedCustomers() + " missades.");
     System.out.println("");
-    System.out.println("2) Total tid " + storeState.getcheckOuts() + " kassor varit lediga: " + timeFormat(storeState.getCheckoutFreeTime(e))  + " te.");
-    System.out.println("   Genomsnittlig ledig kassatid: " + timeFormat(storeState.getCheckoutFreeTime(e)/storeState.getAvailableCheckouts())
-            + " te (dvs " + timeFormat((storeState.getAvailableCheckouts()/storeState.getCheckoutFreeTime(e))*100)  + "% av tiden från öppning tills sista kunden betalat).");
+    System.out.println("2) Total tid " + storeState.getcheckOuts() + " kassor varit lediga: " + timeFormat(storeState.getCheckoutFreeTime())  + " te.");
+    System.out.println("   Genomsnittlig ledig kassatid: " + timeFormat(storeState.getCheckoutFreeTime()/storeState.getAvailableCheckouts())
+            + " te (dvs " + timeFormat((storeState.getCheckoutFreeTime()/storeState.getAvailableCheckouts() / storeState.getTimeAtCheckoutFreeTime())*100)  + "% av tiden från öppning tills sista kunden betalat).");
     System.out.println("");
     System.out.println("3) Total tid " + storeState.getCheckoutQueue().getTotalQueuers() + " kunder tvingats köa: " + timeFormat(storeState.getTotQueueTime()) + " te.");
     System.out.println("   Genomsnittlig kötid: " + timeFormat(storeState.getTotQueueTime() / storeState.getCheckoutQueue().getTotalQueuers()) + " te.");
