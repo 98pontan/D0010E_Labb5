@@ -96,12 +96,10 @@ public class StoreState extends SimState {
 		
 		return false;
 	}
-	// TODO: kanske behöver multiplicera med antalet kassor
+
 	public void createCheckoutFreeTime(double time)
 	{
-		double t;
-		t = time * availableCheckouts;
-		emptyCheckoutTime += t;
+		emptyCheckoutTime = time * availableCheckouts;
 	}
 	/**
 	 * If a checkout is being occupide by a customer
@@ -220,7 +218,6 @@ public class StoreState extends SimState {
 
 	/**
 	 * creates customers objects and return them
-	 * @param cState
 	 * @return the latest created customer
 	 */
 	public Customer createCustomer()
@@ -278,16 +275,6 @@ public class StoreState extends SimState {
 	{
 		return missedCustomers;
 	}
-	
-	/**
-	 * @return the total time of queuing
-	 */
-	public double gettotQueueTime()
-	{
-		return totQueueTime;
-	}
-
-
 
 	/**
 	 * @return a list of customers inside the store
@@ -302,7 +289,6 @@ public class StoreState extends SimState {
 	public Time getTimeFactory() {
 		return timeFactory;
 	}
-
 
 	/**
 	 * @return the number of customers who could not enter the store
@@ -384,5 +370,9 @@ public class StoreState extends SimState {
 	public int getTotCustomers()
 	{
 		return totCustomers;
+	}
+
+	public CreateCustomer getCustomerFactory() {
+		return customerFactory;
 	}
 }
