@@ -40,7 +40,6 @@ public class SortedSequence
 			{
 				if(list.get(j).getTime() > list.get(j + 1).getTime()) {
 					Event temp;
-					
 					temp = list.get(j);
 					list.set(j, list.get(j + 1));
 					list.set(j + 1, temp);

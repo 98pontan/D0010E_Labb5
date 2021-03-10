@@ -1,5 +1,6 @@
 package lab5.store;
 
+import lab5.events.*;
 import lab5.sim.Event;
 import lab5.sim.SimState;
 
@@ -36,6 +37,7 @@ public class StoreState extends SimState {
 	private final double LOWER_CHECKOUT;
 	private final double UPPER_CHECKOUT;
 	private final long SEED;
+	private double lastPayTime;
 
 	private double emptyCheckoutTime;
 
@@ -96,14 +98,35 @@ public class StoreState extends SimState {
 		
 		return false;
 	}
-	// TODO: kanske behöver multiplicera med antalet kassor
-	public void createCheckoutFreeTime(double time)
+
+	public void createCheckoutFreeTime(Event e)
 	{
 		double t;
-
-		t = time - getCurrentTime()*getAvailableCheckouts();
-		emptyCheckoutTime += t;
+		if(e.getClass() != StopEvent.class)
+		{
+			t = getCheckoutFreeTime() + (timeBetweenEvent() * availableCheckouts);
+			
+			if (e.getClass() == PurchaseEvent.class)
+			{
+				setLastPayTime(e.getTime());
+			}
+		}
+		else
+		{
+			t = getCheckoutFreeTime() - ((getLastEventTime() - getLastPayTime()) * availableCheckouts);
+		}
+		emptyCheckoutTime = t;
 	}
+	private double getLastPayTime() {
+		return lastPayTime;
+	}
+
+
+	private void setLastPayTime(double time) {
+		lastPayTime = time;
+	}
+
+
 	/**
 	 * If a checkout is being occupide by a customer
 	 */
@@ -168,6 +191,7 @@ public class StoreState extends SimState {
 	 */
 	public void missedCustomers ()
 	{
+		if(isFull())
 			missedCustomers++;
 	}
 
@@ -220,10 +244,9 @@ public class StoreState extends SimState {
 
 	/**
 	 * creates customers objects and return them
-	 * @param cState
 	 * @return the latest created customer
 	 */
-	public Customer createCustomer(CustomerState cState)
+	public Customer createCustomer()
 	{
 		Customer c = customerFactory.createCustomer();
 		//c.setState(cState);
@@ -278,16 +301,6 @@ public class StoreState extends SimState {
 	{
 		return missedCustomers;
 	}
-	
-	/**
-	 * @return the total time of queuing
-	 */
-	public double gettotQueueTime()
-	{
-		return totQueueTime;
-	}
-
-
 
 	/**
 	 * @return a list of customers inside the store
@@ -302,7 +315,6 @@ public class StoreState extends SimState {
 	public Time getTimeFactory() {
 		return timeFactory;
 	}
-
 
 	/**
 	 * @return the number of customers who could not enter the store
@@ -384,5 +396,9 @@ public class StoreState extends SimState {
 	public int getTotCustomers()
 	{
 		return totCustomers;
+	}
+
+	public CreateCustomer getCustomerFactory() {
+		return customerFactory;
 	}
 }
