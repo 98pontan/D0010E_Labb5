@@ -15,7 +15,6 @@ public class Optimize {
   public static void main(String[] args) {
     Optimize opt = new Optimize();
     long SEED = 315354808530047762;
-    System.out.println(opt.metod2(SEED));
   }
   
   public int metod1(long SEED, int CHECKOUTS, , int MAX_CUSTOMERS,
