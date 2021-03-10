@@ -18,14 +18,15 @@ public class PurchaseEvent extends Event {
 	public PurchaseEvent(StoreState state, EventQueue eventQueue, Customer customer, double executionTime) {
 		super(state, eventQueue);
 		this.time = executionTime;
-		this.name = "Pay";
+		this.name = "Betal";
 		this.customer = customer;
 	}
 	
 	public void run() {
 		state.setTime(time);
-		// Decrease customer count in store by one
+		state.update(this);
 		StoreState model = (StoreState) this.state;
+		// Decrease customer count in store by one
 		// Make sure it's the right element being removed
 		model.getCustomerList().remove(customer);
 
@@ -49,6 +50,5 @@ public class PurchaseEvent extends Event {
 
 		// Save info about another customer has finished
 		model.updatePurchaseCount();
-		state.update(this);
 	}
 }

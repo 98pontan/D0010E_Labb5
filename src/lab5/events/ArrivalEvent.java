@@ -20,7 +20,11 @@ public class ArrivalEvent extends Event {
 	{
 		super(state, eventQueue);
 		this.time = time;
-		this.name = "Arrival";
+		this.name = "Ankomst";
+
+		StoreState store = (StoreState) state;
+		// Skapa alltid en kund, men läggs bara till inne i butiken nedan
+		this.customer = store.getCustomerFactory().createCustomer();
 	}
 
 	/**
@@ -33,6 +37,7 @@ public class ArrivalEvent extends Event {
 	public void run() 
 	{
 		state.setTime(time);
+		state.update(this);
 		StoreState store = (StoreState) this.state;
 
 		// TODO: Make it pretty? Switch maybe?
@@ -47,7 +52,7 @@ public class ArrivalEvent extends Event {
 		}
 
 		if (store.isOpen() && !store.isFull()) {
-			customer = store.createCustomer();
+			store.getCustomerList().add(customer);
 			double gatherTime = store.getTimeFactory().generateGatherTime();
 	    	gatherEvent = new GatherEvent(store, this.eventQueue, customer, gatherTime);
 			eventQueue.addEvent(gatherEvent);
@@ -58,7 +63,5 @@ public class ArrivalEvent extends Event {
 		}
 
 		store.createCheckoutFreeTime(time);
-		updateTime(store);
-		state.update(this);
 	}
 }

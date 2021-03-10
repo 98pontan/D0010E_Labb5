@@ -18,7 +18,7 @@ public class GatherEvent extends Event {
 	public GatherEvent(StoreState state, EventQueue eventQueue, Customer customer, double executionTime) {
 		super(state, eventQueue);
 		this.time = executionTime;
-		this.name = "Gather";
+		this.name = "Plock";
 		this.customer = customer;
 	}
 
@@ -29,6 +29,7 @@ public class GatherEvent extends Event {
 	 */
 	public void run() {
 		state.setTime(time);
+		state.update(this);
 		StoreState model = (StoreState) this.state;
 
 		if (model.checkAvailableCheckout()) {
@@ -46,6 +47,5 @@ public class GatherEvent extends Event {
 			customer.setQueueTime(time);
 			model.getCheckoutQueue().add(customer);
 		}
-		state.update(this);
 	}
 }

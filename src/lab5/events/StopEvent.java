@@ -26,7 +26,7 @@ public class StopEvent extends Event {
 	 */
 	public void run() 
 	{
-		state.setRunflagFalse();
 		state.update(this);
+		state.setRunflagFalse();
 	}
 }
