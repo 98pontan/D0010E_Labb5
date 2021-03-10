@@ -9,17 +9,17 @@ import lab5.view.StoreView;
 
 public class RunSim {
     public static void main(String[] args) {
-        final long SEED             = 1234;
+        final long SEED             = 13;
         final int CHECKOUTS         = 2;
-        final int MAX_CUSTOMERS     = 5;
+        final int MAX_CUSTOMERS     = 7;
         // Simulation run time in time units
-        final double SIM_TIME       = 10.0;
+        final double SIM_TIME       = 8.0;
         // How many customers that arrive per time unit
-        final double ARRIVAL_SPEED  = 1.0;
+        final double ARRIVAL_SPEED  = 3.0;
         // Lower and upper limits in time generation for
         // corresponding events
-        final double lowerGather    = 0.5, upperGather      = 1.0;
-        final double lowerCheckout  = 2.0, upperCheckout    = 3.0;
+        final double lowerGather    = 0.6, upperGather      = 0.9;
+        final double lowerCheckout  = 0.35, upperCheckout    = 0.6;
 
         StoreState model = new StoreState(
             SEED,

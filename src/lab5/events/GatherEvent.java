@@ -45,11 +45,6 @@ public class GatherEvent extends Event {
 		else {
 			customer.setQueueTime(time);
 			store.getCheckoutQueue().add(customer);
-
-			if (!store.getCheckoutQueue().isEmpty()) {
-				//double queueTime = store.getCheckoutQueue().getTotalQueueTime(time);
-				//store.setTotQueueTime(queueTime);
-			}
 		}
 	}
 }

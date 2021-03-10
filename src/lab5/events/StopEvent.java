@@ -15,7 +15,7 @@ public class StopEvent extends Event {
 	public StopEvent(SimState state, EventQueue eventQueue)
 	{
 		super(state, eventQueue);
-		this.time = 0d;
+		this.time = 999;
 		this.name = "Stop";
 		this.customer = null;
 	}
