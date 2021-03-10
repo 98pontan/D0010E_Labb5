@@ -111,12 +111,7 @@ public class StoreState extends SimState {
 	 */
 	public boolean checkAvailableCheckout()
 	{
-		if(availableCheckouts > 0)
-		{
-			return true;
-		}
-		
-		return false;
+		return availableCheckouts > 0;
 	}
 
 	public void createCheckoutFreeTime(double time)
@@ -385,5 +380,9 @@ public class StoreState extends SimState {
 
 	public CreateCustomer getCustomerFactory() {
 		return customerFactory;
+	}
+
+	public void incrementCustomers() {
+		totCustomers++;
 	}
 }
