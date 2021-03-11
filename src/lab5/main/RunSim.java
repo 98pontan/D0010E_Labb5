@@ -19,56 +19,54 @@ import lab5.view.StoreView;
  */
 
 public class RunSim {
-    public static void main(String[] args) {
-        long SEED;
-        int CHECKOUTS;
-        int MAX_CUSTOMERS;
-        // Simulation run time in time units
-        double SIM_TIME;
-        // How many customers that arrive per time unit, also called lambda
-        double ARRIVAL_SPEED;
-        // Lower and upper limits in time generation for
-        // corresponding events
-        double lowerGather;
-        double lowerCheckout;
-        double upperGather;
-        double upperCheckout;
+	public static void main(String[] args) {
+		long SEED;
+		int CHECKOUTS;
+		int MAX_CUSTOMERS;
+		// Simulation run time in time units
+		double SIM_TIME;
+		// How many customers that arrive per time unit, also called lambda
+		double ARRIVAL_SPEED;
+		// Lower and upper limits in time generation for
+		// corresponding events
+		double lowerGather;
+		double lowerCheckout;
+		double upperGather;
+		double upperCheckout;
 
-        if (true) {
-            SEED          = 1234;
-            CHECKOUTS     = 2;
-            MAX_CUSTOMERS = 5;
-            SIM_TIME      = 10.0;
-            ARRIVAL_SPEED = 1.0;
-            lowerGather   = 0.5; upperGather = 1.0;
-            lowerCheckout = 2.0; upperCheckout = 3.0;
-        }
+		if (true) {
+			SEED = 1234;
+			CHECKOUTS = 2;
+			MAX_CUSTOMERS = 5;
+			SIM_TIME = 10.0;
+			ARRIVAL_SPEED = 1.0;
+			lowerGather = 0.5;
+			upperGather = 1.0;
+			lowerCheckout = 2.0;
+			upperCheckout = 3.0;
+		}
 
-        else {
-            SEED          = 13;
-            CHECKOUTS     = 2;
-            MAX_CUSTOMERS = 7;
-            SIM_TIME      = 8.0;
-            ARRIVAL_SPEED = 3.0;
-            lowerGather   = 0.6;  upperGather = 0.9;
-            lowerCheckout = 0.35; upperCheckout = 0.6;
-        }
+		else {
+			SEED = 13;
+			CHECKOUTS = 2;
+			MAX_CUSTOMERS = 7;
+			SIM_TIME = 8.0;
+			ARRIVAL_SPEED = 3.0;
+			lowerGather = 0.6;
+			upperGather = 0.9;
+			lowerCheckout = 0.35;
+			upperCheckout = 0.6;
+		}
 
-        StoreState model = new StoreState(
-            SEED,
-            CHECKOUTS,
-            MAX_CUSTOMERS,
-            ARRIVAL_SPEED,
-            lowerGather, upperGather,
-            lowerCheckout, upperCheckout
-        );
-        StoreView view = new StoreView(model);
-        EventQueue queue = new EventQueue();
-        queue.addEvent(new StopEvent(model, queue));
-        queue.addEvent(new ClosingEvent(model, queue, SIM_TIME));
-        queue.addEvent(new StartEvent(model, queue));
+		StoreState model = new StoreState(SEED, CHECKOUTS, MAX_CUSTOMERS, ARRIVAL_SPEED, lowerGather, upperGather,
+				lowerCheckout, upperCheckout);
+		StoreView view = new StoreView(model);
+		EventQueue queue = new EventQueue();
+		queue.addEvent(new StopEvent(model, queue));
+		queue.addEvent(new ClosingEvent(model, queue, SIM_TIME));
+		queue.addEvent(new StartEvent(model, queue));
 
-        Simulator sim = new Simulator(model, queue);
-        sim.run();
-    }
+		Simulator sim = new Simulator(model, queue);
+		sim.run();
+	}
 }

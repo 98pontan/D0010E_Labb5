@@ -1,21 +1,22 @@
 package lab5.sim;
+
 import lab5.store.*;
 
 /**
  * Abstract template for all events. Holds time, event name and customer.
  * 
  * @author Lucas Pettersson,
- * @author Pontus Eriksson Jirbratt, 
- * @author Jesper Johansson Oskarsson, 
+ * @author Pontus Eriksson Jirbratt,
+ * @author Jesper Johansson Oskarsson,
  * @author Markus Blomqvist
  *
  */
- abstract public class Event {
-	
+abstract public class Event {
+
 	protected SimState state;
 	protected EventQueue eventQueue;
 	protected Customer customer;
-	 
+
 	protected String name;
 	protected double time;
 
@@ -25,8 +26,7 @@ import lab5.store.*;
 	 * @param state
 	 * @param eventQueue
 	 */
-	public Event(SimState state, EventQueue eventQueue)
-	{
+	public Event(SimState state, EventQueue eventQueue) {
 		this.state = state;
 		this.eventQueue = eventQueue;
 	}

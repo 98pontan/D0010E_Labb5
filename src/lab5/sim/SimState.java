@@ -3,7 +3,9 @@ package lab5.sim;
 import java.util.Observable;
 
 /**
- * The general state of the simulation, keep tracks of time, events and if the simulation is still running
+ * The general state of the simulation, keep tracks of time, events and if the
+ * simulation is still running
+ * 
  * @author Pontus Eriksson Jirbratt,
  * @author Lucas Pettersson,
  * @author Jesper Johansson Oskarsson,
@@ -19,8 +21,8 @@ public class SimState extends Observable {
 	 * Constructor set the time to zero and set the flag for the program to true
 	 */
 	public SimState() {
-		currentTime 	= 0;
-		runFlag 		= true;
+		currentTime = 0;
+		runFlag = true;
 	}
 
 	/**
@@ -36,8 +38,7 @@ public class SimState extends Observable {
 	 *
 	 * @param e The event that called update
 	 */
-	public void update(Event e)
-	{
+	public void update(Event e) {
 		currentTime = e.getTime();
 
 		setChanged();
@@ -45,18 +46,16 @@ public class SimState extends Observable {
 	}
 
 	/**
-	 * @return if the program is running 
+	 * @return if the program is running
 	 */
-	boolean getSimRunning() 
-	{
+	boolean getSimRunning() {
 		return runFlag;
 	}
-	
+
 	/**
 	 * @return the current time in the program
 	 */
-	public double getCurrentTime()
-	{
+	public double getCurrentTime() {
 		return currentTime;
 	}
 

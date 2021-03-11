@@ -99,7 +99,7 @@ public class Optimize {
 					lowerRegister, upperRegister, SIM_TIME);
 
 			if (newStore.getMissedCustomers() <= initStore.getMissedCustomers()) {
-				optimizedCheckouts = newStore.getcheckOuts();
+				optimizedCheckouts = newStore.getCHECKOUTS();
 				optimizedCustomers = newStore.getMissedCustomers();
 			}
 
