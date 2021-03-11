@@ -6,7 +6,8 @@ import lab5.sim.Event;
 import lab5.sim.EventQueue;
 
 /**
- * Description
+ * Represents when a customer has finished paying for their
+ * goods and are leaving the store
  * 
  * @author Lucas Pettersson,
  * @author Pontus Eriksson Jirbratt, 
@@ -15,23 +16,35 @@ import lab5.sim.EventQueue;
  *
  */
 public class PurchaseEvent extends Event {
-	public PurchaseEvent(StoreState state, EventQueue eventQueue, Customer customer, double executionTime) {
+	/**
+	 * Initializes parameters
+	 *
+	 * @param state the SimState model
+	 * @param eventQueue the EventQueue
+	 * @param customer the customer object
+	 * @param time the execution time of the event
+	 */
+	public PurchaseEvent(StoreState state, EventQueue eventQueue, Customer customer, double time) {
 		super(state, eventQueue);
-		this.time = executionTime;
+		this.time = time;
 		this.name = "Betal";
 		this.customer = customer;
 	}
-	
+
+	/**
+	 * execution of the Purchase event
+	 * removes customer from store
+	 * empties one checkout if no queue,
+	 * else bring one Customer from queue to checkout
+	 * updates data of successful purchases
+	 */
 	public void run() {
 		StoreState store = (StoreState) this.state;
 		store.update(this);
-		// Decrease customer count in store by one
-		// Make sure it's the right element being removed
 		store.getCustomerList().remove(customer);
 
 		if (store.getCheckoutQueue().isEmpty()) {
 			store.emptyCheckout();
-
 		}
 
 		else {
@@ -39,14 +52,12 @@ public class PurchaseEvent extends Event {
 					store,
 					eventQueue,
 					store.getCheckoutQueue().getFirst(),
-					store.getTimeFactory().generateRegisterTime()
+					store.getTimeFactory().generatePurchaseTime()
 			));
-			//double queueTime = store.getCheckoutQueue().getFirst().getQueueTime(time);
-			//store.setTotQueueTime(queueTime);
+
 			store.getCheckoutQueue().removeFirst();
 		}
 
-		// Save info about another customer has finished
 		store.updatePurchaseCount();
 	}
 }

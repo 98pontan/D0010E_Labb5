@@ -5,4 +5,6 @@
     <fullyQualifiedTypeName name="lab5.store.StoreState"/>
     <fullyQualifiedTypeName name="lab5.events.StopEvent"/>
     <fullyQualifiedTypeName name="lab5.events.ClosingEvent"/>
+    <fullyQualifiedTypeName name="lab5.view.StoreView"/>
+    <fullyQualifiedTypeName name="lab5.K"/>
 </qualifiedTypeNameHistroy>
