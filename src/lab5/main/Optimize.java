@@ -1,12 +1,9 @@
 package lab5.main;
-import java.util.ArrayList;
 import java.util.Random;
 import lab5.events.StartEvent;
-import lab5.K;
 import lab5.events.ClosingEvent;
 import lab5.events.StopEvent;
 import lab5.sim.*;
-import lab5.store.Customer;
 import lab5.store.StoreState;
 
 /**
@@ -14,21 +11,23 @@ import lab5.store.StoreState;
  * It runs simulations to find the optimal amount of checkouts while the other parameters is set.
  * @author Markus Blomqvist.
  */
-public class Optimize {	
+public class Optimize {
     public static void main(String[] args) {
         Optimize opt = new Optimize();
-        long SEED = K.SEED;
+        long SEED = 1234;
 
         // testar
         System.out.println("Minsta antal kassor som ger minimalt antal missade kunder (" +
-        		opt.metod2(SEED).get(0) + "): " + opt.metod2(SEED).get(1));
-        System.out.println(opt.metod3(SEED));
+                opt.metod2(SEED) + "): " + opt.metod3(SEED));
     }
 
-    public StoreState metod1(long SEED, int CHECKOUTS, int MAX_CUSTOMERS,
+    public int metod1(long SEED, int CHECKOUTS, int MAX_CUSTOMERS,
                       double lowerGather, double upperGather, double ARRIVAL_SPEED,
                       double lowerRegister, double upperRegister,  double SIM_TIME){
 
+        // Kanske ska skapa en SimState model istället? Kanske fråga om detta?
+        // I lab5 dokumentet: "Viktigt är att den generella simulatorn inget vet om den specifika."
+        // "Den ska fungera för vilken specifik simulator som helst, inte bara en snabbköpssimulator."
         StoreState model = new StoreState(
                 SEED,
                 CHECKOUTS,
@@ -45,73 +44,71 @@ public class Optimize {
         Simulator sim = new Simulator(model, queue);
         sim.run();
 
-        return model;
+        return model.getMissedCustomers();
     }
 
-    public ArrayList<Integer> metod2(long SEED){
+    public int metod2(long SEED){
         // The first method's parameters.
-        int MAX_CUSTOMERS = K.M;
-        double SIM_TIME = K.END_TIME;
-        double ARRIVAL_SPEED = K.L;
-        double lowerGather = K.LOW_COLLECTION_TIME;
-        double upperGather = K.HIGH_COLLECTION_TIME;
-        double lowerRegister = K.LOW_PAYMENT_TIME;
-        double upperRegister = K.HIGH_PAYMENT_TIME;
+        int MAX_CUSTOMERS = 5;
+        double SIM_TIME = 10;
+        double ARRIVAL_SPEED = 1.0;
+        double lowerGather = 0.5;
+        double upperGather = 1.0;
+        double lowerRegister = 2.0;
+        double upperRegister = 3.0;
 
         // The minimal amount of checkouts can not be bigger than MAX_CUSTOMERS.
-        int checkouts = MAX_CUSTOMERS;
-        StoreState initStore = metod1(SEED, checkouts, MAX_CUSTOMERS,
-              lowerGather, upperGather, ARRIVAL_SPEED,
-              lowerRegister, upperRegister, SIM_TIME);
+        int minCheckouts = MAX_CUSTOMERS;
 
-        int optimizedCheckouts = 0;
-        int optimizedCustomers = 0;
-        ArrayList<Integer> values = new ArrayList<Integer>();
-        
-        while (checkouts >= 1)
-        {
-        	StoreState newStore = metod1(SEED, checkouts, MAX_CUSTOMERS,
+        // Initial value of missedCustomers.
+        int missedCustomers = metod1(SEED, minCheckouts, MAX_CUSTOMERS,
+                lowerGather, upperGather, ARRIVAL_SPEED,
+                lowerRegister, upperRegister, SIM_TIME);
+
+        // Gets a new value as long as minCheckouts >= 1.
+        while(minCheckouts >= 1){
+            // Creates a new amount of missed customers.
+            int newMissedCustomers = metod1(SEED, minCheckouts, MAX_CUSTOMERS,
                     lowerGather, upperGather, ARRIVAL_SPEED,
                     lowerRegister, upperRegister, SIM_TIME);
-        	
-            if (newStore.getMissedCustomers() <= initStore.getMissedCustomers())
-            {
-            	optimizedCheckouts = newStore.getcheckOuts();
-            	optimizedCustomers = newStore.getMissedCustomers();
+
+            // Checks if NewMissedCustomers is different than the initial value.
+            // If it is different the last amount of checkouts was the most optimal amount.
+            if(missedCustomers != newMissedCustomers){
+                return minCheckouts + 1;
             }
-            
-        	checkouts--;
+
+            // Decreases the amount of minCheckouts.
+            minCheckouts--;
         }
-        values.add(0, optimizedCustomers);
-        values.add(1, optimizedCheckouts);
-        return values;
+
+        return MAX_CUSTOMERS;
     }
 
     public int metod3(long SEED){
         // Sets a random seed number.
         Random rand = new Random(SEED);
+
         int maxMinCheckouts = 0;
         int counter = 0;
-        
-        // Det undersöks om det minsta antal som returneras (från metod2) är högre än tidigare och i
-        // så fall sparas det som nytt högsta minsta antal.
 
         // Runs 100 times if the maximum of the minimum number of checkouts has not changed.
         while(counter < 100){
+            // Creates a new amount of checkouts by sending in a new random SEED into the second method.
+            int newAmountOfCheckouts = metod2(rand.nextLong());
 
-           // Creates a new amount of checkouts by sending in a new random SEED into the second method.
-           int newCheckouts = metod2(rand.nextLong()).get(1);
-           
-           // If true, the counter resets. If false then the counter counts up by 1.
-           if(maxMinCheckouts < newCheckouts){
-              maxMinCheckouts = newCheckouts;
-              counter = 0;
-           }
-           else{
-        	   counter++;
-           }
+            // If true, the counter resets. If false then the counter counts up by 1.
+            if(maxMinCheckouts != Math.max(newAmountOfCheckouts, maxMinCheckouts)){
+                counter = 0;
+            }
+            else{
+                counter++;
+            }
+
+            // maxMinCheckouts equals the biggest value of either newAmountOfCheckouts or maxMinCheckouts.
+            maxMinCheckouts = Math.max(newAmountOfCheckouts, maxMinCheckouts);
         }
 
         return maxMinCheckouts;
-     }
+    }
 }
