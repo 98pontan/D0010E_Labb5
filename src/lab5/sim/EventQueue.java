@@ -7,17 +7,24 @@ import java.util.ArrayList;
  * Add and removes events
  * Updates the list with the class SortedSequence
  *
- * @author Pontus Eriksson Jirbratt
+ * @author Pontus Eriksson Jirbratt,
+ * @author Lucas Pettersson,
+ * @author Jesper Johansson Oskarsson,
+ * @author Markus Blomqvist
  */
 
 public class EventQueue
 {
 
-   ArrayList<Event> eventQueue;
+   private ArrayList<Event> eventQueue;
 
+   /**
+    * Constructor that creates an ArrayList of events.
+    */
    public EventQueue() {
       eventQueue = new ArrayList<>();
    }
+
    /**
     * Constructor that takes an ArrayList of events and set the current eventQueue to it.
     *
@@ -56,7 +63,7 @@ public class EventQueue
     * removes it from the list
     * @return the event in the first position of eventQueue
     */
-   Event popNextEvent()
+   public Event popNextEvent()
    {
       final int NEXTEVENT = 0;
       Event event;

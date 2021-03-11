@@ -1,4 +1,5 @@
 package lab5.main;
+
 import java.util.Random;
 import lab5.events.StartEvent;
 import lab5.K;
@@ -6,41 +7,54 @@ import lab5.events.ClosingEvent;
 import lab5.events.StopEvent;
 import lab5.sim.*;
 import lab5.store.StoreState;
-import lab5.view.StoreView;
 
 /**
  * This class is used to optimize the operations of a simulated environment.
  * It runs simulations to find the optimal amount of checkouts while the other parameters is set.
- * @author Markus Blomqvist.
+ *
+ * @author Pontus Eriksson Jirbratt,
+ * @author Lucas Pettersson,
+ * @author Jesper Johansson Oskarsson,
+ * @author Markus Blomqvist
+ *
  */
+
 public class Optimize {
-	private static int optimizedCustomers = 0;
+	private int missedCustomersCounter;
 	
     public static void main(String[] args) {
         Optimize opt = new Optimize();
-        long SEED = K.SEED;
-
-        // testar
-        System.out.println("Minsta antal kassor som ger minimalt antal missade kunder (" +
-        		optimizedCustomers + "): " + opt.metod3(SEED));
+        opt.run(K.SEED);
     }
 
-    public StoreState metod1(long SEED, int CHECKOUTS, int MAX_CUSTOMERS,
-                      double lowerGather, double upperGather, double ARRIVAL_SPEED,
-                      double lowerRegister, double upperRegister,  double SIM_TIME){
+    public void run(long SEED) {
+        int method2Result = _method2(SEED);
+        int method3Result = _method3(SEED);
 
-        // Kanske ska skapa en SimState model istället? Kanske fråga om detta?
-        // I lab5 dokumentet: "Viktigt är att den generella simulatorn inget vet om den specifika."
-        // "Den ska fungera för vilken specifik simulator som helst, inte bara en snabbköpssimulator."
+        System.out.println(
+                "Minsta antal kassor som ger minimalt antal missade (" +
+                missedCustomersCounter + "): " + method3Result
+        );
+    }
+
+    private StoreState _method1(
+        long SEED,
+        int CHECKOUTS,
+        int MAX_CUSTOMERS,
+        double ARRIVAL_SPEED,
+        double lowerGather, double upperGather,
+        double lowerRegister, double upperRegister,
+        double SIM_TIME
+    ) {
         StoreState model = new StoreState(
                 SEED,
                 CHECKOUTS,
                 MAX_CUSTOMERS,
                 ARRIVAL_SPEED,
                 lowerGather, upperGather,
-                lowerRegister, upperRegister);
+                lowerRegister, upperRegister
+        );
 
-//        StoreView view = new StoreView(model);
         EventQueue queue = new EventQueue();
         queue.addEvent(new StopEvent(model, queue));
         queue.addEvent(new ClosingEvent(model, queue, SIM_TIME));
@@ -52,68 +66,68 @@ public class Optimize {
         return model;
     }
 
-    public int metod2(long SEED){
-        // The first method's parameters.
-        int MAX_CUSTOMERS = K.M;
-        double SIM_TIME = K.END_TIME;
-        double ARRIVAL_SPEED = K.L;
-        double lowerGather = K.LOW_COLLECTION_TIME;
-        double upperGather = K.HIGH_COLLECTION_TIME;
-        double lowerRegister = K.LOW_PAYMENT_TIME;
-        double upperRegister = K.HIGH_PAYMENT_TIME;
-
+    // FIND MIN CHECKOUTS
+    private int _method2(long SEED) {
+        int MAX_CUSTOMERS       = K.M;
+        double ARRIVAL_SPEED    = K.L;
+        double lowerGather      = K.LOW_COLLECTION_TIME;
+        double upperGather      = K.HIGH_COLLECTION_TIME;
+        double lowerRegister    = K.LOW_PAYMENT_TIME;
+        double upperRegister    = K.HIGH_PAYMENT_TIME;
+        double SIM_TIME         = K.END_TIME;
         // The minimal amount of checkouts can not be bigger than MAX_CUSTOMERS.
-        int checkouts = MAX_CUSTOMERS;
-        StoreState initStore = metod1(SEED, checkouts, MAX_CUSTOMERS,
-              lowerGather, upperGather, ARRIVAL_SPEED,
-              lowerRegister, upperRegister, SIM_TIME);
+        int checkouts = 1;
+        StoreState model;
+        missedCustomersCounter = K.M;
 
-        int optimizedCheckouts = 0;
-        
-        while (checkouts >= 1)
+        while (checkouts < MAX_CUSTOMERS)
         {
-        	StoreState newStore = metod1(SEED, checkouts, MAX_CUSTOMERS,
-                    lowerGather, upperGather, ARRIVAL_SPEED,
-                    lowerRegister, upperRegister, SIM_TIME);
-        	
-            System.out.println("WORKING...");
-        	
-            if (newStore.getMissedCustomers() <= initStore.getMissedCustomers())
-            {
-            	optimizedCheckouts = newStore.getcheckOuts();
-            	optimizedCustomers = newStore.getMissedCustomers();
+            System.out.println("Hello");
+            model = _method1(
+                SEED,
+                checkouts,
+                MAX_CUSTOMERS,
+                ARRIVAL_SPEED,
+                lowerGather, upperGather,
+                lowerRegister, upperRegister,
+                SIM_TIME
+            );
+
+            if (model.getMissedCustomers() < missedCustomersCounter) {
+                missedCustomersCounter = model.getMissedCustomers();
             }
-            
-        	checkouts--;
+
+            else if (model.getMissedCustomers() == missedCustomersCounter) {
+                checkouts--;
+                break;
+            }
+
+            checkouts++;
         }
-        return optimizedCheckouts;
+
+        return checkouts;
     }
 
-    public int metod3(long SEED){
+    // FIND MIN CHECKOUTS WITH DIFFERENT SEEDS
+    private int _method3(long SEED){
         // Sets a random seed number.
         Random rand = new Random(SEED);
-        int smallestAmountNeeded = 0;
-        int counter = 0;
-        
-        // Det undersöks om det minsta antal som returneras (från metod2) är högre än tidigare och i
-        // så fall sparas det som nytt högsta minsta antal.
+        int lowestSoFar = K.M;
+        int matchCounter = 0;
+        while (true) {
+            int minCheckouts = _method2(rand.nextLong());
+            System.out.println("Another hello");
+            if (minCheckouts < lowestSoFar) {
+                lowestSoFar = minCheckouts;
+            }
 
-        // Runs 100 times if the maximum of the minimum number of checkouts has not changed.
-        while(counter < 100){
+            else if (minCheckouts == lowestSoFar) {
+                matchCounter++;
+            }
 
-           // Creates a new amount of checkouts by sending in a new random SEED into the second method.
-           int optimizedCustomers = metod2(rand.nextLong());
-
-           // If true, the counter resets. If false then the counter counts up by 1.
-           if(smallestAmountNeeded < optimizedCustomers){
-              smallestAmountNeeded = optimizedCustomers;
-              counter = 0;
-           }
-           else{
-        	   counter++;
-           }
+            if (matchCounter == 100) {
+                return lowestSoFar;
+            }
         }
-
-        return smallestAmountNeeded;
      }
 }

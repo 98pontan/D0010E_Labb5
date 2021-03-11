@@ -3,7 +3,7 @@ import lab5.sim.*;
 import lab5.store.*;
 
 /**
- * Description
+ * Represents the opening of the store
  * 
  * @author Lucas Pettersson,
  * @author Pontus Eriksson Jirbratt, 
@@ -12,8 +12,13 @@ import lab5.store.*;
  *
  */
 public class StartEvent extends Event {
-	private ArrivalEvent arrivalEvent;
-
+	/**
+	 * Initializes parameters, since it's a start event time is 0 and
+	 * customer is null
+	 *
+	 * @param state the SimState model
+	 * @param eventQueue the EventQueue
+	 */
 	public StartEvent(SimState state, EventQueue eventQueue) 
 	{
 		super(state, eventQueue);
@@ -21,7 +26,10 @@ public class StartEvent extends Event {
 		this.name = "Start";
 		this.customer = null;
 	}
-	
+
+	/**
+	 * Opens the store and creates the first arrival event
+	 */
 	public void run() 
 	{
 		StoreState store = (StoreState) this.state;
@@ -29,7 +37,7 @@ public class StartEvent extends Event {
 		store.toggleIsOpen();
 
 		double arrivalTime = store.getTimeFactory().generateArrivalTime();
-		arrivalEvent = new ArrivalEvent(this.state, this.eventQueue, arrivalTime);
+		ArrivalEvent arrivalEvent = new ArrivalEvent(this.state, this.eventQueue, arrivalTime);
 		eventQueue.addEvent(arrivalEvent);
 	}
 }

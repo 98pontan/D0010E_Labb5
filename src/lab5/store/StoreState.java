@@ -18,29 +18,23 @@ import java.util.ArrayList;
  */
 
 public class StoreState extends SimState {
+	private final long SEED;
 	private final int MAX_CUSTOMERS;
+	private final int CHECKOUTS;
 	private final double ARRIVAL_SPEED;
 	private final double LOWER_GATHER;
 	private final double UPPER_GATHER;
 	private final double LOWER_CHECKOUT;
 	private final double UPPER_CHECKOUT;
-	private final long SEED;
 
-	private int checkOuts;
-	private int maxCheckouts;
-	private int maxCustomersToday;
 	private int missedCustomers;
 	private int purchases;
-	private int turnedAwayCustomers;
 	private int availableCheckouts;
-	private int occupiedCheckouts;
 	private int totCustomers;
 	private double totQueueTime;
 	private double emptyCheckoutTime;
+	private double totTimeAtCheckout;
 	private boolean isOpen = false;
-	private double timeAtCheckoutFreeTime;
-
-	private double t = 0;
 
 	private Time timeFactory;
 	private CreateCustomer customerFactory;
@@ -68,7 +62,7 @@ public class StoreState extends SimState {
 	) {
 		super();
 		this.MAX_CUSTOMERS 	= MAX_CUSTOMERS;
-		checkOuts 			= CHECKOUTS;
+		this.CHECKOUTS = CHECKOUTS;
 		availableCheckouts 	= CHECKOUTS;
 		timeFactory 		= new Time(this, SEED, lowerCheckout, upperCheckout, lowerGather, upperGather, ARRIVAL_SPEED);
 		customerList 		= new ArrayList<>();
@@ -78,19 +72,30 @@ public class StoreState extends SimState {
 		this.SEED = SEED;
 		this.ARRIVAL_SPEED = ARRIVAL_SPEED;
 
-		LOWER_CHECKOUT = lowerCheckout;
-		UPPER_CHECKOUT = upperCheckout;
-		LOWER_GATHER = lowerGather;
-		UPPER_GATHER = upperGather;
+		LOWER_CHECKOUT 	= lowerCheckout;
+		UPPER_CHECKOUT 	= upperCheckout;
+		LOWER_GATHER 	= lowerGather;
+		UPPER_GATHER 	= upperGather;
 	}
 
+	/**
+	 * Updates the total checkout and queue free time, then updates
+	 * the view and saves the last called event
+	 * @param e The event that called update
+	 */
 	public void update(Event e) {
-		if (e.getClass() != StopEvent.class) {
-			if (!(!isOpen() && e.getClass() == ArrivalEvent.class))
-			{
-				_updateCheckoutFreeTime(e.getTime());
-			}
-		}
+		_updateCheckoutFreeTime(e);
+		_updateTotQueueTime(e);
+		super.update(e);
+		setLastEvent(e);
+	}
+
+	/**
+	 * Updates total queue time
+	 *
+	 * @param e the current event
+	 */
+	private void _updateTotQueueTime(Event e) {
 		try {
 			totQueueTime += (e.getTime() - getLastEvent().getTime()) * checkoutQueue.size();
 		}
@@ -98,23 +103,34 @@ public class StoreState extends SimState {
 		catch (NullPointerException exception) {
 			totQueueTime = 0;
 		}
-		super.update(e);
-		setLastEvent(e);
 	}
 
-	private void _updateCheckoutFreeTime(double currentTime) {
-		if (checkAvailableCheckout()) {
-			try {
-				emptyCheckoutTime += (currentTime - getLastEvent().getTime()) * availableCheckouts;
-				setTimeAtCheckoutFreeTime(currentTime);
-			}
+	/**
+	 * Updates the total checkout free time
+	 *
+	 * @param e the current event
+	 */
+	private void _updateCheckoutFreeTime(Event e) {
+		double currentTime = e.getTime();
+		if (e.getClass() != StopEvent.class) {
+			if (!(!isOpen() && e.getClass() == ArrivalEvent.class) && checkAvailableCheckout())
+			{
+				try {
+					emptyCheckoutTime += (currentTime - getLastEvent().getTime()) * availableCheckouts;
+					setTimeAtCheckout(currentTime);
+				}
 
-			catch (NullPointerException e) {
-				emptyCheckoutTime = 0;
+				catch (NullPointerException exception) {
+					emptyCheckoutTime = 0;
+				}
 			}
 		}
 	}
 
+	/**
+	 *
+	 * @return the total free checkout time
+	 */
 	public double getCheckoutFreeTime()
 	{
 		return emptyCheckoutTime;
@@ -129,26 +145,12 @@ public class StoreState extends SimState {
 		return availableCheckouts > 0;
 	}
 
-	public void createCheckoutFreeTime(double time)
-	{
-	}
 	/**
-	 * If a checkout is being occupied by a customer
+	 * Occupies a checkout
 	 */
 	public void occupiedCheckout()
 	{
-		if(availableCheckouts > 0) 
-		{
-			availableCheckouts--;
-			occupiedCheckouts++;
-			//time
-		}
-	
-	}
-
-	public void setTotQueueTime(double newTime)
-	{
-		this.totQueueTime += newTime;
+		availableCheckouts--;
 	}
 
 	/**
@@ -156,50 +158,22 @@ public class StoreState extends SimState {
 	 */
 	public void emptyCheckout()
 	{
-		if(availableCheckouts + 1 <= checkOuts)
-		{
-			availableCheckouts++;
-			
-			if(occupiedCheckouts - 1 >= 0)
-				occupiedCheckouts--;
-			//time
-		}
-	}
-	
-	
-	/**
-	 * Opens checkouts
-	 * @param n, number of checkouts to open
-	 */
-	void openCheckout(int n) 
-	{
-		checkOuts += n;
-		
-		if(checkOuts > maxCheckouts)
-			maxCheckouts = checkOuts;
-			
+		availableCheckouts++;
 	}
 	
 	/**
-	 * Closes checkouts so long its positive
-	 * @param n, number of checkout to close
-	 */
-	public void loseCheckouts(int n)
-	{
-		if(n - checkOuts >= 0) 
-			checkOuts -= n;
-	}
-	
-	/**
-	 * Increases the number of missed customers if the number of customers is over the max number of customers. 
-	 * @param
+	 * Increases the number of missed customers.
 	 */
 	public void missedCustomers ()
 	{
-		if(isFull())
-			missedCustomers++;
+		missedCustomers++;
 	}
 
+	/**
+	 * Checks if store is full
+	 *
+	 * @return true if store is full, else false
+	 */
 	public boolean isFull() {
 		return MAX_CUSTOMERS == customerList.size();
 	}
@@ -221,14 +195,6 @@ public class StoreState extends SimState {
 	}
 
 	/**
-	 * increment the number of customers who did not enter the store, either full store or they arrived after closing
-	 */
-	public void turnedAwayCustomer()
-	{
-		turnedAwayCustomers++;
-	}
-
-	/**
 	 * number of purchase events same as number of customers who has gone trough checkouts
 	 */
 	public void updatePurchaseCount()
@@ -236,24 +202,6 @@ public class StoreState extends SimState {
 		purchases++;
 	}
 
-	// Kanske borde flyttas in i customerFactory?
-	public void addCustomer(Customer c) {
-		if(customerList.size() + 1 > maxCustomersToday)
-			maxCustomersToday = customerList.size() + 1;
-
-		customerList.add(c);
-	};
-
-	/**
-	 * creates customers objects and return them
-	 * @return the latest created customer
-	 */
-	public Customer createCustomer() {
-		Customer c = customerFactory.createCustomer();
-		addCustomer(c);
-		totCustomers++;
-		return c;
-	}
 	/**
 	 * @return number of customers in the store
 	 */
@@ -265,9 +213,9 @@ public class StoreState extends SimState {
 	/**
 	 * @return number of open checkouts
 	 */
-	public int getcheckOuts()
+	public int getCHECKOUTS()
 	{
-		return checkOuts;
+		return CHECKOUTS;
 	}
 	
 	/**
@@ -279,19 +227,11 @@ public class StoreState extends SimState {
 	}
 	
 	/**
-	 * @return number of occupied checkouts
-	 */
-	int getOccupiedCheckouts()
-	{
-		return occupiedCheckouts;
-	}
-	
-	/**
 	 * @return number of customers visiting the store 
 	 */
-	public int getMaxCustomersToday()
+	public int getMaxCustomers()
 	{
-		return maxCustomersToday;
+		return MAX_CUSTOMERS;
 	}
 	
 	/**
@@ -310,17 +250,10 @@ public class StoreState extends SimState {
 	}
 
 	/**
-	 * @return the class that "creates" time (timeFactory)
+	 * @return the Time object
 	 */
 	public Time getTimeFactory() {
 		return timeFactory;
-	}
-
-	/**
-	 * @return the number of customers who could not enter the store
-	 */
-	public int getTurnedAwayCustomer() {
-		return turnedAwayCustomers;
 	}
 
 	/**
@@ -378,34 +311,61 @@ public class StoreState extends SimState {
 		return SEED;
 	}
 
+	/**
+	 *
+	 * @return total payments
+	 */
 	public int getPurchases()
 	{
 		return purchases;
 	}
 
+	/**
+	 *
+	 * @return total queue time
+	 */
 	public double getTotQueueTime()
 	{
 		return totQueueTime;
 	}
 
+	/**
+	 *
+	 * @return total amount of customers
+	 */
 	public int getTotCustomers()
 	{
 		return totCustomers;
 	}
 
+	/**
+	 *
+	 * @return the CreateCustomer object used to create new customers
+	 */
 	public CreateCustomer getCustomerFactory() {
 		return customerFactory;
 	}
 
+	/**
+	 * Increments total customers counter
+	 */
 	public void incrementCustomers() {
 		totCustomers++;
 	}
 
-	public double getTimeAtCheckoutFreeTime() {
-		return timeAtCheckoutFreeTime;
+	/**
+	 *
+	 * @return the total time of free checkouts
+	 */
+	public double getTimeAtCheckout() {
+		return totTimeAtCheckout;
 	}
 
-	public void setTimeAtCheckoutFreeTime(double timeAtCheckoutFreeTime) {
-		this.timeAtCheckoutFreeTime = timeAtCheckoutFreeTime;
+	/**
+	 *
+	 * @param timeAtCheckout the total time of free checkouts
+	 */
+	public void setTimeAtCheckout(double timeAtCheckout) {
+		this.totTimeAtCheckout = timeAtCheckout;
 	}
 }

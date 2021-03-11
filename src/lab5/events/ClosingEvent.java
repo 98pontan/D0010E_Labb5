@@ -3,7 +3,7 @@ import lab5.sim.*;
 import lab5.store.*;
 
 /**
- * Description
+ * Event representing closing the store for new arriving customers
  * 
  * @author Lucas Pettersson,
  * @author Pontus Eriksson Jirbratt, 
@@ -12,7 +12,13 @@ import lab5.store.*;
  *
  */
 public class ClosingEvent extends Event {
-
+	/**
+	 * Initializes parameters.
+	 *
+	 * @param state the SimState model
+	 * @param eventQueue the EventQueue
+	 * @param time the execution time of the event
+	 */
 	public ClosingEvent(SimState state, EventQueue eventQueue, double time)
 	{
 		super(state, eventQueue);

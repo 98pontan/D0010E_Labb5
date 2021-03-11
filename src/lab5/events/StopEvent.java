@@ -2,7 +2,7 @@ package lab5.events;
 import lab5.sim.*;
 
 /**
- * Description
+ * Represents the end of the simulation
  * 
  * @author Lucas Pettersson,
  * @author Pontus Eriksson Jirbratt, 
@@ -11,11 +11,17 @@ import lab5.sim.*;
  *
  */
 public class StopEvent extends Event {
-
+	/**
+	 * Initializes parameters, since it's a stop event time is irrelevant
+	 * and customer is null
+	 *
+	 * @param state the SimState model
+	 * @param eventQueue the EventQueue
+	 */
 	public StopEvent(SimState state, EventQueue eventQueue)
 	{
 		super(state, eventQueue);
-		this.time = 0d;
+		this.time = 999;
 		this.name = "Stop";
 		this.customer = null;
 	}

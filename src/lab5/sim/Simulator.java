@@ -1,5 +1,15 @@
 package lab5.sim;
 
+/**
+ * Handles running the simulator, triggers events from EventQueue.
+ *
+ * @author Pontus Eriksson Jirbratt,
+ * @author Lucas Pettersson,
+ * @author Jesper Johansson Oskarsson,
+ * @author Markus Blomqvist
+ *
+ */
+
 public class Simulator {
     SimState model;
     EventQueue queue;

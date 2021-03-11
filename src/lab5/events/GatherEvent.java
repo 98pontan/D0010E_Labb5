@@ -6,7 +6,7 @@ import lab5.sim.Event;
 import lab5.sim.EventQueue;
 
 /**
- * Description
+ * Represents when a customer has finished collecting their items
  * 
  * @author Lucas Pettersson,
  * @author Pontus Eriksson Jirbratt, 
@@ -15,9 +15,17 @@ import lab5.sim.EventQueue;
  *
  */
 public class GatherEvent extends Event {
-	public GatherEvent(StoreState state, EventQueue eventQueue, Customer customer, double executionTime) {
+	/**
+	 * Initializes parameters
+	 *
+	 * @param state the SimState model
+	 * @param eventQueue the EventQueue
+	 * @param customer the customer object
+	 * @param time the execution time of the event
+	 */
+	public GatherEvent(StoreState state, EventQueue eventQueue, Customer customer, double time) {
 		super(state, eventQueue);
-		this.time = executionTime;
+		this.time = time;
 		this.name = "Plock";
 		this.customer = customer;
 	}
@@ -32,24 +40,17 @@ public class GatherEvent extends Event {
 		store.update(this);
 
 		if (store.checkAvailableCheckout()) {
-			store.createCheckoutFreeTime(time);
 			store.occupiedCheckout();
 			eventQueue.addEvent(new PurchaseEvent(
 					store,
 					eventQueue,
 					customer,
-					store.getTimeFactory().generateRegisterTime())
+					store.getTimeFactory().generatePurchaseTime())
 			);
 		}
 
 		else {
-			customer.setQueueTime(time);
 			store.getCheckoutQueue().add(customer);
-
-			if (!store.getCheckoutQueue().isEmpty()) {
-				//double queueTime = store.getCheckoutQueue().getTotalQueueTime(time);
-				//store.setTotQueueTime(queueTime);
-			}
 		}
 	}
 }

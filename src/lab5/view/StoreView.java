@@ -9,15 +9,20 @@ import java.util.Observable;
 /**
  * This class prints out the data for the simulation of the store.
  * It prints out the start followed by the events that is called and then the end.
+ *
+ * @author Pontus Eriksson Jirbratt,
+ * @author Lucas Pettersson,
+ * @author Jesper Johansson Oskarsson,
  * @author Markus Blomqvist
  */
-// METODERNA MÅSTE KONTROLLERAS
+
 public class StoreView extends SimView {
   private StoreState storeState;
   
   /**
-   * This is the constructor for this class.
-   * It will use the states to get data.
+   * Sets the state and calls constructor in SimView
+   *
+   * @param storeState model to observe
    */
   public StoreView(StoreState storeState){
     super(storeState);
@@ -25,13 +30,13 @@ public class StoreView extends SimView {
   }
   
   /**
-   * This method prints out the start.
+   * Prints out the initial parameters.
    */
   private void printStart(){
     System.out.println("PARAMETRAR");
     System.out.println("==========");
-    System.out.println("Antal kassor, N..........: " + storeState.getcheckOuts());
-    System.out.println("Max som ryms, M..........: " + storeState.getMaxCustomersToday());
+    System.out.println("Antal kassor, N..........: " + storeState.getCHECKOUTS());
+    System.out.println("Max som ryms, M..........: " + storeState.getMaxCustomers());
     System.out.println("Ankomsthastighet, lambda.: " + storeState.getArrivalSpeed());
     System.out.println("Plocktider, [P_min..Pmax]: " + "[" + storeState.getGatherLower() + ".." + storeState.getGatherUpper() + "]");
     System.out.println("Betaltider, [K_min..Kmax]: " + "[" + storeState.getCheckoutLower() + ".." + storeState.getCheckoutUpper() + "]");
@@ -44,22 +49,20 @@ public class StoreView extends SimView {
   }
   
   /**
-   * This method prints out the events.
+   * Prints out the event data.
+   *
+   * @param e the current event
    */
   private void printEvents(Event e) {
     String eventName = e.getName();
-    if (eventName.length() < 4) { //magisk fyra (Avser nog tab)
-      eventName = eventName + " ";
-    }
-    
+
+    // Get the customer ID, if null set to "---"
     String customerID = String.valueOf(e.getCustomer());
     if (customerID.equals("null")) {
       customerID = "---";
     }
     
-    String checkOpen;
-    checkOpen = storeState.isOpen() ? "ö" + "\t" : "s" + "\t";
-    
+    String checkOpen = storeState.isOpen() ? "Ö" + "\t" : "S" + "\t";
     System.out.println(
               timeFormat(e.getTime()) + "\t" +
               eventName + "\t\t" +
@@ -78,27 +81,43 @@ public class StoreView extends SimView {
   
   /**
    * This method prints out the end.
+   *
+   * @param e the current event
    */
   private void printEnd(Event e) {
+    double checkoutFreeTime = storeState.getCheckoutFreeTime();
+    double totQueueTime = storeState.getTotQueueTime();
+    int availableCheckouts = storeState.getAvailableCheckouts();
+    int totalInQueue = storeState.getCheckoutQueue().getTotalQueuers();
+
+
     System.out.println(timeFormat(storeState.getCurrentTime()) + "\tStop");
     System.out.println("");
     System.out.println("RESUlTAT");
     System.out.println("========");
-    System.out.println(""); // Totala antalet kunder, kunder som handlade, missade kunder. (kan vara fel i 1) nedan)
-    System.out.println("1) Av " + storeState.getTotCustomers() + " kunder handlade " + storeState.getPurchases() + " medan " + storeState.getMissedCustomers() + " missades.");
     System.out.println("");
-    System.out.println("2) Total tid " + storeState.getcheckOuts() + " kassor varit lediga: " + timeFormat(storeState.getCheckoutFreeTime())  + " te.");
-    System.out.println("   Genomsnittlig ledig kassatid: " + timeFormat(storeState.getCheckoutFreeTime()/storeState.getAvailableCheckouts())
-            + " te (dvs " + timeFormat((storeState.getCheckoutFreeTime()/storeState.getAvailableCheckouts() / storeState.getTimeAtCheckoutFreeTime())*100)  + "% av tiden från öppning tills sista kunden betalat).");
+    System.out.println("1) Av " + storeState.getTotCustomers() + " kunder handlade " +
+            storeState.getPurchases() + " medan " + storeState.getMissedCustomers() +
+            " missades.");
     System.out.println("");
-    System.out.println("3) Total tid " + storeState.getCheckoutQueue().getTotalQueuers() + " kunder tvingats köa: " + timeFormat(storeState.getTotQueueTime()) + " te.");
-    System.out.println("   Genomsnittlig kötid: " + timeFormat(storeState.getTotQueueTime() / storeState.getCheckoutQueue().getTotalQueuers()) + " te.");
+    System.out.println("2) Total tid " + storeState.getCHECKOUTS() +
+            " kassor varit lediga: " + timeFormat(checkoutFreeTime)  + " te.");
+    System.out.println("   Genomsnittlig ledig kassatid: " +
+            timeFormat(checkoutFreeTime/availableCheckouts) + " te (dvs " +
+            timeFormat((checkoutFreeTime/availableCheckouts / storeState.getTimeAtCheckout())*100) +
+            "% av tiden från öppning tills sista kunden betalat).");
+    System.out.println("");
+    System.out.println("3) Total tid " + totalInQueue + " kunder tvingats köa: " +
+            timeFormat(totQueueTime) + " te.");
+    System.out.println("   Genomsnittlig kötid: " +
+            timeFormat(totQueueTime / totalInQueue) + " te.");
   }
 
   /**
-   * This method makes sure that the time has the correct format
+   * Makes sure that the time has the correct format
    * to print out in the simulation with 2 decimals.
-   * It returns a String of the time used in the print methods.
+   *
+   * @return a String of the time used in the print methods.
    */
   private String timeFormat(double time){
     String printTime = String.valueOf(Math.round(time * 100.0) / 100.0);

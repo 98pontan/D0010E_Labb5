@@ -1,32 +1,19 @@
 package lab5.sim;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Sorts the eventQueue with lowest time first. 
- * @author Pontus Eriksson Jirbratt
- *
+ * @author Pontus Eriksson Jirbratt,
+ * @author Lucas Pettersson,
+ * @author Jesper Johansson Oskarsson,
+ * @author Markus Blomqvist
  */
 public class SortedSequence 
 {
-	/*
-	public static void main(String[] args)
-	{
-		ArrayList<Event> a = new ArrayList<>(Arrays.asList());
-		ArrayList<Event> list;
-		for(int i = 0;i < 4; i ++) {
-			a.add(i, new Event());
-		}
-		SortedSequence ss = new SortedSequence();
-		
-		ss.printArray(a);
-		
-	}
-	*/
-	
 	/**
-	 * sorts the ArrayList with bubblesort and returns the sorted list
+	 * sorts the ArrayList with bubblesort and returns the sorted list.
+	 * ATTN! Doesn't sort the last element in list (Because it's the stop event).
 	 * @param list
 	 * @return a sorted list in order of time. 
 	 */
@@ -48,24 +35,6 @@ public class SortedSequence
 			}//end for j
 		}//end for i
 		
-		/*for(int i = 0; i < list.size(); i++) {
-			System.out.println("list: " + list.get(i).time);
-			System.out.println("a: " + list.get(i).time);
-		}
-		*/
-		
 		return list;
 	}
-/*	
-	void printArray(ArrayList<Event> unsorted) 
-	{
-		ArrayList<Event> list = sortList(unsorted);
-		
-		for(int i = 0; i < list.size(); i++) 
-		{
-			System.out.println("list: " + list.get(i).time);
-		}
-	}
-	*/
-
 }

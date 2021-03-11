@@ -12,7 +12,6 @@ import java.util.Observable;
  */
 public class SimState extends Observable {
 	double currentTime;
-	int numberOfEvents;
 	boolean runFlag;
 	Event lastEvent;
 
@@ -21,7 +20,6 @@ public class SimState extends Observable {
 	 */
 	public SimState() {
 		currentTime 	= 0;
-		numberOfEvents 	= 0;
 		runFlag 		= true;
 	}
 
@@ -31,29 +29,15 @@ public class SimState extends Observable {
 	public void setRunFlagFalse() {
 		runFlag = false;
 	}
-	
-	/**
-	 * Increments number of events
-	 */
-	private void _newEvent()
-	{
-		numberOfEvents++;
-	}
 
 	/**
-	 * a total time of the simulation
-	 * @param time the time the events needed to finnish
-	 */
-	public void setTime(double time) {
-		currentTime = time;
-	}
-
-	/**
-	 * updates the observer
+	 * Updates the observer, updates the currentTime to the events execution time.
+	 * Also increments the event counter.
+	 *
+	 * @param e The event that called update
 	 */
 	public void update(Event e)
 	{
-		_newEvent();
 		currentTime = e.getTime();
 
 		setChanged();
@@ -76,10 +60,18 @@ public class SimState extends Observable {
 		return currentTime;
 	}
 
+	/**
+	 *
+	 * @return the last called event
+	 */
 	public Event getLastEvent() {
 		return lastEvent;
 	}
 
+	/**
+	 *
+	 * @param e the event to set as last event
+	 */
 	public void setLastEvent(Event e) {
 		lastEvent = e;
 	}

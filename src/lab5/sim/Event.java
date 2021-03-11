@@ -2,7 +2,7 @@ package lab5.sim;
 import lab5.store.*;
 
 /**
- * Description
+ * Abstract template for all events. Holds time, event name and customer.
  * 
  * @author Lucas Pettersson,
  * @author Pontus Eriksson Jirbratt, 
@@ -18,29 +18,45 @@ import lab5.store.*;
 	 
 	protected String name;
 	protected double time;
-	
-	abstract public void run();
 
-	public double getTime() {
-		return this.time;
-	};
-
-	public String getName() {
-		return this.name;
-	};
-
-	public Customer getCustomer() {
-		return this.customer;
-	};
-
-	protected void updateTime(SimState model) {
-		model.setTime(this.time);
-	}
-
+	/**
+	 * Sets the event SimState and EventQueue.
+	 *
+	 * @param state
+	 * @param eventQueue
+	 */
 	public Event(SimState state, EventQueue eventQueue)
 	{
 		this.state = state;
 		this.eventQueue = eventQueue;
 	}
-	
+
+	/**
+	 * Responsible for executing the main event code.
+	 */
+	abstract public void run();
+
+	/**
+	 *
+	 * @return The event time
+	 */
+	public double getTime() {
+		return this.time;
+	};
+
+	/**
+	 *
+	 * @return The event name
+	 */
+	public String getName() {
+		return this.name;
+	};
+
+	/**
+	 *
+	 * @return The customer object
+	 */
+	public Customer getCustomer() {
+		return this.customer;
+	};
 }
